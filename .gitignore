@@ -1,0 +1,43 @@
+# Laravel & PHP
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.*.php
+.env.*.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
+.phpunit.cache
+/.vscode
+.idea/
+
+# Laravel specific
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+storage/app/*
+!storage/app/.gitignore
+
+storage/framework/*
+!storage/framework/.gitignore
+
+storage/logs/*
+!storage/logs/.gitignore
+
+# Ignore compiled files
+/public/hot
+/public/mix-manifest.json
+/public/build
+/public/css
+/public/js
+
+# Optional: OS & IDE files
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
