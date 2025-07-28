@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'ساشیا')</title>
+    
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
@@ -34,7 +35,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="uk-flex-auto">
+    <main class="uk-flex-auto uk-margin-medium">
         <div class="uk-container">
             @yield('content')
         </div>
@@ -56,6 +57,7 @@
             </ul>
         </div>
     </div>
+
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit-icons.min.js"></script>
