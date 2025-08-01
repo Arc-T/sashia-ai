@@ -1,101 +1,140 @@
-<nav class="uk-navbar-container uk-box-shadow-small">
-    <div class="uk-container uk-container-expand">
-        <div class="uk-navbar" uk-navbar>
-            <div class="uk-navbar-left">  <!-- RTL adjustment -->
-                
-                {{-- Mobile Menu Toggle --}}
-                <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon href="#offcanvas-menu" uk-toggle></a>
-                
-                {{-- Logo --}}
-                <a href="{{ url('/') }}" class="uk-navbar-item uk-logo">
-                    <span class="uk-text-bold">ساشیا</span>
-                </a>
-                
-                {{-- Desktop Menu --}}
-                <ul class="uk-navbar-nav uk-visible@m">
-                    <li class="uk-active"><a href="#">خانه</a></li>
-                    <li>
-                        <a href="#">محصولات</a>
-                        <div class="uk-navbar-dropdown">
-                            <ul class="uk-nav uk-navbar-dropdown-nav">
-                                <li><a href="#">محصولات غذایی</a></li>
-                                <li><a href="#">لوازم خانگی</a></li>
-                                <li><a href="#">پوشاک</a></li>
-                            </ul>
+<div class="uk-container">
+    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar
+        uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
+        <div class="uk-navbar-right">
+            <!-- Mobile Toggle -->
+            <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon href="#offcanvas-menu" uk-toggle></a>
+
+            <!-- Logo - Visible on all screens -->
+            <a href="{{ url('/') }}" class="uk-navbar-item uk-logo uk-text-bold">
+                <span uk-icon="icon: happy; ratio: 1.5" class="uk-margin-small-right"></span>
+                ساشیا
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="uk-navbar-nav uk-visible@m">
+                <li class="uk-active"><a href="#" class="uk-text-bold">خانه</a></li>
+                <li>
+                    <a href="#" class="uk-text-bold">محصولات</a>
+                    <div class="uk-navbar-dropdown uk-box-shadow-large uk-width-large">
+                        <div class="uk-navbar-dropdown-grid uk-child-width-1-2" uk-grid>
+                            <div>
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li class="uk-nav-header">دسته‌بندی‌ها</li>
+                                    <li><a href="#"><span uk-icon="icon: laptop"></span> کالای دیجیتال</a></li>
+                                    <li><a href="#"><span uk-icon="icon: tshirt"></span> پوشاک</a></li>
+                                    <li><a href="#"><span uk-icon="icon: home"></span> لوازم خانگی</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li class="uk-nav-header">سایر</li>
+                                    <li><a href="#"><span uk-icon="icon: star"></span> محصولات ویژه</a></li>
+                                    <li><a href="#"><span uk-icon="icon: search"></span> جستجوی پیشرفته</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </li>
-                    <li><a href="#">درباره ما</a></li>
-                    <li><a href="#">تماس با ما</a></li>
-                </ul>
-            </div>
-
-            <div class="uk-navbar-right">
-                {{-- Search --}}
-                <div class="uk-navbar-item">
-                    <form class="uk-search uk-search-navbar">
-                        <span uk-search-icon></span>
-                        <input class="uk-search-input" type="search" placeholder="جستجو...">
-                    </form>
-                </div>
-                
-                {{-- Dark Mode Toggle --}}
-                <div class="uk-navbar-item">
-                    <button id="darkModeToggle" class="uk-button uk-button-default uk-button-small" uk-tooltip="تغییر حالت شب">
-                        <span class="dark-mode-icon">🌙</span>
-                        <span class="light-mode-icon uk-hidden">☀️</span>
-                    </button>
-                </div>
-                
-                {{-- User/Auth Actions --}}
-                <div class="uk-navbar-item">
-                    <a href="#" class="uk-button uk-button-text">
-                        <span uk-icon="icon: user"></span>
-                        <span class="uk-margin-small-right">ورود</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-
-{{-- Mobile Offcanvas Menu --}}
-<div id="offcanvas-menu" uk-offcanvas="flip: true; overlay: true">
-    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-        <button class="uk-offcanvas-close" type="button" uk-close></button>
-        
-        <div class="uk-card uk-card-default uk-card-body uk-margin-bottom">
-            <h3 class="uk-card-title">منو</h3>
-            <ul class="uk-nav uk-nav-default">
-                <li class="uk-active"><a href="#">خانه</a></li>
-                <li class="uk-parent">
-                    <a href="#">محصولات</a>
-                    <ul class="uk-nav-sub">
-                        <li><a href="#">محصولات غذایی</a></li>
-                        <li><a href="#">لوازم خانگی</a></li>
-                        <li><a href="#">پوشاک</a></li>
-                    </ul>
+                    </div>
                 </li>
-                <li><a href="#">درباره ما</a></li>
-                <li><a href="#">تماس با ما</a></li>
+                <li><a href="#" class="uk-text-bold">درباره ما</a></li>
+                <li><a href="#" class="uk-text-bold">تماس با ما</a></li>
             </ul>
         </div>
-        
-        <div class="uk-card uk-card-default uk-card-body">
-            <div class="uk-margin-bottom">
-                <form class="uk-search uk-search-default uk-width-1-1">
-                    <span uk-search-icon></span>
-                    <input class="uk-search-input" type="search" placeholder="جستجو...">
-                </form>
-            </div>
-            <div class="uk-flex uk-flex-between">
-                <button id="mobileDarkModeToggle" class="uk-button uk-button-default uk-button-small">
-                    <span class="dark-mode-icon">🌙 حالت شب</span>
-                    <span class="light-mode-icon uk-hidden">☀️ حالت روز</span>
+
+        <div class="uk-navbar-left">
+            <!-- User Actions -->
+            <div class="uk-navbar-item">
+                <button id="darkModeToggle" class="uk-button uk-button-default uk-button-small">
+                    <span id="darkModeIcon" uk-tooltip="تم تاریک">🌙</span>
                 </button>
-                <a href="#" class="uk-button uk-button-primary uk-button-small">
-                    <span uk-icon="icon: user"></span>
-                    ورود
-                </a>
+
+                @auth
+                    <div class="uk-inline uk-margin-small-left">
+                        <button class="uk-button uk-button-default uk-button-small" type="button">
+                            <span uk-icon="icon: user"></span>
+                            <span class="uk-visible@m">{{ Str::limit(Auth::user()->name, 15) }}</span>
+                        </button>
+                        <div uk-dropdown="pos: bottom-right; mode: click; boundary: !.uk-navbar; boundary-align: true">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li class="uk-nav-header">{{ Auth::user()->name }}</li>
+                                <li><a href="#"><span uk-icon="icon: user"></span> پروفایل کاربری</a></li>
+                                <li><a href="#"><span uk-icon="icon: settings"></span> تنظیمات حساب</a></li>
+                                <li><a href="#"><span uk-icon="icon: cart"></span> سفارشات من</a></li>
+                                <li class="uk-nav-divider"></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                            <span uk-icon="icon: sign-out"></span> خروج
+                                        </a>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                @else
+                    <div class="uk-inline uk-margin-small-left">
+                        <a href="{{ route('auth') }}" class="uk-button uk-button-default uk-button-small">
+                            <span uk-icon="icon: user"></span>
+                            <span class="uk-visible@m">ورود/ثبت نام</span>
+                        </a>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Mobile Off-canvas Menu -->
+<div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true; mode: push">
+    <div class="uk-offcanvas-bar uk-padding-remove">
+        <div class="uk-card uk-card-default uk-card-small">
+            <div class="uk-card-header">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <h3 class="uk-card-title">
+                    <span uk-icon="icon: happy"></span> ساشیا
+                </h3>
+            </div>
+            <div class="uk-card-body uk-padding-remove">
+                <ul class="uk-nav uk-nav-default">
+                    <li class="uk-active"><a href="#"><span uk-icon="icon: home"></span> خانه</a></li>
+                    <li class="uk-parent">
+                        <a href="#"><span uk-icon="icon: cart"></span> محصولات</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="#"><span uk-icon="icon: laptop"></span> کالای دیجیتال</a></li>
+                            <li><a href="#"><span uk-icon="icon: tshirt"></span> پوشاک</a></li>
+                            <li><a href="#"><span uk-icon="icon: home"></span> لوازم خانگی</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><span uk-icon="icon: info"></span> درباره ما</a></li>
+                    <li><a href="#"><span uk-icon="icon: mail"></span> تماس با ما</a></li>
+                </ul>
+            </div>
+            <div class="uk-card-footer">
+                @auth
+                    <div class="uk-panel">
+                        <div class="uk-text-bold">
+                            <span uk-icon="icon: user"></span> {{ Auth::user()->name }}
+                        </div>
+                        <ul class="uk-nav uk-nav-default uk-margin-small-top">
+                            <li><a href="#"><span uk-icon="icon: user"></span> پروفایل</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                        <span uk-icon="icon: sign-out"></span> خروج
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('auth') }}" class="uk-button uk-button-primary uk-width-1-1">
+                        <span uk-icon="icon: sign-in"></span> ورود/ثبت نام
+                    </a>
+                @endauth
             </div>
         </div>
     </div>
