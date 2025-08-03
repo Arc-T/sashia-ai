@@ -61,12 +61,14 @@
                                 <li><a href="#"><span uk-icon="icon: settings"></span> تنظیمات حساب</a></li>
                                 <li><a href="#"><span uk-icon="icon: cart"></span> سفارشات من</a></li>
                                 <li class="uk-nav-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
+                                <li class="uk-nav-item">
+                                    <form method="POST" action="{{ route('logout') }}" class="uk-display-inline">
                                         @csrf
                                         <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); this.closest('form').submit();">
-                                            <span uk-icon="icon: sign-out"></span> خروج
+                                            onclick="event.preventDefault(); this.closest('form').submit();"
+                                            class="uk-text-danger"> <!-- Added uk-text-danger for red color -->
+                                            <span uk-icon="icon: sign-out"></span>
+                                            <span class="uk-visible@s">خروج</span>
                                         </a>
                                     </form>
                                 </li>

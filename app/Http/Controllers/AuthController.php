@@ -7,14 +7,14 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
     // Show combined auth form
     public function showAuthForm()
     {
-        return view('auth');
+        return view('auth.auth');
     }
 
     // Handle login
@@ -25,7 +25,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (!Auth::attempt($credentials, $request->remember)) {
+        if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
@@ -51,11 +51,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect('/dashboard')->with('success', 'ثبت نام با موفقیت انجام شد!');
+        return redirect('/')->with('success', 'ثبت نام با موفقیت انجام شد!');
     }
 
     // Handle logout

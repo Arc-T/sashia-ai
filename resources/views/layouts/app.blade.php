@@ -8,35 +8,24 @@
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <!-- Light Theme (always loaded) -->
+    <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
+
+    <!-- Dark Theme (loaded conditionally) -->
+    <link rel="stylesheet" href="{{ asset('css/dark-theme.css') }}" id="darkTheme" disabled>
 </head>
 
 <body class="uk-height-viewport uk-flex uk-flex-column uk-animation-fade">
 
     <!-- Header -->
-    <header class="uk-box-shadow-small uk-light" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+    <header class="uk-box-shadow-small" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
         @include('layouts.header')
     </header>
-
-    @if (session('success'))
-        <div class="uk-alert-success" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="uk-alert-danger" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
 
     <!-- Main Content -->
     <main class="uk-flex-auto uk-margin-medium">
         <div class="uk-container">
+            @include('layouts.partials.messages')
             @yield('content')
         </div>
     </main>
@@ -63,23 +52,13 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit-icons.min.js"></script>
     <!-- Dark mode toggle script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggle = document.getElementById('darkModeToggle');
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            const darkTheme = document.getElementById('darkTheme');
+            const isDark = darkTheme.disabled;
 
-            // Initialize
-            if (localStorage.getItem('theme') === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-
-            // Toggle handler
-            if (toggle) {
-                toggle.addEventListener('click', function() {
-                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-                    localStorage.setItem('theme', isDark ? 'light' : 'dark');
-                    UIkit.update();
-                });
-            }
+            darkTheme.disabled = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         });
     </script>
 </body>

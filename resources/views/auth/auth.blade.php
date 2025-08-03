@@ -9,29 +9,12 @@
     <!-- UIkit CSS -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
 </head>
 
 <body class="uk-background-muted uk-height-viewport uk-flex uk-flex-middle">
-
-    @if (session('success'))
-        <div class="uk-alert-success" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="uk-alert-danger" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
-
     <div class="uk-container uk-margin-auto-vertical">
+        @include('layouts.partials.messages')
         <div class="uk-card uk-card-default uk-box-shadow-large uk-overflow-hidden">
             <div class="uk-grid-collapse" uk-grid>
                 <!-- Hero Section -->
@@ -86,8 +69,8 @@
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="login-password">رمز عبور</label>
                                     <div class="uk-inline uk-width-1-1">
-                                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"
-                                            id="toggle-password" style="cursor: pointer;"></span>
+                                        <span class="uk-form-icon" uk-icon="icon: lock" id="toggle-password"
+                                            style="cursor: pointer;"></span>
                                         <input class="uk-input" id="login-password" type="password" name="password"
                                             placeholder="••••••••" required>
                                     </div>
@@ -110,7 +93,7 @@
                                 </div>
                             </form>
 
-                            <div class="uk-margin-large-top">
+                            {{-- <div class="uk-margin-large-top">
                                 <div class="uk-text-center uk-text-muted uk-margin-bottom">یا با استفاده از</div>
                                 <div class="uk-flex uk-flex-center">
                                     <button class="uk-button uk-button-default uk-margin-small-right">
@@ -120,7 +103,7 @@
                                         <span uk-icon="icon: facebook"></span> فیسبوک
                                     </button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </li>
 
                         <!-- Register Form -->
@@ -151,8 +134,8 @@
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="register-password">رمز عبور</label>
                                     <div class="uk-inline uk-width-1-1">
-                                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"
-                                            id="toggle-register-password" style="cursor: pointer;"></span>
+                                        <span class="uk-form-icon" uk-icon="icon: lock" id="toggle-register-password"
+                                            style="cursor: pointer;"></span>
                                         <input class="uk-input" id="register-password" type="password"
                                             name="password" placeholder="••••••••" required>
                                     </div>
@@ -162,7 +145,7 @@
                                     <label class="uk-form-label" for="register-password-confirm">تکرار رمز
                                         عبور</label>
                                     <div class="uk-inline uk-width-1-1">
-                                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
                                         <input class="uk-input" id="register-password-confirm" type="password"
                                             name="password_confirmation" placeholder="••••••••" required>
                                     </div>
@@ -180,11 +163,6 @@
                                         نام</button>
                                 </div>
                             </form>
-
-                            <div class="uk-text-center uk-margin-top">
-                                <p>قبلاً حساب کاربری دارید؟ <a href="#" class="uk-link-text"
-                                        uk-switcher-item="0">ورود</a></p>
-                            </div>
                         </li>
                     </ul>
                 </div>
@@ -195,36 +173,6 @@
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.0/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.0/dist/js/uikit-icons.min.js"></script>
-
-    <!-- Minimal Custom JS -->
-    <script>
-        // Password toggle functionality
-        document.getElementById('toggle-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('login-password');
-            const icon = this;
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.setAttribute('uk-icon', 'icon: unlock');
-            } else {
-                passwordInput.type = 'password';
-                icon.setAttribute('uk-icon', 'icon: lock');
-            }
-        });
-
-        document.getElementById('toggle-register-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('register-password');
-            const icon = this;
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.setAttribute('uk-icon', 'icon: unlock');
-            } else {
-                passwordInput.type = 'password';
-                icon.setAttribute('uk-icon', 'icon: lock');
-            }
-        });
-    </script>
 </body>
 
 </html>

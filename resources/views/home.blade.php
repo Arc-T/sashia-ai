@@ -4,12 +4,12 @@
 @section('content')
 
     <!-- Hero Section -->
-    <div class="uk-section uk-section-primary uk-light uk-padding-remove-vertical" uk-parallax="bgy: -200">
+    <div class="uk-section uk-section-primary uk-padding-remove-vertical" uk-parallax="bgy: -200">
         <div class="uk-container uk-position-relative">
             <div class="uk-grid-match uk-child-width-1-2@m uk-flex-middle" uk-grid
                 uk-scrollspy="cls: uk-animation-slide-bottom; target: > div; delay: 150;">
                 <div class="uk-text-center">
-                    <h1 class="uk-heading-primary uk-text-bold uk-margin-remove-bottom">خلاقیت خود را آزاد کنید</h1>
+                    <h1 class="uk-text-bold uk-margin-remove-bottom">خلاقیت خود را آزاد کنید</h1>
                     <p class="uk-text-lead uk-margin-medium-bottom">با مجموعه‌ای از تصاویر الهام‌بخش، داستان‌نویسی را آغاز
                         نمایید</p>
                     <div class="uk-flex uk-flex-center">
@@ -122,7 +122,7 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="uk-section uk-section-secondary uk-light uk-padding-large">
+    <div class="uk-section uk-section-secondary uk-padding-large">
         <div class="uk-container uk-text-center">
             <div uk-scrollspy="cls: uk-animation-fade">
                 <h2 class="uk-heading-medium">آماده شروع نوشتن هستید؟</h2>
