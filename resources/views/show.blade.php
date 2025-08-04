@@ -174,118 +174,208 @@ uk-child-width-1-3@m uk-child-width-1-4@l uk-child-width-1-5@xl"
     </div>
 
 
-    <!-- Image Detail Modal -->
-    <div id="image-modal" uk-modal="bg-close: false">
-        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-width-1-1 uk-width-3-4@m uk-border-rounded"
+    <!-- Modal Wrapper -->
+    <div id="image-modal" uk-modal="bg-close: false; esc-close: true;">
+        <div class="uk-modal-dialog uk-margin-auto-vertical uk-width-1-1 uk-width-3-4@m uk-border-rounded uk-overflow-hidden"
             style="max-width: 1200px;">
 
             <!-- Close Button -->
-            <button class="uk-modal-close-outside uk-icon uk-close-large" type="button" uk-close></button>
+            <button class="uk-modal-close-default" type="button" uk-close></button>
 
-            <div class="uk-grid-collapse" uk-grid>
+            <div class="uk-grid-collapse uk-grid-match uk-flex-middle" uk-grid>
 
                 <!-- Image Column -->
-                <div class="uk-width-1-1 uk-width-2-3@m uk-background-muted uk-flex uk-flex-middle uk-position-relative"
-                    style="min-height: 70vh;">
-                    <!-- Image Wrapper -->
-                    <div class="uk-position-relative" style="min-height: 70vh;">
+                <div class="uk-width-1-1 uk-width-2-3@m uk-position-relative uk-padding-remove">
 
-                        <!-- Image Actions: Floating Top-Right Overlay -->
-                        <div class="uk-position-top-right uk-margin-small-top uk-margin-small-right" style="z-index: 2;">
-                            <div class="uk-flex uk-flex-middle uk-flex-right uk-background-transparent">
-                                <a class="uk-icon-button uk-dark uk-margin-small-left" uk-icon="download"
-                                    uk-tooltip="title: دانلود"></a>
-                                <a class="uk-icon-button uk-dark uk-margin-small-left" uk-icon="social"
-                                    uk-tooltip="title: اشتراک‌گذاری"></a>
-                                <a class="uk-icon-button uk-dark" uk-icon="bookmark" uk-tooltip="title: ذخیره"></a>
-                            </div>
-                        </div>
-
-                        <!-- Loading Spinner -->
-                        <div id="modal-loading" class="uk-position-center" uk-spinner="ratio: 2"></div>
-
-                        <!-- Image -->
-                        <img id="modal-image" src="" alt="" class="uk-width-1-1 uk-height-max-large"
-                            style="object-fit: contain; display: none;"
-                            onload="document.getElementById('modal-loading').style.display = 'none'; this.style.display = '';">
+                    <!-- Skeleton Loader -->
+                    <div id="modal-loading" class="uk-position-center uk-text-center">
+                        <span uk-spinner="ratio: 2"></span>
+                        <p class="uk-text-muted uk-margin-small-top">در حال بارگذاری تصویر...</p>
                     </div>
+
+                    <!-- Image Display with Card -->
+                    <div class="uk-overflow-hidden uk-position-relative uk-flex uk-flex-center uk-flex-middle uk-padding-small"
+                        style="max-height: 90vh;">
+
+                        <img id="modal-image" src="" alt="تصویر تولید شده توسط هوش مصنوعی"
+                            class="uk-border-rounded uk-transition-scale-up uk-transition-opaque"
+                            style="max-height: 90vh; max-width: 100%; object-fit: contain; display: none;">
+                    </div>
+
+                    <!-- Navigation (RTL adjusted) -->
+                    <div
+                        class="uk-position-center-left uk-visible-toggle uk-padding-small uk-text-small uk-flex uk-flex-between uk-width-1-1">
+                        <a href="#" class="uk-icon-button uk-border-circle" uk-icon="chevron-left"
+                            uk-tooltip="بعدی"></a>
+                        <a href="#" class="uk-icon-button uk-border-circle" uk-icon="chevron-right"
+                            uk-tooltip="قبلی"></a>
+                    </div>
+
+                    {{-- <!-- Bottom Info Bar with icons -->
+                    <div class="uk-position-bottom uk-background-secondary uk-light uk-padding-small uk-text-small uk-flex uk-flex-between uk-border-rounded uk-margin-top"
+                        style="backdrop-filter: saturate(180%) blur(10px);">
+                        <span><span uk-icon="file-image" class="uk-margin-small-left"></span> JPEG</span>
+                        <span><span uk-icon="crop" class="uk-margin-small-left"></span> 1200 × 800</span>
+                        <span><span uk-icon="cloud-download" class="uk-margin-small-left"></span> 450 کیلوبایت</span>
+                    </div> --}}
 
                 </div>
 
                 <!-- Info Column -->
-                <div class="uk-width-1-1 uk-width-1-3@m uk-padding uk-background-default uk-overflow-auto">
+                <div class="uk-width-1-1 uk-width-1-3@m uk-background-default uk-border-rounded-right uk-overflow-auto uk-padding-small"
+                    style="max-height: 90vh;">
+                    <div class="uk-padding-small">
 
-                    <!-- Title & Like -->
-                    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-                        <h3 id="modal-title" class="uk-margin-remove uk-text-bold uk-text-large"></h3>
-                        <button class="uk-icon-button uk-button-secondary" uk-icon="heart"
-                            uk-tooltip="افزودن به علاقه‌مندی‌ها"></button>
-                    </div>
-
-                    <!-- Meta -->
-                    <div class="uk-margin-small-bottom">
-                        <span id="modal-category" class="uk-label uk-label-success uk-margin-small-left"></span>
-                        <span id="modal-date" class="uk-text-small uk-text-muted"></span>
-                    </div>
-
-                    <!-- Uploader Info -->
-                    <div class="uk-card uk-card-default uk-card-body uk-card-small uk-border-rounded uk-margin-bottom">
-                        <div class="uk-flex uk-flex-middle">
-                            <img class="uk-border-circle uk-box-shadow-small" width="48" height="48"
-                                src="https://randomuser.me/api/portraits/women/43.jpg" alt="Uploader">
-                            <div class="uk-margin-right">
-                                <div class="uk-text-meta">آپلود توسط</div>
-                                <div class="uk-text-bold">سارا محمدی</div>
-                                <div class="uk-text-small uk-text-muted">عکاس حرفه‌ای طبیعت</div>
+                        <!-- Title & Metadata -->
+                        <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+                            <div>
+                                <h3 id="modal-title" class="uk-margin-remove uk-text-bold"></h3>
+                                <div class="uk-text-meta">
+                                    <span id="modal-date" class="uk-text-muted"></span>
+                                    <span id="modal-category"
+                                        class="uk-label uk-label-success uk-margin-small-right"></span>
+                                </div>
+                            </div>
+                            <button class="uk-icon-button" uk-icon="more-vertical"
+                                uk-toggle="target: #image-more-actions"></button>
+                            <div id="image-more-actions" uk-dropdown="mode: click; pos: bottom-right">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li><a href="#" onclick="copyImageLink()"><span uk-icon="copy"></span> کپی
+                                            لینک</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li><a href="#"><span uk-icon="warning"></span> گزارش مشکل</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- CTA -->
-                    <button
-                        class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-bottom uk-border-pill">
-                        <span uk-icon="comment"></span> دریافت متن الهام‌بخش
-                    </button>
-
-                    <!-- Image Info (Grid View) -->
-                    <div class="uk-card uk-card-default uk-card-body uk-card-small uk-border-rounded uk-margin-bottom">
-                        <h5 class="uk-heading-bullet uk-margin-small-bottom">اطلاعات تصویر</h5>
-                        <ul class="uk-list uk-list-divider uk-text-small uk-margin-remove">
-                            <li><strong>ابعاد:</strong> 1200 × 800 پیکسل</li>
-                            <li><strong>حجم:</strong> 450 کیلوبایت</li>
-                            <li><strong>فرمت:</strong> JPEG</li>
-                            <li><strong>مجوز:</strong> استفاده آزاد</li>
-                        </ul>
-                    </div>
-
-                    <!-- Tags -->
-                    <div class="uk-margin-bottom">
-                        <h5 class="uk-heading-line"><span>تگ‌ها</span></h5>
-                        <div class="uk-flex uk-flex-wrap">
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">طبیعت</span>
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">جنگل</span>
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">سبز</span>
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">درخت</span>
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">منظره</span>
-                            <span class="uk-label uk-margin-small-bottom uk-margin-small-left">طبیعت‌گردی</span>
+                        <!-- Uploader -->
+                        <div class="uk-card uk-card-default uk-card-small uk-border-rounded uk-margin-bottom">
+                            <div class="uk-card-body uk-padding-small uk-flex uk-flex-middle">
+                                <img class="uk-border-circle uk-box-shadow-small uk-margin-small-left"
+                                    src="https://randomuser.me/api/portraits/women/43.jpg" width="48" height="48"
+                                    alt="Uploader">
+                                <div>
+                                    <div class="uk-text-bold">سارا محمدی</div>
+                                    <div class="uk-text-meta">عکاس حرفه‌ای طبیعت</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Social -->
-                    <div class="uk-margin-top">
-                        <h5 class="uk-heading-line"><span>اشتراک‌گذاری</span></h5>
-                        <div class="uk-grid-small uk-child-width-auto" uk-grid>
-                            <div><a class="uk-icon-button" uk-icon="icon: twitter"></a></div>
-                            <div><a class="uk-icon-button" uk-icon="icon: facebook"></a></div>
-                            <div><a class="uk-icon-button" uk-icon="icon: linkedin"></a></div>
-                            <div><a class="uk-icon-button" uk-icon="icon: whatsapp"></a></div>
+                        <!-- Action Button -->
+                        <button
+                            class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-border-pill uk-box-shadow-hover-large">
+                            <span uk-icon="comment" class="uk-margin-small-left"></span> دریافت متن الهام‌بخش
+                        </button>
+
+                        <!-- Stats -->
+                        <div class="uk-grid-small uk-child-width-expand@s
+uk-margin-top" uk-grid>
+                            <div>
+                                <div
+                                    class="uk-card uk-card-default uk-card-body uk-card-small uk-text-center uk-border-rounded">
+                                    <div class="uk-text-bold">1,245</div>
+                                    <div class="uk-text-meta">بازدید</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="uk-card uk-card-default uk-card-body uk-card-small uk-text-center uk-border-rounded">
+                                    <div class="uk-text-bold">328</div>
+                                    <div class="uk-text-meta">دانلود</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="uk-card uk-card-default uk-card-body uk-card-small uk-text-center uk-border-rounded">
+                                    <div class="uk-text-bold">87</div>
+                                    <div class="uk-text-meta">لایک</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
+                        <!-- Image Info List -->
+                        <div class="uk-card uk-card-default uk-card-small uk-border-rounded uk-margin-top">
+                            <div class="uk-card-header">
+                                <h5 class="uk-heading-bullet uk-margin-remove">اطلاعات تصویر</h5>
+                            </div>
+                            <div class="uk-card-body uk-padding-small">
+                                <ul class="uk-list uk-list-divider uk-list-small">
+                                    <li><span class="uk-text-muted">ابعاد:</span> 1200×800</li>
+                                    <li><span class="uk-text-muted">حجم:</span> 450 کیلوبایت</li>
+                                    <li><span class="uk-text-muted">فرمت:</span> JPEG</li>
+                                    <li><span class="uk-text-muted">دوربین:</span> Canon EOS 5D</li>
+                                    <li><span class="uk-text-muted">مجوز:</span> <span class="uk-text-success">استفاده
+                                            آزاد</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="uk-margin-top">
+                            <h5 class="uk-heading-line uk-text-small"><span>تگ‌ها</span></h5>
+                            <div class="uk-flex uk-flex-wrap uk-flex-center">
+                                <a href="#"
+                                    class="uk-label uk-label-success uk-border-pill uk-margin-small-left uk-margin-small-bottom">طبیعت</a>
+                                <a href="#"
+                                    class="uk-label uk-label-success uk-border-pill uk-margin-small-left uk-margin-small-bottom">درخت</a>
+                                <a href="#"
+                                    class="uk-label uk-label-success uk-border-pill uk-margin-small-left uk-margin-small-bottom">سبز</a>
+                            </div>
+                        </div>
+
+
+                        <!-- Related -->
+                        <div class="uk-margin-top">
+                            <h5 class="uk-heading-line uk-text-small"><span>تصاویر مرتبط</span></h5>
+                            <div class="uk-grid-small uk-child-width-1-3" uk-grid uk-lightbox>
+                                <div><a href="https://source.unsplash.com/random/800x600?nature"
+                                        class="uk-border-rounded"><img
+                                            src="https://source.unsplash.com/random/300x200?nature" alt=""></a>
+                                </div>
+                                <div><a href="https://source.unsplash.com/random/800x600?forest"
+                                        class="uk-border-rounded"><img
+                                            src="https://source.unsplash.com/random/300x200?forest" alt=""></a>
+                                </div>
+                                <div><a href="https://source.unsplash.com/random/800x600?tree"
+                                        class="uk-border-rounded"><img
+                                            src="https://source.unsplash.com/random/300x200?tree" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social -->
+                        <div class="uk-margin-top">
+                            <h5 class="uk-heading-line uk-text-small"><span>اشتراک‌گذاری</span></h5>
+                            <div class="uk-flex uk-flex-center uk-grid-small" uk-grid>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="twitter"></a>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="facebook"></a>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="linkedin"></a>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="whatsapp"></a>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="telegram"></a>
+                                <a class="uk-icon-button uk-icon-button-primary" uk-icon="pinterest"></a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function copyImageLink() {
+            const image = document.getElementById("modal-image");
+            const url = image?.src;
+            if (!url) return;
+            navigator.clipboard.writeText(url).then(() => UIkit.notification("لینک کپی شد!", "success"));
+        }
+
+        document.getElementById("modal-image").addEventListener("load", () => {
+            document.getElementById("modal-loading").style.display = "none";
+            document.getElementById("modal-image").style.display = "block";
+        });
+    </script>
+
 
 
     <!-- Filter/Search JavaScript -->
