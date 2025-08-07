@@ -89,11 +89,7 @@
                     </button>
                 </div>
                 <div>
-                    <button class="uk-button uk-button-default uk-margin-small-right"
-                        onclick="UIkit.modal('#prompt-guide-modal').hide()">
-                        بستن
-                    </button>
-                    <button class="uk-button uk-button-primary">
+                    <button class="uk-button uk-button-primary" onclick="UIkit.modal('#image-modal').show()">
                         متوجه شدم <span uk-icon="icon: happy"></span>
                     </button>
                 </div>

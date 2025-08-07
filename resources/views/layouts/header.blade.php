@@ -15,22 +15,26 @@
             <ul class="uk-navbar-nav uk-visible@m">
                 <li class="uk-active"><a href="#" class="uk-text-bold">خانه</a></li>
                 <li>
-                    <a href="#" class="uk-text-bold">محصولات</a>
+                    <a href="#" class="uk-text-bold">
+                        پرامپت ها
+                        <span uk-icon="icon: chevron-down;"></span>
+                    </a>
                     <div class="uk-navbar-dropdown uk-box-shadow-large uk-width-large">
                         <div class="uk-navbar-dropdown-grid uk-child-width-1-2" uk-grid>
                             <div>
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header">دسته‌بندی‌ها</li>
-                                    <li><a href="#"><span uk-icon="icon: laptop"></span> کالای دیجیتال</a></li>
-                                    <li><a href="#"><span uk-icon="icon: tshirt"></span> پوشاک</a></li>
-                                    <li><a href="#"><span uk-icon="icon: home"></span> لوازم خانگی</a></li>
+                                    <li class="uk-nav-header uk-margin-small-bottom">دسته‌بندی‌ها</li>
+                                    <li><a href="#"><span uk-icon="icon: image"
+                                                class="uk-margin-small-left"></span>تصاویر</a></li>
+                                    <li><a href="#"><span uk-icon="icon: play-circle"
+                                                class="uk-margin-small-left"></span>کلیپ ها</a></li>
                                 </ul>
                             </div>
                             <div>
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header">سایر</li>
-                                    <li><a href="#"><span uk-icon="icon: star"></span> محصولات ویژه</a></li>
-                                    <li><a href="#"><span uk-icon="icon: search"></span> جستجوی پیشرفته</a></li>
+                                <ul class="uk-nav uk-navbar-dropdown-nav ">
+                                    <li class="uk-nav-header uk-margin-small-bottom">سایر</li>
+                                    <li><a href="#"><span uk-icon="icon: code"
+                                                class="uk-margin-small-left"></span>برنامه نویسی</a></li>
                                 </ul>
                             </div>
                         </div>
