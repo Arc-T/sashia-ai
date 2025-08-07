@@ -7,18 +7,18 @@
     <title>@yield('title', 'ساشیا')</title>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css">
+    <link rel="stylesheet" href="{{ asset('css/uikit.rtl.min.css') }}">
     <!-- Light Theme (always loaded) -->
-    <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme/light-theme.css') }}">
 
     <!-- Dark Theme (loaded conditionally) -->
-    <link rel="stylesheet" href="{{ asset('css/dark-theme.css') }}" id="darkTheme" disabled>
+    <link rel="stylesheet" href="{{ asset('css/theme/dark-theme.css') }}" id="darkTheme" disabled>
 </head>
 
 <body class="uk-height-viewport uk-flex uk-flex-column uk-animation-fade">
 
     <!-- Header -->
-    <header class="uk-box-shadow-small" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+    <header class="uk-box-shadow-small">
         @include('layouts.header')
     </header>
 
