@@ -24,9 +24,9 @@
                             <div>
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
                                     <li class="uk-nav-header uk-margin-small-bottom">دسته‌بندی‌ها</li>
-                                    <li><a href="#"><span uk-icon="icon: image"
+                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: image"
                                                 class="uk-margin-small-left"></span>تصاویر</a></li>
-                                    <li><a href="#"><span uk-icon="icon: play-circle"
+                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: play-circle"
                                                 class="uk-margin-small-left"></span>کلیپ ها</a></li>
                                 </ul>
                             </div>

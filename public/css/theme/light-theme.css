@@ -1,0 +1,218 @@
+/* ======================
+   Base Styles & Variables
+   ====================== */
+:root {
+  --font-primary: "Shabnam", sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --scrollbar-width: 8px;
+
+  /* Light Mode Colors */
+  --color-bg: #ffffff;
+  --color-text: #121212;
+  --color-primary: #1e87f0;
+  --color-secondary: #222;
+  --color-muted: #999;
+  --color-border: #e5e5e5;
+  --color-section-default: #f8f8f8;
+  --color-section-muted: #f0f0f0;
+  --scrollbar-track: #f0f0f0;
+  --scrollbar-thumb: #888;
+}
+
+/* ======================
+   Core Styles
+   ====================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: var(--font-primary) !important;
+  /* transition: all 0.3s ease; */
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-primary) !important;
+}
+
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+
+/* ======================
+   Typography
+   ====================== */
+.uk-heading-small,
+.uk-heading-medium,
+.uk-heading-large,
+.uk-heading-xlarge,
+.uk-heading-2xlarge {
+  color: var(--color-text);
+}
+
+.uk-text-muted {
+  color: var(--color-muted) !important;
+}
+
+/* ======================
+   Cards
+   ====================== */
+.uk-card {
+  border-radius: var(--radius-md);
+  background-color: var(--color-section-default);
+  color: var(--color-text);
+  transition: box-shadow 0.3s ease;
+}
+
+.uk-card-default {
+  background-color: var(--color-section-default);
+  border: 1px solid var(--color-border);
+}
+
+.uk-card-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.uk-card-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.uk-card-hover:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ======================
+   Buttons
+   ====================== */
+.uk-button {
+  border-radius: var(--radius-sm);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.uk-button-default {
+  background-color: var(--color-section-default);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.uk-button-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.uk-button-primary:hover,
+.uk-button-primary:focus {
+  background-color: #1667c1;
+  box-shadow: 0 4px 12px rgba(30, 135, 240, 0.4);
+  outline: none;
+}
+
+.uk-button:focus,
+.uk-navbar-nav > li > a:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ======================
+   Forms
+   ====================== */
+.uk-input,
+.uk-select,
+.uk-textarea,
+.uk-checkbox,
+.uk-radio {
+  border-radius: var(--radius-sm);
+  background-color: var(--color-section-default);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: border-color 0.3s ease;
+}
+
+.uk-input:focus,
+.uk-select:focus,
+.uk-textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* ======================
+   Navigation
+   ====================== */
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background-color: var(--color-bg) !important;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.uk-navbar-nav > li > a {
+  color: var(--color-text);
+}
+
+.uk-navbar-nav > li > a:hover,
+.uk-navbar-nav > li > a:focus {
+  color: var(--color-primary);
+}
+
+/* ======================
+   Tables
+   ====================== */
+.uk-table th {
+  background-color: var(--color-section-muted);
+}
+
+.uk-table tr:nth-child(even) {
+  background-color: var(--color-section-default);
+}
+
+/* ======================
+   Modals
+   ====================== */
+.uk-modal-dialog {
+  border-radius: var(--radius-md);
+  max-width: 800px;
+  width: 90%;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .uk-modal-dialog {
+    width: 95% !important;
+    max-width: 100% !important;
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ======================
+   Scrollbar
+   ====================== */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-sm);
+}
+
+/* ======================
+   Icon Alignment & Tags
+   ====================== */
+.uk-label > [uk-icon] {
+  vertical-align: middle;
+  margin-left: 4px;
+  margin-right: 4px;
+}

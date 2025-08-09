@@ -30,11 +30,11 @@ storage/logs/*
 !storage/logs/.gitignore
 
 # Ignore compiled files
-/public/hot
-/public/mix-manifest.json
-/public/build
-/public/css
-/public/js
+# /public/hot
+# /public/mix-manifest.json
+# /public/build
+# /public/css
+# /public/js
 
 # Optional: OS & IDE files
 .DS_Store

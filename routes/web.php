@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/show', [HomeController::class, 'show']);
+Route::get('/show', [HomeController::class, 'show'])->name('gallery');
 
 Route::get('/auth', function () {
     return view('auth');
