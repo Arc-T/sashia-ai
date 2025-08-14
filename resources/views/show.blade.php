@@ -2,68 +2,90 @@
 @section('title', 'گالری تصاویر الهام‌بخش')
 
 @section('content')
-    <div class="uk-section uk-section-default uk-padding-remove-vertical">
+    <div class="uk-section uk-padding-remove-vertical">
         <div class="uk-container uk-container-expand" id="gallery-content">
             <!-- Unified Filter Bar with improved responsive behavior -->
-            <div class="uk-grid-small uk-flex-middle uk-margin-bottom" uk-grid>
-                <!-- Categories Tabs - Now with responsive behavior -->
-                <div class="uk-width-expand@m uk-width-1-1 uk-margin-bottom@s">
-                    <div class="uk-position-relative">
-                        <!-- Tab navigation with arrow indicators for overflow -->
-                        <div class="uk-visible-toggle" tabindex="-1" uk-slider>
-                            <ul class="uk-tab uk-tab-small uk-slider-items uk-flex-nowrap uk-border-rounded">
-                                <li><a href="#" class="uk-text-truncate">همه</a></li>
-                                <li><a href="#" class="uk-text-truncate">شخصیت‌ها</a></li>
-                                <li><a href="#" class="uk-text-truncate">مناظر</a></li>
-                                <li><a href="#" class="uk-text-truncate">هنر مفهومی</a></li>
-                                <li><a href="#" class="uk-text-truncate">فوتورئال</a></li>
-                                <li><a href="#" class="uk-text-truncate">انیمه</a></li>
-                                <li><a href="#" class="uk-text-truncate">سه‌بعدی</a></li>
-                                <li><a href="#" class="uk-text-truncate">انتزاعی</a></li>
-                                <li><a href="#" class="uk-text-truncate">پرتره</a></li>
-                            </ul>
-                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
-                                uk-slidenav-next uk-slider-item="next"></a>
-                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"
-                                uk-slidenav-previous uk-slider-item="previous"></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sorting Controls - Improved dropdowns with better mobile behavior -->
-                <div class="uk-width-auto@m uk-width-1-1">
-                    <div class="uk-flex uk-flex-middle uk-flex-right@m uk-flex-wrap uk-child-width-auto">
-                        <!-- Time Dropdown -->
-                        <div class="uk-inline uk-margin-small-left">
-                            <button class="uk-button uk-button-text uk-button-small uk-border-rounded" type="button">
-                                <span class="uk-margin-small-left">همه زمان‌ها</span>
-                                <span uk-icon="icon: chevron-down; ratio: 0.8"></span>
-                            </button>
-                            <div
-                                uk-dropdown="mode: click; pos: bottom-right; boundary: #gallery-content; boundary-align: true">
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a href="#" class="uk-active">همه زمان‌ها</a></li>
-                                    <li><a href="#">۲۴ ساعت گذشته</a></li>
-                                    <li><a href="#">هفته گذشته</a></li>
-                                    <li><a href="#">ماه گذشته</a></li>
-                                </ul>
+            <!-- Categories Tabs & Sorting Controls -->
+            <div class="uk-container uk-margin-medium-bottom">
+                <div class="uk-grid uk-grid-small uk-flex-middle" uk-grid>
+                    <!-- Categories Tabs -->
+                    <div class="uk-width-expand@m uk-width-1-1">
+                        <div class="uk-position-relative">
+                            <!-- UIKit Grid with horizontal scrolling -->
+                            <div class="uk-grid uk-grid-small uk-flex-nowrap uk-overflow-hidden" uk-grid>
+                                <div class="uk-width-auto">
+                                    <ul
+                                        class="uk-tab uk-tab-small uk-border-rounded uk-background-default uk-box-shadow-small">
+                                        <li class="uk-active"><a href="#" class="uk-text-truncate">همه</a></li>
+                                        <li><a href="#" class="uk-text-truncate">شخصیت‌ها</a></li>
+                                        <li><a href="#" class="uk-text-truncate">مناظر</a></li>
+                                        <li><a href="#" class="uk-text-truncate">هنر مفهومی</a></li>
+                                        <li><a href="#" class="uk-text-truncate">فوتورئال</a></li>
+                                        <li><a href="#" class="uk-text-truncate">انیمه</a></li>
+                                        <li><a href="#" class="uk-text-truncate">سه‌بعدی</a></li>
+                                        <li><a href="#" class="uk-text-truncate">انتزاعی</a></li>
+                                        <li><a href="#" class="uk-text-truncate">پرتره</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Sort Dropdown -->
-                        <div class="uk-inline uk-margin-small-left">
-                            <button class="uk-button uk-button-text uk-button-small uk-border-rounded" type="button">
-                                <span class="uk-margin-small-left">پربازدیدها</span>
-                                <span uk-icon="icon: chevron-down; ratio: 0.8"></span>
-                            </button>
-                            <div
-                                uk-dropdown="mode: click; pos: bottom-right; boundary: #gallery-content; boundary-align: true">
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a href="#" class="uk-active">پربازدیدها</a></li>
-                                    <li><a href="#">جدیدترین</a></li>
-                                    <li><a href="#">پرامتیازترین</a></li>
-                                    <li><a href="#">محبوب‌ترین</a></li>
-                                </ul>
+                    <!-- Sorting Controls -->
+                    <div class="uk-width-auto@m uk-width-1-1 uk-margin-small-top@m">
+                        <div class="uk-flex uk-flex-right@m uk-flex-center uk-flex-wrap uk-grid-small" uk-grid>
+                            <!-- Time Filter -->
+                            <div>
+                                <button
+                                    class="uk-button uk-button-default uk-button-small uk-border-rounded uk-flex uk-flex-middle"
+                                    type="button">
+                                    <span>همه زمان‌ها</span>
+                                    <span class="uk-margin-small-right" uk-icon="icon: chevron-down; ratio: 0.7"></span>
+                                </button>
+                                <div
+                                    uk-dropdown="mode: click; pos: bottom-right; animation: uk-animation-slide-top-small; duration: 200">
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active"><a href="#">همه زمان‌ها</a></li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">۲۴ ساعت گذشته</a></li>
+                                        <li><a href="#">هفته گذشته</a></li>
+                                        <li><a href="#">ماه گذشته</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Sort Options -->
+                            <div>
+                                <button
+                                    class="uk-button uk-button-default uk-button-small uk-border-rounded uk-flex uk-flex-middle"
+                                    type="button">
+                                    <span>پربازدیدها</span>
+                                    <span class="uk-margin-small-right" uk-icon="icon: chevron-down; ratio: 0.7"></span>
+                                </button>
+                                <div
+                                    uk-dropdown="mode: click; pos: bottom-right; animation: uk-animation-slide-top-small; duration: 200">
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active"><a href="#">پربازدیدها</a></li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">جدیدترین</a></li>
+                                        <li><a href="#">پرامتیازترین</a></li>
+                                        <li><a href="#">محبوب‌ترین</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- View Toggle -->
+                            <div class="uk-button-group">
+                                <button
+                                    class="uk-button uk-button-default uk-button-small uk-border-rounded uk-border-remove-right"
+                                    uk-tooltip="title: Grid View; pos: top">
+                                    <span uk-icon="icon: grid; ratio: 0.8"></span>
+                                </button>
+                                <button
+                                    class="uk-button uk-button-default uk-button-small uk-border-rounded uk-border-remove-left"
+                                    uk-tooltip="title: List View; pos: top">
+                                    <span uk-icon="icon: list; ratio: 0.8"></span>
+                                </button>
                             </div>
                         </div>
                     </div>

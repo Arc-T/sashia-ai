@@ -2,103 +2,486 @@
    Dark Mode Variables
    ====================== */
 :root {
-  --color-bg: #121212;
-  --color-text: #ffffff;
-  --color-primary: #3ea6ff;
-  --color-secondary: #f5f5f5;
-  --color-muted: #aaa;
-  --color-border: #444;
-  --color-section-default: #1e1e1e;
-  --color-section-muted: #2a2a2a;
+  /* Base Colors */
+  --color-bg: #151521;
+  --color-bg-secondary: #1e1e2d;
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-muted: rgba(222, 226, 230, 0.75);
+  --color-text-disabled: #9899ac;
+
+  /* Primary Colors */
+  --color-primary: #90caf9;
+  --color-primary-dark: #42a5f5;
+  --color-primary-light: #e3f2fd;
+
+  /* Secondary Colors */
+  --color-secondary: #ce93d8;
+  --color-secondary-dark: #ab47bc;
+  --color-secondary-light: #f3e5f5;
+
+  /* Status Colors */
+  --color-success: #198754;
+  --color-warning: #ffb74d;
+  --color-danger: #dc3545;
+
+  /* Surface Colors */
+  --color-surface: #151521;
+  --color-surface-1dp: #1e1e1e;
+  --color-surface-2dp: #222222;
+  --color-surface-4dp: #242424;
+  --color-surface-8dp: #272727;
+  --color-surface-12dp: #2c2c2c;
+  --color-surface-16dp: #2d2d2d;
+  --color-surface-24dp: #303030;
+
+  /* Border & Divider */
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-divider: rgba(255, 255, 255, 0.12);
+
+  /* Scrollbar */
   --scrollbar-track: #2a2a2a;
   --scrollbar-thumb: #555;
+  --scrollbar-thumb-hover: #666;
 }
 
 /* ======================
-   Dark Mode Components
+   Base Styles
    ====================== */
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Cards */
+.uk-navbar-nav > li > a:hover,
+.uk-navbar-nav > li > a:focus {
+  color: var(--color-primary);
+}
+
+/* a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+} */
+
+img {
+  border-radius: 16px !important;
+}
+
+/* ======================
+Custom
+====================== */
+.uk-background-success {
+  background-color: var(--color-success);
+}
+
+.uk-background-danger {
+  background-color: var(--color-danger);
+}
+
+/* ======================
+   Typography
+   ====================== */
+.uk-logo,
+.uk-text-lead,
+.uk-card-title,
+.uk-text-emphasis,
+.uk-heading-line {
+  color: var(--color-text) !important;
+}
+.uk-text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+.uk-text-primary {
+  color: var(--color-primary) !important;
+}
+
+.uk-text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.uk-text-success {
+  color: var(--color-success) !important;
+}
+
+.uk-text-warning {
+  color: var(--color-warning) !important;
+}
+
+.uk-text-danger {
+  color: var(--color-danger) !important;
+}
+
+/* ======================
+   Navbar
+   ====================== */
+.uk-navbar-primary {
+  background: var(--color-bg-secondary) !important;
+}
+
+.uk-navbar-dark {
+  background: var(--color-bg-secondary);
+}
+
+/* ======================
+   Cards
+   ====================== */
 .uk-card-default {
-  background-color: var(--color-section-default);
+  background-color: var(--color-bg-secondary);
   border-color: var(--color-border);
+  color: var(--color-text);
 }
 
-/* Buttons */
+.uk-card-primary {
+  background-color: var(--color-bg-secondary);
+  color: white;
+}
+
+.uk-card-secondary {
+  background-color: var(--color-bg-secondary);
+  color: white;
+}
+
+.uk-nav-header {
+  color: var(--color-primary-light) !important;
+}
+
+/* ======================
+   Buttons
+   ====================== */
 .uk-button-default {
-  background-color: var(--color-section-default);
+  background-color: var(--color-surface-8dp);
   color: var(--color-text);
   border-color: var(--color-border);
 }
 
+.uk-button-default:hover {
+  background-color: var(--color-surface-12dp);
+  color: var(--color-text);
+}
+
+.uk-button-primary {
+  background-color: var(--color-bg-secondary) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+.uk-button-primary:hover {
+  background-color: #1e88e5;
+}
+
 .uk-button-secondary {
-  background-color: #3a3a3a;
+  background-color: var(--color-secondary-dark);
   color: white;
 }
 
-/* Forms */
+.uk-button-secondary:hover {
+  background-color: #8e24aa;
+}
+
+.uk-button-danger {
+  background-color: #e53935;
+  color: white;
+}
+
+.uk-button-danger:hover {
+  background-color: #c62828;
+}
+
+/* ======================
+   Forms
+   ====================== */
 .uk-input,
 .uk-select,
-.uk-textarea {
-  background-color: #2d2d2d;
+.uk-textarea,
+.uk-checkbox,
+.uk-radio {
+  background-color: var(--color-surface-8dp);
   border-color: var(--color-border);
-  color: #eee;
+  color: var(--color-text);
 }
 
 .uk-input:focus,
 .uk-select:focus,
 .uk-textarea:focus {
-  background-color: #333;
+  background-color: var(--color-surface-12dp);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(66, 165, 245, 0.2);
 }
 
-/* Navigation */
-.uk-navbar-dropdown {
-  background-color: var(--color-section-default);
-  border-color: var(--color-border);
+.uk-checkbox:checked,
+.uk-radio:checked {
+  background-color: var(--color-primary);
+  border-color: transparent;
 }
 
-/* Tables */
-.uk-table th {
-  background-color: #2a2a2a;
+.uk-form-label {
+  color: var(--color-text);
 }
 
-.uk-table tr:nth-child(even) {
-  background-color: #1e1e1e;
-}
-
-/* Modals */
-.uk-modal-dialog {
-  background-color: var(--color-section-default);
-}
-
-.uk-modal-header {
-  border-bottom-color: var(--color-border);
-}
-
-.uk-modal-footer {
-  border-top-color: var(--color-border);
-}
-
-/* Special Elements */
-.uk-alert-close {
-  right: auto !important;
-  left: 20px !important;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar-thumb:hover {
-  background: #666;
+.uk-form-danger {
+  border-color: #e53935 !important;
 }
 
 /* ======================
-   Alert
+   Navigation
    ====================== */
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background-color: var(--color-surface-1dp);
+}
 
+.uk-navbar-dropdown {
+  background-color: var(--color-surface-4dp);
+  border-color: var(--color-border);
+}
+
+.uk-navbar-dropdown-nav > li > a {
+  color: var(--color-text-muted);
+}
+
+.uk-navbar-dropdown-nav > li > a:hover {
+  color: var(--color-text-disabled);
+}
+
+.uk-navbar-toggle {
+  color: var(--color-text);
+}
+
+.uk-navbar-toggle:hover {
+  color: var(--color-text-disabled);
+}
+
+/* Side Navigation */
+.uk-nav-default > li > a {
+  color: var(--color-text);
+}
+
+.uk-nav-default > li > a:hover {
+  color: var(--color-text-disabled);
+}
+
+.uk-nav-default {
+  color: var(--color-text-muted);
+}
+
+.uk-nav-default .uk-nav-divider {
+  border-top-color: var(--color-divider);
+}
+
+/* ======================
+   Tables
+   ====================== */
+.uk-table {
+  color: var(--color-text);
+}
+
+.uk-table th {
+  background-color: var(--color-surface-2dp);
+  color: var(--color-text);
+}
+
+.uk-table td {
+  border-top-color: var(--color-divider);
+}
+
+.uk-table tbody tr:hover {
+  background-color: var(--color-surface-4dp);
+}
+
+.uk-table-striped tbody tr:nth-child(even) {
+  background-color: var(--color-surface-1dp);
+}
+
+.uk-table-divider > :first-child > tr:not(:first-child),
+.uk-table-divider > :not(:first-child) > tr,
+.uk-table-divider > tr:not(:first-child) {
+  border-top-color: var(--color-divider);
+}
+
+/* ======================
+   Modals & Dialogs
+   ====================== */
+.uk-modal-dialog {
+  background-color: var(--color-surface-1dp);
+}
+
+.uk-modal-header {
+  border-bottom-color: var(--color-divider);
+}
+
+.uk-modal-footer {
+  border-top-color: var(--color-divider);
+}
+
+.uk-modal-title {
+  color: var(--color-text);
+}
+
+/* ======================
+   Alerts & Notifications
+   ====================== */
+.uk-alert {
+  background-color: var(--color-surface-2dp);
+  color: var(--color-text);
+}
+
+.uk-alert-primary {
+  background-color: rgba(66, 165, 245, 0.2);
+  color: var(--color-primary);
+}
+
+.uk-alert-success {
+  background-color: rgba(129, 199, 132, 0.2);
+  color: var(--color-success);
+}
+
+.uk-alert-warning {
+  background-color: rgba(255, 183, 77, 0.2);
+  color: var(--color-warning);
+}
+
+.uk-alert-danger {
+  background-color: rgba(229, 115, 115, 0.2);
+  color: var(--color-danger);
+}
+
+.uk-alert-close {
+  color: var(--color-text-muted);
+}
+
+.uk-alert-close:hover {
+  color: var(--color-text);
+}
+
+/* ======================
+   Progress & Loading
+   ====================== */
+.uk-progress {
+  background-color: var(--color-surface-4dp);
+}
+
+.uk-progress::-webkit-progress-bar {
+  background-color: var(--color-surface-4dp);
+}
+
+.uk-progress::-webkit-progress-value {
+  background-color: var(--color-primary);
+}
+
+/* ======================
+   Tabs
+   ====================== */
+.uk-tab > * > a {
+  color: var(--color-text-muted);
+}
+
+.uk-tab > .uk-active > a {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.uk-tab > * > a:hover {
+  color: var(--color-text);
+}
+
+/* ======================
+   Tooltips
+   ====================== */
+.uk-tooltip {
+  background-color: var(--color-surface-8dp);
+  color: var(--color-text);
+}
+
+/* ======================
+   Scrollbar
+   ====================== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ======================
+   Utility Classes
+   ====================== */
+.uk-background-default {
+  background-color: var(--color-surface-1dp);
+}
+
+.uk-background-muted {
+  background-color: var(--color-surface-2dp);
+}
+
+.uk-background-primary {
+  background-color: var(--color-primary-dark);
+}
+
+.uk-background-secondary {
+  background-color: var(--color-secondary-dark);
+}
+
+.uk-border-rounded {
+  border-radius: 4px;
+}
+
+/* ======================
+   Special Elements
+   ====================== */
 .uk-alert-close-left {
   right: auto !important;
   left: 20px !important;
+}
+
+/* ======================
+   Dropdowns
+   ====================== */
+.uk-dropdown {
+  background-color: var(--color-surface-4dp);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.uk-dropdown-nav > li > a {
+  color: var(--color-text);
+}
+
+.uk-dropdown-nav > li > a:hover {
+  color: var(--color-primary);
+}
+
+/* ======================
+   Pagination
+   ====================== */
+.uk-pagination > * > * {
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.uk-pagination > li > a:hover {
+  background-color: var(--color-surface-8dp);
+}
+
+.uk-pagination > .uk-active > * {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.uk-pagination > .uk-disabled > * {
+  color: var(--color-text-disabled);
+}
+
+.uk-section-default,
+.uk-section-muted {
+  background: var(--color-bg) !important;
 }

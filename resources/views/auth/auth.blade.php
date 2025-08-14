@@ -8,8 +8,8 @@
 
     <!-- UIkit CSS -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css">
-    <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('uikit/dist/css/uikit-rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme/light-theme.css') }}">
 </head>
 
 <body class="uk-background-muted uk-height-viewport uk-flex uk-flex-middle">

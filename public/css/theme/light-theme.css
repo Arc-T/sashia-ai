@@ -1,6 +1,10 @@
 /* ======================
    Base Styles & Variables
    ====================== */
+img {
+  border-radius: 16px !important;
+}
+
 :root {
   --font-primary: "Shabnam", sans-serif;
   --radius-sm: 6px;
@@ -9,7 +13,7 @@
   --scrollbar-width: 8px;
 
   /* Light Mode Colors */
-  --color-bg: #ffffff;
+  --color-bg: #f2f7ff;
   --color-text: #121212;
   --color-primary: #1e87f0;
   --color-secondary: #222;
@@ -19,6 +23,30 @@
   --color-section-muted: #f0f0f0;
   --scrollbar-track: #f0f0f0;
   --scrollbar-thumb: #888;
+
+  /* Status Colors */
+  --color-success: #198754;
+  --color-warning: #ffb74d;
+  --color-danger: #dc3545;
+
+  --color-primary: #90caf9;
+  --color-primary-light: #42a5f5;
+}
+
+/* ======================
+   Custom
+   ====================== */
+.uk-background-success {
+  background-color: var(--color-success);
+}
+
+.uk-background-danger {
+  background-color: var(--color-danger);
+}
+
+.uk-button-primary {
+  background-color: var(--color-bg) !important;
+  color: var(--color-primary-light) !important;
 }
 
 /* ======================
@@ -48,6 +76,8 @@ body {
   max-width: 100vw;
 }
 
+
+
 /* ======================
    Typography
    ====================== */
@@ -61,6 +91,13 @@ body {
 
 .uk-text-muted {
   color: var(--color-muted) !important;
+}
+
+/* ======================
+   Navbar
+   ====================== */
+.uk-navbar-primary {
+  background: white !important;
 }
 
 /* ======================

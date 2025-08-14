@@ -7,7 +7,7 @@
     <title>@yield('title', 'ساشیا')</title>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/uikit.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('uikit/dist/css/uikit-rtl.min.css') }}">
     <!-- Light Theme (always loaded) -->
     <link rel="stylesheet" href="{{ asset('css/theme/light-theme.css') }}">
 
@@ -18,7 +18,7 @@
 <body class="uk-height-viewport uk-flex uk-flex-column uk-animation-fade">
 
     <!-- Header -->
-    <header class="uk-box-shadow-small">
+    <header class="uk-box-shadow-small uk-navbar-primary">
         @include('layouts.header')
     </header>
 
@@ -28,28 +28,27 @@
             @include('layouts.partials.messages')
             @yield('content')
         </div>
+        <div id="mediaad-W29V9"></div>
     </main>
 
     <!-- Footer -->
-    <footer class="uk-section uk-section-secondary">
+    <footer>
         @include('layouts.footer')
     </footer>
 
-    <!-- Mobile Menu -->
-    <div id="offcanvas-menu" uk-offcanvas>
-        <div class="uk-offcanvas-bar">
-            <ul class="uk-nav uk-nav-default">
-                <li><a href="#">خانه</a></li>
-                <li><a href="#">محصولات</a></li>
-                <li><a href="#">درباره ما</a></li>
-                <li><a href="#">تماس با ما</a></li>
-            </ul>
-        </div>
-    </div>
-
     <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit-icons.min.js"></script>
+    {{-- <script type="text/javascript">
+        (function() {
+            const head = document.getElementsByTagName("head")[0];
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.async = true;
+            script.src = "https://s1.mediaad.org/serve/sashia-ai.ir/loader.js";
+            head.appendChild(script);
+        })();
+    </script> --}}
+    <script src="{{ asset('uikit/dist/js/uikit-core.min.js') }}"></script>
+    <script src="{{ asset('uikit/dist/js/uikit-icons.min.js') }}"></script>
     <!-- Dark mode toggle script -->
     <script>
         document.getElementById('darkModeToggle').addEventListener('click', function() {
