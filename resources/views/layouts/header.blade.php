@@ -111,22 +111,12 @@
                                         <span uk-icon="icon: git-branch" class="uk-margin-small-left"></span>دستیار
                                         هوشمند ساشیا
                                     </li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>بازی ساز ساشیا</a></li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>کلیپ ساز ساشیا</a></li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>عکس ساز ساشیا</a></li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>اپلیکیشن - وب ساز ساشیا</a></li>
-                                    <li class="uk-nav-divider uk-margin-small-top"><a href="#"><span
+                                    <li><a href="#"><span
                                                 uk-icon="icon: code" class="uk-margin-small-left"></span>‌پراشیا (
                                             پرامتپت ساز ساشیا )</a></li>
                                     <li><a href="#"><span uk-icon="icon: code"
                                                 class="uk-margin-small-left"></span>جا پرامپتی ( ذخیره ساز پرامتپ ساشیا
                                             )</a></li>
-                                    <li><a class="uk-nav-divider uk-margin-small-top"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>اتوماسیون ساز ساشیا</a></li>
                                 </ul>
                             </div>
                             <div>

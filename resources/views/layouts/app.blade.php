@@ -13,6 +13,7 @@
 
     <!-- Dark Theme (loaded conditionally) -->
     <link rel="stylesheet" href="{{ asset('css/theme/dark-theme.css') }}" id="darkTheme" disabled>
+    @stack('styles')
 </head>
 
 <body class="uk-height-viewport uk-flex uk-flex-column uk-animation-fade">
@@ -60,6 +61,7 @@
             document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>

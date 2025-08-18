@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    public function home()
+    {
+        $demoData = include(resource_path('data/demo.php'));
+
+        return view('perasia', [
+            'trendingPrompts' => $demoData['trendingPrompts'],
+            'categories' => $demoData['categories'],
+            'filterCategories' => $demoData['filterCategories'],
+            'featuredPrompts' => $demoData['featuredPrompts']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

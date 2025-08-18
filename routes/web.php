@@ -7,10 +7,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/show', [HomeController::class, 'show'])->name('gallery');
+Route::get('/perasia', [HomeController::class, 'home']);
 
 Route::get('/auth', function () {
     return view('auth');
 });
+
+Route::get('/maker', function () {
+    return view('maker');
+});
+
+Route::get('/saved-prompts', function () {
+    return view('saved-prompts');
+});
+
 
 // Protected Routes
 Route::middleware('auth')->group(function () {

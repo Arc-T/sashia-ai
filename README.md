@@ -1,61 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+۱. بخش آموزش و راهنمایی (Tutorials & Guides)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+    آموزش‌های گام‌به‌گام برای استفاده از ابزارهای هوش مصنوعی (مثل ChatGPT، MidJourney، DALL-E، Stable Diffusion و...).
 
-## About Laravel
+    راهنمای ساخت پرامپت‌های حرفه‌ای برای حوزه‌های مختلف (متن، تصویر، کد نویسی و...).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    مثال‌های عملی با توضیحات دقیق (مثلاً: "چطور یک پرامپت مؤثر برای تولید محتوای سئو شده بنویسیم؟").
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+۲. بخش ابزارهای رایگان (Free Tools)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    پرامپت جنراتور: ابزاری که براساس نیاز کاربر (مثلاً ساخت لوگو، تولید متن تبلیغاتی و...) پرامپت مناسب را پیشنهاد دهد.
 
-## Learning Laravel
+    بهینه‌ساز پرامپت: کمک می‌کند پرامپت‌های کاربر را برای نتایج بهتر اصلاح کند.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    تبدیل فایل‌ها: مثلاً تبدیل توضیحات متنی به فایل‌های قابل استفاده در ابزارهای اتوماسیون.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+۳. بخش جامعه کاربری (Community & Sharing)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    امکان اشتراک‌گذاری پرامپت‌ها و فایل‌های آماده توسط کاربران (مثل یک گالری عمومی).
 
-## Laravel Sponsors
+    سیستم رتبه‌بندی و نظرات برای پرامپت‌ها و فایل‌ها.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    فروم یا چت برای پرسش و پاسخ و تبادل نظر.
 
-### Premium Partners
+۴. بخش استفاده حرفه‌ای (Professional Use Cases)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    مثال‌های واقعی از استفاده هوش مصنوعی در کسب‌وکارها (مثل بازاریابی، طراحی محصول، خدمات مشتریان و...).
 
-## Contributing
+    مطالعه موردی (Case Studies) از شرکت‌هایی که با این ابزارها موفق شده‌اند.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    پکیج‌های آماده برای صنایع خاص (مثلاً "پرامپت‌های مخصوص استارتاپ‌های فناوری").
 
-## Code of Conduct
+۵. بخش اخبار و به‌روزرسانی‌ها (AI News & Updates)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    معرفی ابزارهای جدید هوش مصنوعی.
 
-## Security Vulnerabilities
+    مقایسه بین ابزارهای مختلف (مثلاً مقایسه ChatGPT با Claude یا Gemini).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    آموزش ویژگی‌های جدید ابزارها.
 
-## License
+۶. بخش سفارشی‌سازی (Custom Solutions)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    خدمات طراحی پرامپت یا فایل‌های اتوماسیون سفارشی برای کاربران خاص.
+
+    امکان درخواست پروژه‌های اختصاصی از متخصصان.
+
+۷. بخش منابع دانلودی (Downloadable Resources)
+
+    مجموعه‌ای از کتابچه‌های راهنما، چک‌لیست‌ها و قالب‌های آماده (مثلاً "۱۰ پرامپت طلایی برای بازاریابی محتوا").
+
+    فایل‌های ویدئویی آموزش سریع (Tutorial Snippets).
+
+۸. بخش تحلیل و گزارش (Analytics & Reports)
+
+    ابزار تحلیل کیفیت پرامپت‌ها (مثلاً بررسی خوانایی، تأثیرگذاری و...).
+
+    گزارش‌های آماری از ترندهای استفاده از هوش مصنوعی در صنایع مختلف.
+
+۹. بخش چندزبانه (Multilingual Support)
+
+    پرامپت‌ها و منابع به زبان‌های مختلف (اگر کاربران بین‌المللی دارید).
+
+    ابزار ترجمه خودکار پرامپت‌ها.
+
+۱۰. بخش سرگرمی و خلاقیت (Fun & Creative)
+
+    پرامپت‌های مخصوص بازی‌ها، داستان‌نویسی، تولید ایده‌های خلاقانه و....
+
+    چالش‌های هفتگی برای کاربران (مثلاً "بهترین پرامپت برای ساخت یک داستان علمی-تخیلی").
