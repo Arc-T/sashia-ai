@@ -48,7 +48,7 @@
             head.appendChild(script);
         })();
     </script> --}}
-    <script src="{{ asset('uikit/dist/js/uikit-core.min.js') }}"></script>
+    <script src="{{ asset('uikit/dist/js/uikit.min.js') }}"></script>
     <script src="{{ asset('uikit/dist/js/uikit-icons.min.js') }}"></script>
     <!-- Dark mode toggle script -->
     <script>

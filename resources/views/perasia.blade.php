@@ -138,8 +138,7 @@
                         @endforeach
                     </ul>
 
-                    <div class="uk-grid-match uk-child-width-1-2@s
-uk-child-width-1-3@m js-filter"
+                    <div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m js-filter"
                         uk-grid>
                         @foreach ($featuredPrompts as $prompt)
                             <div data-tags="{{ $prompt['tags'] }}">
