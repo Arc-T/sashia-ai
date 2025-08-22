@@ -7,7 +7,7 @@
     <title>@yield('title', 'ساشیا')</title>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('uikit/dist/css/uikit-rtl.min.css') }}">
+    @vite(['resources/css/app.css'])
     <!-- Light Theme (always loaded) -->
     <link rel="stylesheet" href="{{ asset('css/theme/light-theme.css') }}">
 
@@ -48,8 +48,7 @@
             head.appendChild(script);
         })();
     </script> --}}
-    <script src="{{ asset('uikit/dist/js/uikit.min.js') }}"></script>
-    <script src="{{ asset('uikit/dist/js/uikit-icons.min.js') }}"></script>
+    @vite(['resources/js/app.js'])
     <!-- Dark mode toggle script -->
     <script>
         document.getElementById('darkModeToggle').addEventListener('click', function() {

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'همینجوری')
+@section('title', 'ساشیا | صفحه اصلی')
 
 @section('content')
 

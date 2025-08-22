@@ -15,50 +15,50 @@ class PromptCaseController extends Controller
 {
     public function index(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         
-        $query = PromptCase::with(['category', 'tags'])
-            ->where('user_id', $user->id);
+        // $query = PromptCase::with(['category', 'tags'])
+        //     ->where('user_id', $user->id);
 
-        // Search
-        if ($request->has('search')) {
-            $query->search($request->search);
-        }
+        // // Search
+        // if ($request->has('search')) {
+        //     $query->search($request->search);
+        // }
 
-        // Filter by category
-        if ($request->has('category') && $request->category != 'all') {
-            $query->byCategory($request->category);
-        }
+        // // Filter by category
+        // if ($request->has('category') && $request->category != 'all') {
+        //     $query->byCategory($request->category);
+        // }
 
-        // Filter favorites
-        if ($request->has('favorites') && $request->favorites) {
-            $query->favorite();
-        }
+        // // Filter favorites
+        // if ($request->has('favorites') && $request->favorites) {
+        //     $query->favorite();
+        // }
 
-        // Sorting
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
+        // // Sorting
+        // $sortBy = $request->get('sort_by', 'created_at');
+        // $sortOrder = $request->get('sort_order', 'desc');
         
-        $query->orderBy($sortBy, $sortOrder);
+        // $query->orderBy($sortBy, $sortOrder);
 
-        $prompts = $query->paginate(10);
+        // $prompts = $query->paginate(10);
 
-        $categories = Category::all();
-        $totalPrompts = PromptCase::where('user_id', $user->id)->count();
-        $favoritePrompts = PromptCase::where('user_id', $user->id)->favorite()->count();
-        $totalCategories = Category::count();
-        $totalTeams = Team::count();
+        // $categories = Category::all();
+        // $totalPrompts = PromptCase::where('user_id', $user->id)->count();
+        // $favoritePrompts = PromptCase::where('user_id', $user->id)->favorite()->count();
+        // $totalCategories = Category::count();
+        // $totalTeams = Team::count();
 
-        return view('prompt_case.index', compact(
-            'prompts',
-            'categories',
-            'totalPrompts',
-            'favoritePrompts',
-            'totalCategories',
-            'totalTeams'
-        ));
+        // return view('prompt_case.index', compact(
+        //     'prompts',
+        //     'categories',
+        //     'totalPrompts',
+        //     'favoritePrompts',
+        //     'totalCategories',
+        //     'totalTeams'
+        // ));
 
-        // return view('prompt_case.index');
+        return view('prompt_case.index');
     }
 
     public function create()

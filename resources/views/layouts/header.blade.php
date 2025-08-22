@@ -14,8 +14,18 @@
             <!-- Desktop Navigation -->
             <ul class="uk-navbar-nav uk-visible@m uk-margin-right">
                 <li>
+                    <a href="{{ route('prompt_case.index') }}">
+                        <span uk-icon="icon: info" class="uk-margin-small-left"></span> پرامپتی
+                    </a>
+                </li>
+                <li>
                     <a href="#">
-                        <span uk-icon="icon: album" class="uk-margin-small-left"></span>خدمات
+                        <span uk-icon="icon: mail" class="uk-margin-small-left"></span>پراشیا
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span uk-icon="icon: album" class="uk-margin-small-left"></span>منابع
                         <span uk-icon="icon: chevron-down;"></span>
                     </a>
                     <div class="uk-navbar-dropdown uk-box-shadow-large uk-width-large" style="border-radius: 16px;">
@@ -71,8 +81,8 @@
                         <span uk-icon="icon: chevron-down;"></span>
                     </a>
                     <div class="uk-navbar-dropdown uk-box-shadow-large uk-width-large"
-                        style="border-radius: 16px; width: 800px;">
-                        <div class="uk-navbar-dropdown-grid uk-child-width-1-3" uk-grid>
+                        style="border-radius: 16px;">
+                        <div class="uk-navbar-dropdown-grid uk-child-width-1-2" uk-grid>
                             <div>
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
                                     <li class="uk-nav-header uk-margin-small-bottom">
@@ -108,20 +118,6 @@
                             <div>
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
                                     <li class="uk-nav-header uk-margin-small-bottom">
-                                        <span uk-icon="icon: git-branch" class="uk-margin-small-left"></span>دستیار
-                                        هوشمند ساشیا
-                                    </li>
-                                    <li><a href="#"><span
-                                                uk-icon="icon: code" class="uk-margin-small-left"></span>‌پراشیا (
-                                            پرامتپت ساز ساشیا )</a></li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>جا پرامپتی ( ذخیره ساز پرامتپ ساشیا
-                                            )</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header uk-margin-small-bottom">
                                         <span uk-icon="icon: git-branch" class="uk-margin-small-left"></span>نصب شده
                                         ها
                                     </li>
@@ -149,51 +145,6 @@
                             </div>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <a href="#">
-                        <span uk-icon="icon: person-video" class="uk-margin-small-left"></span>آموزش
-                        <span uk-icon="icon: chevron-down;"></span>
-                    </a>
-                    <div class="uk-navbar-dropdown uk-box-shadow-large uk-width-large" style="border-radius: 16px;">
-                        <div class="uk-navbar-dropdown-grid uk-child-width-1-2" uk-grid>
-                            <div>
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header uk-margin-small-bottom">
-                                        <span uk-icon="icon: commenting" class="uk-margin-small-left"></span>هوش
-                                        مصنوعی
-                                    </li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: image"
-                                                class="uk-margin-small-left"></span>LLM</a></li>
-
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>Nlm</a></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header uk-margin-small-bottom">
-                                        <span uk-icon="icon: git-branch" class="uk-margin-small-left"></span>اتوماسیون
-                                    </li>
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>n8n</a></li>
-
-                                    <li><a href="#"><span uk-icon="icon: code"
-                                                class="uk-margin-small-left"></span>zappier</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">
-                        <span uk-icon="icon: info" class="uk-margin-small-left"></span>درباره ما
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span uk-icon="icon: mail" class="uk-margin-small-left"></span>تماس با ما
-                    </a>
                 </li>
             </ul>
         </div>

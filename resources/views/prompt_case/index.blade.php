@@ -1,26 +1,21 @@
 @extends('layouts.app')
-@section('title', 'salam')
+@section('title', 'جا پرامپتی |‌ داشبورد')
 
 @section('content')
     <!-- Page Header -->
     <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-        <h1 class="uk-heading-medium uk-text-bold uk-text-primary">مدیریت پیشنهادات ذخیره شده</h1>
+        <h1 class="uk-heading-medium uk-text-bold uk-text-primary">مدیریت پرامپت های ذخیره شده</h1>
 
         <!-- Search and Filter -->
         <div class="uk-inline">
-            <button class="uk-button uk-button-primary" type="button">
-                <span uk-icon="icon: plus"></span>
-                <span class="uk-margin-small-right">پیشنهاد جدید</span>
+            <!-- Trigger Button -->
+            <button class="uk-button uk-border-pill uk-light uk-flex uk-flex-middle" type="button"
+                uk-toggle="target: #prompt-modal"
+                style="background: linear-gradient(135deg, #6a11cb, #2575fc); border: none; padding: 10px 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                <span uk-icon="icon: plus-circle; ratio: 1.2" class="uk-margin-small-left"></span>
+                ایجاد پرامپت جدید
             </button>
-            <div uk-dropdown="mode: click; pos: bottom-right; offset: 5">
-                <ul class="uk-nav uk-dropdown-nav">
-                    <li><a href="#" uk-toggle="target: #create-prompt-modal"><span uk-icon="icon: file-edit"></span>
-                            ایجاد دستی</a></li>
-                    <li><a href="#"><span uk-icon="icon: cloud-download"></span> وارد کردن از فایل</a></li>
-                    <li class="uk-nav-divider"></li>
-                    <li><a href="#"><span uk-icon="icon: template"></span> از الگو استفاده کنید</a></li>
-                </ul>
-            </div>
+            @include('prompt_case.create')
         </div>
     </div>
 
@@ -34,7 +29,7 @@
                     </div>
                     <div>
                         <h3 class="uk-card-title uk-margin-remove uk-text-bold">۱۲۷</h3>
-                        <p class="uk-text-muted uk-margin-remove">کل پیشنهادات</p>
+                        <p class="uk-text-muted uk-margin-remove">کل پرامپت ها</p>
                     </div>
                 </div>
             </div>
@@ -139,7 +134,7 @@
             </div>
 
             <!-- Prompts Table -->
-            <div class="uk-card-body uk-padding-remove-top">
+            <div class="uk-card-body uk-padding-remove-top uk-padding-remove-bottom">
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-divider uk-table-middle uk-table-hover">
                         <thead>
@@ -173,134 +168,77 @@
                                 <td>
                                     <span class="uk-text-small">۱۴۰۲/۰۵/۱۵</span>
                                 </td>
-                                <td>
+                                <td class="uk-text-nowrap">
                                     <div class="uk-button-group">
-                                        <button class="uk-button uk-button-default uk-button-small" uk-tooltip="ویرایش">
-                                            <span uk-icon="icon: pencil"></span>
+                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                            uk-icon="copy" uk-tooltip="کپی">
                                         </button>
-                                        <button class="uk-button uk-button-default uk-button-small" uk-tooltip="کپی">
-                                            <span uk-icon="icon: copy"></span>
+                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                            uk-icon="eye" uk-tooltip="نمایش">
+                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                                uk-icon="pencil" uk-tooltip="ویرایش">
+                                            </button>
                                         </button>
-                                        <button class="uk-button uk-button-default uk-button-small"
-                                            uk-tooltip="اشتراک‌گذاری">
-                                            <span uk-icon="icon: share"></span>
+                                        <!-- Delete Button -->
+                                        <button class="uk-icon-button uk-button-danger uk-margin-small-right"
+                                            uk-icon="trash" uk-tooltip="حذف" uk-toggle="target: #delete-modal">
                                         </button>
-                                        <button class="uk-button uk-button-danger uk-button-small" uk-tooltip="حذف">
-                                            <span uk-icon="icon: trash"></span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
 
-                            <!-- Prompt 2 -->
-                            <tr>
-                                <td>
-                                    <div class="uk-flex uk-flex-middle">
-                                        <span class="uk-margin-small-left uk-text-bold">کد پایتون</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uk-text-truncate" style="max-width: 300px;">
-                                        یک تابع پایتون بنویس که لیستی از اعداد را دریافت کند و اعداد زوج و فرد را جدا
-                                        کرده و در دو لیست مختلف برگرداند...
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="uk-label">برنامه‌نویسی</span>
-                                </td>
-                                <td>
-                                    <span class="uk-text-small">۱۴۰۲/۰۴/۲۲</span>
-                                </td>
-                                <td>
-                                    <div class="uk-button-group">
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: pencil"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: copy"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: share"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-danger uk-button-small">
-                                            <span uk-icon="icon: trash"></span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                        <!-- Delete Confirmation Modal -->
+                                        <div id="delete-modal" uk-modal>
+                                            <div
+                                                class="uk-modal-dialog uk-border-rounded uk-box-shadow-xlarge uk-width-1-1 uk-width-medium@m">
 
-                            <!-- Prompt 3 -->
-                            <tr>
-                                <td>
-                                    <div class="uk-flex uk-flex-middle">
-                                        <span uk-icon="icon: star; ratio: 0.8"
-                                            class="uk-margin-small-left uk-text-warning"></span>
-                                        <span class="uk-text-bold">تحلیل داده‌ها</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uk-text-truncate" style="max-width: 300px;">
-                                        یک کوئری SQL بنویس که میانگین فروش را بر اساس ماه و منطقه جغرافیایی محاسبه کند و
-                                        نتایج را به صورت نزولی مرتب کند...
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="uk-label uk-label-warning">تحلیل داده</span>
-                                </td>
-                                <td>
-                                    <span class="uk-text-small">۱۴۰۲/۰۳/۱۰</span>
-                                </td>
-                                <td>
-                                    <div class="uk-button-group">
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: pencil"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: copy"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: share"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-danger uk-button-small">
-                                            <span uk-icon="icon: trash"></span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                                <!-- Close -->
+                                                <button class="uk-modal-close-default" type="button" uk-close></button>
 
-                            <!-- Prompt 4 -->
-                            <tr>
-                                <td>
-                                    <div class="uk-flex uk-flex-middle">
-                                        <span class="uk-margin-small-left uk-text-bold">ایده‌پردازی</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uk-text-truncate" style="max-width: 300px;">
-                                        ۱۰ ایده خلاقانه برای ویژگی‌های جدید یک اپلیکیشن مدیریت وظایف پیشنهاد بده که
-                                        کاربران را به استفاده بیشتر ترغیب کند...
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="uk-label uk-label-danger">خلاقانه</span>
-                                </td>
-                                <td>
-                                    <span class="uk-text-small">۱۴۰۲/۰۲/۲۸</span>
-                                </td>
-                                <td>
-                                    <div class="uk-button-group">
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: pencil"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: copy"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-default uk-button-small">
-                                            <span uk-icon="icon: share"></span>
-                                        </button>
-                                        <button class="uk-button uk-button-danger uk-button-small">
-                                            <span uk-icon="icon: trash"></span>
-                                        </button>
+                                                <!-- Header -->
+                                                <div class="uk-padding-small uk-light"
+                                                    style="background: linear-gradient(135deg, #f44336, #e57373);">
+                                                    <h3
+                                                        class="uk-modal-title uk-text-bold uk-flex uk-flex-middle uk-margin-remove">
+                                                        <span uk-icon="icon: warning; ratio: 1.5"
+                                                            class="uk-margin-small-left"></span>
+                                                        حذف آیتم
+                                                    </h3>
+                                                </div>
+
+                                                <!-- Body -->
+                                                <div class="uk-padding uk-text-center">
+                                                    <p class="uk-text-large uk-text-bold">آیا مطمئن هستید که می‌خواهید این
+                                                        آیتم را حذف کنید؟</p>
+                                                    <p class="uk-text-meta">این عملیات قابل بازگشت نیست.</p>
+                                                </div>
+
+                                                <!-- Footer -->
+                                                <div class="uk-padding-small uk-background-muted">
+                                                    <div class="uk-flex uk-flex-between uk-flex-middle" uk-grid>
+                                                        <div>
+                                                            <button
+                                                                class="uk-button uk-button-default uk-border-pill uk-modal-close"
+                                                                type="button">
+                                                                <span uk-icon="icon: close"></span> لغو
+                                                            </button>
+                                                        </div>
+                                                        <div>
+                                                            <button class="uk-button uk-button-danger uk-border-pill"
+                                                                type="button" id="confirm-delete-btn">
+                                                                <span uk-icon="icon: trash"></span> حذف
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Optional JS: handle confirmation -->
+                                        <script>
+                                            document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+                                                // Put your delete logic here
+                                                UIkit.modal('#delete-modal').hide(); // close modal after action
+                                                console.log('Item deleted!');
+                                            });
+                                        </script>
                                     </div>
                                 </td>
                             </tr>
@@ -846,7 +784,7 @@
                                         @can('update', $prompt)
                                             <button class="uk-button uk-button-default uk-button-small"
                                                 uk-tooltip="اشتراک‌گذاری" onclick="sharePrompt({{ $prompt->id }})">
-                                                <span uk-icon="icon: share"></span>
+                                                <span uk-icon="icon: social"></span>
                                             </button>
                                         @endcan
 
@@ -885,31 +823,31 @@
             <div class="uk-card-footer">
                 <ul class="uk-pagination uk-flex-center" uk-margin>
                     {{-- Previous Page Link --}}
-                    @if ($prompts->onFirstPage())
+{{-- @if ($prompts->onFirstPage())
                         <li class="uk-disabled"><span uk-pagination-previous></span></li>
                     @else
-                        <li><a href="{{ $prompts->previousPageUrl() }}"><span uk-pagination-previous></span></a></li>
-                    @endif
+                        <li><a href="{{ $prompts->previousPageUrl() }}"><span uk-pagination-previous></span></a></li> --}}
+{{-- @endif --}}
 
-                    {{-- Pagination Elements --}}
-                    @foreach ($prompts->getUrlRange(1, $prompts->lastPage()) as $page => $url)
+{{-- Pagination Elements --}}
+{{-- @foreach ($prompts->getUrlRange(1, $prompts->lastPage()) as $page => $url)
                         @if ($page == $prompts->currentPage())
                             <li class="uk-active"><span>{{ $page }}</span></li>
                         @else
                             <li><a href="{{ $url }}">{{ $page }}</a></li>
                         @endif
-                    @endforeach
+                    @endforeach --}}
 
-                    {{-- Next Page Link --}}
-                    @if ($prompts->hasMorePages())
+{{-- Next Page Link --}}
+{{-- @if ($prompts->hasMorePages())
                         <li><a href="{{ $prompts->nextPageUrl() }}"><span uk-pagination-next></span></a></li>
                     @else
                         <li class="uk-disabled"><span uk-pagination-next></span></li>
-                    @endif
-                </ul>
-            </div>
-        {{-- @endif --}}
-    {{-- </div> --}}
+                    @endif --}}
+{{-- </ul> --}}
+{{-- </div> --}}
+{{-- @endif --}}
+{{-- </div> --}}
 {{-- </div> --}}
 
 <!-- Create Prompt Modal -->
