@@ -5,68 +5,70 @@ namespace App\Http\Controllers;
 use App\Models\PromptTemplate;
 use App\Models\PromptCategory;
 use App\Models\AiModel;
+use App\Services\PromptCollectionService;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class PromptTemplateController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PromptTemplate::with(['category', 'aiModel', 'tags', 'user'])
-                              ->public();
-
-        // Filter by category
-        if ($request->has('category') && $request->category != 'all') {
-            $category = PromptCategory::where('slug', $request->category)->first();
-            if ($category) {
-                $query->where('category_id', $category->id);
-            }
-        }
+        // $query = PromptTemplate::with(['category', 'aiModel', 'tags', 'user'])
+        //     ->public();
 
         // Filter by tags
-        if ($request->has('tags')) {
-            $tags = explode(',', $request->tags);
-            $query->whereHas('tags', function($q) use ($tags) {
-                $q->whereIn('name', $tags);
-            });
-        }
+        // if ($request->has('tags')) {
+        //     $tags = explode(',', $request->tags);
+        //     $query->whereHas('tags', function ($q) use ($tags) {
+        //         $q->whereIn('name', $tags);
+        //     });
+        // }
 
-        // Filter by AI model
-        if ($request->has('ai_model')) {
-            $aiModel = AiModel::where('model_identifier', $request->ai_model)->first();
-            if ($aiModel) {
-                $query->where('ai_model_id', $aiModel->id);
-            }
-        }
+        // // Filter by AI model
+        // if ($request->has('ai_model')) {
+        //     $aiModel = AiModel::where('model_identifier', $request->ai_model)->first();
+        //     if ($aiModel) {
+        //         $query->where('ai_model_id', $aiModel->id);
+        //     }
+        // }
 
-        // Sort options
-        if ($request->has('sort')) {
-            $sort = $request->sort;
-            if ($sort == 'popular') {
-                $query->popular();
-            } elseif ($sort == 'recent') {
-                $query->recent();
-            } elseif ($sort == 'likes') {
-                $query->orderBy('total_likes', 'desc');
-            }
-        } else {
-            $query->popular();
-        }
+        // // Sort options
+        // if ($request->has('sort')) {
+        //     $sort = $request->sort;
+        //     if ($sort == 'popular') {
+        //         $query->popular();
+        //     } elseif ($sort == 'recent') {
+        //         $query->recent();
+        //     } elseif ($sort == 'likes') {
+        //         $query->orderBy('total_likes', 'desc');
+        //     }
+        // } else {
+        //     $query->popular();
+        // }
 
-        $perPage = $request->has('per_page') ? $request->per_page : 20;
-        $promptTemplates = $query->paginate($perPage);
+        $perPage = 20;
+        $page = $request->input('page', 1);
 
-        return response()->json([
-            'prompt_templates' => $promptTemplates,
-            'filters' => $request->all()
-        ]);
+        $all = PromptCollectionService::all();
+        $items = $all->forPage($page, $perPage);
+
+        $paginated = new LengthAwarePaginator(
+            $items,
+            $all->count(),
+            $perPage,
+            $page,
+            ['path' => url('/prompt-templates')]
+        );
+
+        return view('prompt_templates.index', ['images' => $paginated]);
     }
 
     public function show($id)
     {
         $promptTemplate = PromptTemplate::with(['category', 'aiModel', 'tags', 'user', 'media'])
-                                       ->public()
-                                       ->findOrFail($id);
+            ->public()
+            ->findOrFail($id);
 
         // Record view
         $promptTemplate->increment('total_views');
@@ -116,7 +118,6 @@ class PromptTemplateController extends Controller
                 'message' => 'Prompt template created successfully',
                 'prompt_template' => $promptTemplate->load(['category', 'aiModel', 'tags'])
             ], 201);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -133,9 +134,9 @@ class PromptTemplateController extends Controller
 
         // Check if user already liked this prompt template
         $existingLike = $promptTemplate->interactions()
-                                      ->where('user_id', $user->id)
-                                      ->where('interaction_type', 'LIKE')
-                                      ->first();
+            ->where('user_id', $user->id)
+            ->where('interaction_type', 'LIKE')
+            ->first();
 
         if ($existingLike) {
             // Unlike

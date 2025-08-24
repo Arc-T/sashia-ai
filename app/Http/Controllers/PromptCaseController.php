@@ -15,17 +15,6 @@ class PromptCaseController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PromptTemplate::with(['category', 'aiModel', 'tags', 'user'])
-            ->public();
-
-        // Filter by category
-        if ($request->has('category') && $request->category != 'all') {
-            $category = PromptCategory::where('slug', $request->category)->first();
-            if ($category) {
-                $query->where('category_id', $category->id);
-            }
-        }
-
         // Filter by tags
         if ($request->has('tags')) {
             $tags = explode(',', $request->tags);

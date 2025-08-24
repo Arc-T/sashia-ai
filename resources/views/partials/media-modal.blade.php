@@ -3,7 +3,7 @@
         style="max-width: 1200px;">
 
         <!-- Close Button -->
-        <button class="uk-modal-close-default" type="button" uk-close></button>
+        {{-- <button class="uk-modal-close-default" type="button" uk-close></button> --}}
 
         <div class="uk-grid-collapse uk-grid-match uk-flex-middle" uk-grid>
 
@@ -16,66 +16,44 @@
                 </div>
 
                 <!-- Image Display with Card -->
-                <div class="uk-overflow-hidden uk-position-relative uk-flex uk-flex-center uk-flex-middle uk-padding-small"
+                <div class="uk-overflow-hidden uk-position-relative uk-flex uk-flex-center uk-flex-middle"
                     style="max-height: 90vh;">
 
                     <img id="modal-image" src="" alt="تصویر تولید شده توسط هوش مصنوعی"
                         class="uk-border-rounded uk-transition-scale-up uk-transition-opaque"
-                        style="max-height: 90vh; max-width: 100%; object-fit: contain; display: none;">
-                </div>
-                <!-- Navigation (RTL adjusted) -->
-                <div
-                    class="uk-position-center-left uk-visible-toggle uk-padding-small uk-text-small uk-flex uk-flex-between uk-width-1-1">
-                    <a href="#" class="uk-icon-button uk-border-circle" uk-icon="chevron-left"
-                        uk-tooltip="بعدی"></a>
-                    <a href="#" class="uk-icon-button uk-border-circle" uk-icon="chevron-right"
-                        uk-tooltip="قبلی"></a>
+                        style="max-height: 75vh; max-width: 100%; object-fit: contain; display: none;">
                 </div>
 
             </div>
 
             <!-- Info Column -->
-            <div class="uk-width-1-1 uk-width-1-3@m uk-background-default uk-border-rounded-right uk-overflow-auto uk-padding-small"
+            <div class="uk-width-1-1 uk-width-1-3@m uk-background-default uk-border-rounded-right uk-overflow-auto uk-padding-small uk-padding-remove-right"
                 style="max-height: 90vh;">
-                <div class="uk-padding-small">
+                <div class="uk-padding-small uk-padding-remove-right">
                     <!-- Title & Metadata -->
-                    <!-- Title + Meta + Actions -->
-                    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+                    <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap uk-margin-bottom">
+                        <!-- Title & Metadata - Now on left -->
+                        <div class="uk-flex uk-flex-middle uk-margin-small-right">
+                            <span id="modal-category" class="uk-label uk-label-success uk-margin-small-left"></span>
+                            <span id="modal-date" class="uk-text-meta uk-text-muted"></span>
+                        </div>
 
-                        <!-- Title & Metadata -->
-                        <div>
-                            <h3 id="modal-title" class="uk-margin-remove uk-text-bold"></h3>
-                            <div class="uk-flex uk-text-meta uk-margin-small-top">
-                                <span id="modal-date" class="uk-text-muted"></span>
-                                <span id="modal-category"
-                                    class="uk-label uk-label-success uk-margin-small-right"></span>
+                        <!-- Action Buttons - Now on right -->
+                        <div class="uk-flex uk-flex-middle uk-margin-small-top@s">
+                            <div class="uk-button-group uk-flex-nowrap">
+                                <button class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
+                                    uk-icon="download" uk-tooltip="دانلود تصویر">
+                                </button>
+                                <button class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
+                                    uk-icon="social" uk-tooltip="اشتراک‌گذاری">
+                                </button>
+                                <button class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
+                                    uk-icon="more-vertical" uk-toggle="target: #image-more-actions">
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Top left buttons -->
-                        <div class="uk-flex uk-flex-middle" uk-grid>
-                            <div class="uk-button-group uk-grid-small" uk-grid>
-                                <div>
-                                    <button
-                                        class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
-                                        uk-icon="download" uk-tooltip="دانلود تصویر">
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
-                                        uk-icon="social" uk-tooltip="اشتراک‌گذاری">
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        class="uk-icon-button uk-button-default uk-border-circle uk-box-shadow-small"
-                                        uk-icon="more-vertical" uk-toggle="target: #image-more-actions">
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- More actions items --}}
+                        {{-- More actions dropdown --}}
                         <div id="image-more-actions" uk-dropdown="mode: click; pos: bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
                                 <li><a href="#" onclick="copyImageLink()"><span uk-icon="copy"></span> کپی
@@ -90,11 +68,10 @@
                     <div class="uk-card uk-card-default uk-card-small uk-border-rounded uk-margin-bottom">
                         <div class="uk-card-body uk-padding-small uk-flex uk-flex-middle">
                             <img class="uk-border-circle uk-box-shadow-small uk-margin-small-left"
-                                src="https://randomuser.me/api/portraits/women/43.jpg" width="48" height="48"
-                                alt="Uploader">
+                                src="{{ asset('images/logo.png') }}" width="48" height="48" alt="Uploader">
                             <div>
-                                <div class="uk-text-bold">سارا محمدی</div>
-                                <div class="uk-text-meta">عکاس حرفه‌ای طبیعت</div>
+                                <div class="uk-text-bold">گروه ساشیا</div>
+                                <div class="uk-text-meta">تهیه شده از هوش مصنوعی</div>
                             </div>
                         </div>
                     </div>
@@ -114,7 +91,7 @@
                         <!-- Help Button -->
                         <div>
                             <button
-                                class="uk-button uk-button-success uk-button-large uk-width-1-1 uk-border-pill uk-box-shadow-hover-large"
+                                class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-border-pill uk-box-shadow-hover-large"
                                 uk-toggle="target: #prompt-guide-modal">
                                 <span uk-icon="question" class="uk-margin-small-left"></span>
                                 راهنما </button>
@@ -182,7 +159,7 @@
 
 
                     <!-- Related -->
-                    <div class="uk-margin-top">
+                    {{-- <div class="uk-margin-top">
                         <h5 class="uk-heading-line uk-text-small"><span>تصاویر مرتبط</span></h5>
                         <div class="uk-grid-small uk-child-width-1-3" uk-grid uk-lightbox>
                             <div><a href="https://source.unsplash.com/random/800x600?nature"
@@ -198,7 +175,7 @@
                                         src="https://source.unsplash.com/random/300x200?tree" alt=""></a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Social -->
                     <div class="uk-margin-top">
