@@ -15,50 +15,54 @@ class PromptCaseController extends Controller
 {
     public function index(Request $request)
     {
-        // $user = Auth::user();
-        
-        // $query = PromptCase::with(['category', 'tags'])
-        //     ->where('user_id', $user->id);
+        $query = PromptTemplate::with(['category', 'aiModel', 'tags', 'user'])
+            ->public();
 
-        // // Search
-        // if ($request->has('search')) {
-        //     $query->search($request->search);
-        // }
+        // Filter by category
+        if ($request->has('category') && $request->category != 'all') {
+            $category = PromptCategory::where('slug', $request->category)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            }
+        }
 
-        // // Filter by category
-        // if ($request->has('category') && $request->category != 'all') {
-        //     $query->byCategory($request->category);
-        // }
+        // Filter by tags
+        if ($request->has('tags')) {
+            $tags = explode(',', $request->tags);
+            $query->whereHas('tags', function ($q) use ($tags) {
+                $q->whereIn('name', $tags);
+            });
+        }
 
-        // // Filter favorites
-        // if ($request->has('favorites') && $request->favorites) {
-        //     $query->favorite();
-        // }
+        // Filter by AI model
+        if ($request->has('ai_model')) {
+            $aiModel = AiModel::where('model_identifier', $request->ai_model)->first();
+            if ($aiModel) {
+                $query->where('ai_model_id', $aiModel->id);
+            }
+        }
 
-        // // Sorting
-        // $sortBy = $request->get('sort_by', 'created_at');
-        // $sortOrder = $request->get('sort_order', 'desc');
-        
-        // $query->orderBy($sortBy, $sortOrder);
+        // Sort options
+        if ($request->has('sort')) {
+            $sort = $request->sort;
+            if ($sort == 'popular') {
+                $query->popular();
+            } elseif ($sort == 'recent') {
+                $query->recent();
+            } elseif ($sort == 'likes') {
+                $query->orderBy('total_likes', 'desc');
+            }
+        } else {
+            $query->popular();
+        }
 
-        // $prompts = $query->paginate(10);
+        $perPage = $request->has('per_page') ? $request->per_page : 20;
+        $promptTemplates = $query->paginate($perPage);
 
-        // $categories = Category::all();
-        // $totalPrompts = PromptCase::where('user_id', $user->id)->count();
-        // $favoritePrompts = PromptCase::where('user_id', $user->id)->favorite()->count();
-        // $totalCategories = Category::count();
-        // $totalTeams = Team::count();
-
-        // return view('prompt_case.index', compact(
-        //     'prompts',
-        //     'categories',
-        //     'totalPrompts',
-        //     'favoritePrompts',
-        //     'totalCategories',
-        //     'totalTeams'
-        // ));
-
-        return view('prompt_case.index');
+        return response()->json([
+            'prompt_templates' => $promptTemplates,
+            'filters' => $request->all()
+        ]);
     }
 
     public function create()

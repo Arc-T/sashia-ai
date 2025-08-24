@@ -1,5 +1,4 @@
 CREATE DATABASE IF NOT EXISTS `sashia_ai` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
 USE `sashia_ai`;
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -12,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL DEFAULT NULL,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq_users_email` (`email`),
     UNIQUE KEY `uniq_users_phone` (`phone`)
@@ -28,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `ai_models` (
     `is_active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Controls whether this model is available for use',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq_ai_models_model_identifier` (`model_identifier`),
     KEY `idx_ai_models_is_active` (`is_active`)
@@ -42,13 +41,14 @@ CREATE TABLE IF NOT EXISTS `ai_model_guides` (
     `sort_order` SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Order of this guide section for display',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
     KEY `idx_ai_model_guides_ai_model_id` (`ai_model_id`),
     CONSTRAINT `fk_ai_model_guides_ai_model_id` FOREIGN KEY (`ai_model_id`) REFERENCES `ai_models` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB COMMENT='Stores tips and guides specific to each AI model';
 
-CREATE TABLE IF NOT EXISTS `prompt_categories` (
+-- Changed from prompt_categories to categories
+CREATE TABLE IF NOT EXISTS `categories` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) NOT NULL COMMENT 'URL-friendly identifier',
@@ -61,13 +61,13 @@ CREATE TABLE IF NOT EXISTS `prompt_categories` (
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uniq_prompt_categories_slug` (`slug`),
-    KEY `idx_prompt_categories_parent_id` (`parent_id`),
-    KEY `idx_prompt_categories_is_active` (`is_active`),
-    CONSTRAINT `fk_prompt_categories_parent_id` FOREIGN KEY (`parent_id`) REFERENCES `prompt_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+    UNIQUE KEY `uniq_categories_slug` (`slug`),
+    KEY `idx_categories_parent_id` (`parent_id`),
+    KEY `idx_categories_is_active` (`is_active`),
+    CONSTRAINT `fk_categories_parent_id` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `prompts` (
+CREATE TABLE IF NOT EXISTS `prompt_templates` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
@@ -75,65 +75,59 @@ CREATE TABLE IF NOT EXISTS `prompts` (
     `ai_model_id` INT UNSIGNED NOT NULL COMMENT 'The model this prompt is optimized for',
     `category_id` INT UNSIGNED NOT NULL,
     `user_id` INT UNSIGNED NOT NULL COMMENT 'The creator/owner of the prompt',
+    `total_likes` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Denormalized count for performance',
+    `total_views` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Denormalized count for performance',
     `is_public` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Visibility control: 0 = Private, 1 = Public',
+    `is_active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Soft delete flag',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
-    KEY `idx_prompts_ai_model_id` (`ai_model_id`),
-    KEY `idx_prompts_category_id` (`category_id`),
-    KEY `idx_prompts_user_id` (`user_id`),
-    KEY `idx_prompts_is_public_is_active` (`is_public`, `is_active`),
-    FULLTEXT KEY `ft_prompts_title_content` (`title`, `content`),
-    CONSTRAINT `fk_prompts_ai_model_id` FOREIGN KEY (`ai_model_id`) REFERENCES `ai_models` (`id`) ON UPDATE CASCADE,
-    CONSTRAINT `fk_prompts_category_id` FOREIGN KEY (`category_id`) REFERENCES `prompt_categories` (`id`) ON UPDATE CASCADE,
-    CONSTRAINT `fk_prompts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+    KEY `idx_prompt_templates_ai_model_id` (`ai_model_id`),
+    KEY `idx_prompt_templates_category_id` (`category_id`),
+    KEY `idx_prompt_templates_user_id` (`user_id`),
+    KEY `idx_prompt_templates_is_public_is_active` (`is_public`, `is_active`),
+    FULLTEXT KEY `ft_prompt_templates_title_content` (`title`, `content`),
+    CONSTRAINT `fk_prompt_templates_ai_model_id` FOREIGN KEY (`ai_model_id`) REFERENCES `ai_models` (`id`) ON UPDATE CASCADE,
+    -- Changed reference from prompt_categories to categories
+    CONSTRAINT `fk_prompt_templates_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE,
+    CONSTRAINT `fk_prompt_templates_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `prompt_case` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `content` TEXT NOT NULL COMMENT 'The actual prompt text',
-  `description` TEXT NULL,
-  `is_favorite` TINYINT(1) NOT NULL DEFAULT 0,
-  `metadata` JSON NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  -- **************************** Table Keys ****************************
-  PRIMARY KEY (`id`),
-  KEY `idx_prompt_case_user_id` (`user_id`),
-  FULLTEXT KEY `ft_prompt_case_title_content` (`title`, `content`),
-  CONSTRAINT `fk_prompts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB;
-		
 CREATE TABLE IF NOT EXISTS `prompt_tags` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL COMMENT 'Tag name (lowercase, normalized)',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	-- **************************** Table Keys ****************************
+  -- **************************** Table Keys ****************************
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_prompt_tags_name` (`name`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `prompt_tag_pivot` (
-  `prompt_id` INT UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `taggables` (
   `tag_id` INT UNSIGNED NOT NULL,
-	-- **************************** Table Keys ****************************
-  PRIMARY KEY (`prompt_id`, `tag_id`),
-  KEY `idx_prompt_tag_pivot_tag_id` (`tag_id`),
-  CONSTRAINT `fk_prompt_tag_pivot_prompt_id` FOREIGN KEY (`prompt_id`) REFERENCES `prompts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_prompt_tag_pivot_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `prompt_tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `taggable_id` INT UNSIGNED NOT NULL,
+  `taggable_type` VARCHAR(255) NOT NULL COMMENT 'Model class name (e.g., App\\\\Models\\\\PromptTemplate, App\\\\Models\\\\PromptCase)',
+  -- Composite primary key
+  PRIMARY KEY (`tag_id`, `taggable_id`, `taggable_type`),
+  -- Foreign key constraint
+  CONSTRAINT `fk_taggables_tag_id` 
+    FOREIGN KEY (`tag_id`) 
+    REFERENCES `prompt_tags` (`id`) 
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
+  -- Indexes for better performance
+  KEY `idx_taggables_taggable` (`taggable_id`, `taggable_type`),
+  KEY `idx_taggables_type` (`taggable_type`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `teams` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, -- UNSIGNED
+  `id` INT UNSigned NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL COMMENT 'Team name',
   `description` TEXT NULL COMMENT 'Team description',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	-- **************************** Table Keys ****************************
+  -- **************************** Table Keys ****************************
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_teams_name` (`name`)
 ) ENGINE=InnoDB;
@@ -141,27 +135,15 @@ CREATE TABLE IF NOT EXISTS `teams` (
 CREATE TABLE IF NOT EXISTS `user_interactions` (
    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` INT UNSIGNED NOT NULL,
-    `prompt_id` INT UNSIGNED NOT NULL,
-    `interaction_type` ENUM('LIKE', 'FAVORITE', 'DOWNLOAD', 'USE', 'SHARE', 'REPORT') NOT NULL,
+    `prompt_template_id` INT UNSIGNED NOT NULL,
+    `interaction_type` ENUM('LIKE', 'FAVORITE', 'DOWNLOAD', 'USE', 'SHARE', 'REPORT', 'VIEW') NOT NULL,
     `metadata` JSON NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uniq_user_interaction` (`user_id`, `prompt_id`, `interaction_type`),
-    KEY `idx_user_interactions_prompt_id_type` (`prompt_id`, `interaction_type`),
-    CONSTRAINT `fk_user_interactions_prompt_id` FOREIGN KEY (`prompt_id`) REFERENCES `prompts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS `prompt_views` (
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `prompt_id` INT UNSIGNED NOT NULL,
-    `user_id` INT UNSIGNED NULL,
-    `user_ip` VARBINARY(16) NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    KEY `idx_prompt_views_prompt_id_created` (`prompt_id`, `created_at`),
-    KEY `idx_prompt_views_created_at` (`created_at`),
-    CONSTRAINT `fk_prompt_views_prompt_id` FOREIGN KEY (`prompt_id`) REFERENCES `prompts` (`id`) ON DELETE CASCADE
+    UNIQUE KEY `uniq_user_interaction` (`user_id`, `prompt_template_id`, `interaction_type`),
+    KEY `idx_user_interactions_prompt_template_id_type` (`prompt_template_id`, `interaction_type`),
+    CONSTRAINT `fk_user_interactions_prompt_template_id` FOREIGN KEY (`prompt_template_id`) REFERENCES `prompt_templates` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `media` (
@@ -173,11 +155,11 @@ CREATE TABLE IF NOT EXISTS `media` (
     `file_size` INT UNSIGNED NULL COMMENT 'Size in bytes',
     `metadata` JSON NULL COMMENT 'Exif data, image dimensions, video duration, etc.',
     `resource_type` VARCHAR(50) NOT NULL COMMENT 'Top-level type: image, video, audio, document',
-    `resource_id` INT UNSIGNED NOT NULL COMMENT 'The ID of the related resource (prompt, user, etc.)',
-    `resource_entity` VARCHAR(50) NOT NULL COMMENT 'The name of the related table (prompts, users, ai_model_guides)',
+    `resource_id` INT UNSIGNED NOT NULL COMMENT 'The ID of the related resource (prompt_template, user, etc.)',
+    `resource_entity` VARCHAR(50) NOT NULL COMMENT 'The name of the related table (prompt_templates, users, ai_model_guides)',
     `sort_order` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
     KEY `idx_media_resource` (`resource_entity`, `resource_id`),
     KEY `idx_media_resource_type` (`resource_type`)
@@ -191,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `automations` (
     `is_active` TINYINT(1) NOT NULL DEFAULT 1,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -200,18 +182,20 @@ CREATE TABLE IF NOT EXISTS `automation_templates` (
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     `automation_id` INT UNSIGNED NOT NULL,
+    -- Changed reference from prompt_categories to categories
     `category_id` INT UNSIGNED NOT NULL,
     `user_id` INT UNSIGNED NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		-- **************************** Table Keys ****************************
+    -- **************************** Table Keys ****************************
     PRIMARY KEY (`id`),
     KEY `idx_automation_templates_automation_id` (`automation_id`),
     KEY `idx_automation_templates_category_id` (`category_id`),
     KEY `idx_automation_templates_user_id` (`user_id`),
     CONSTRAINT `fk_automation_templates_automation_id` FOREIGN KEY (`automation_id`) REFERENCES `automations` (`id`) ON UPDATE CASCADE,
-    CONSTRAINT `fk_automation_templates_category_id` FOREIGN KEY (`category_id`) REFERENCES `prompt_categories` (`id`) ON UPDATE CASCADE
-    -- CONSTRAINT `fk_automation_templates_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+    -- Changed reference from prompt_categories to categories
+    CONSTRAINT `fk_automation_templates_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE,
+    CONSTRAINT `fk_automation_templates_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `submission_categories` (
@@ -235,8 +219,9 @@ CREATE TABLE IF NOT EXISTS `submission_categories` (
 CREATE TABLE IF NOT EXISTS `submissions` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` INT UNSIGNED NOT NULL COMMENT 'The author of the submission',
-		`category_id` INT UNSIGNED NOT NULL,
-    `submissible_type` VARCHAR(100) NOT NULL COMMENT 'The related model name (e.g., prompts, automations)',
+    -- Changed reference from submission_categories to categories
+    `category_id` INT UNSIGNED NOT NULL,
+    `submissible_type` VARCHAR(100) NOT NULL COMMENT 'The related model name (e.g., prompt_templates, automations)',
     `submissible_id` INT UNSIGNED NOT NULL COMMENT 'The ID of the related record in its table',
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
@@ -248,8 +233,10 @@ CREATE TABLE IF NOT EXISTS `submissions` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq_submissions_submissible` (`submissible_type`, `submissible_id`),
     KEY `idx_submissions_submissible` (`submissible_type`, `submissible_id`),
-		KEY `idx_submissions_category_id` (`category_id`),
+    KEY `idx_submissions_category_id` (`category_id`),
     KEY `idx_submissions_user_id` (`user_id`),
     KEY `idx_submissions_is_public_active` (`is_public`, `is_active`),
-    CONSTRAINT `fk_submissions_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+    CONSTRAINT `fk_submissions_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+    -- Changed reference from submission_categories to categories
+    CONSTRAINT `fk_submissions_category_id` FOREIGN KEY (`category_id`) REFERENCES `submission_categories` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB COMMENT='Central table for all user submissions. Uses a polymorphic relationship.';

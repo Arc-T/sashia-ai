@@ -3,17 +3,42 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    use HasFactory;
+    // app/Models/Category.php
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'color_hex',
+        'parent_id',
+        'sort_order',
+        'is_active'
+    ];
 
-    protected $fillable = ['name', 'description', 'color'];
-
-    public function prompts(): HasMany
+    public function parent()
     {
-        return $this->hasMany(PromptCase::class);
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function promptTemplates()
+    {
+        return $this->hasMany(PromptTemplate::class);
+    }
+
+    public function automationTemplates()
+    {
+        return $this->hasMany(AutomationTemplate::class);
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
 }
