@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AIModel;
 use App\Models\PromptCase;
 use App\Models\Category;
 use App\Models\PromptCaseTag;
 use App\Models\PromptCaseUsageStat;
+use App\Models\PromptTag;
+use App\Models\PromptTemplate;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,50 +18,14 @@ class PromptCaseController extends Controller
 {
     public function index(Request $request)
     {
-        // Filter by tags
-        if ($request->has('tags')) {
-            $tags = explode(',', $request->tags);
-            $query->whereHas('tags', function ($q) use ($tags) {
-                $q->whereIn('name', $tags);
-            });
-        }
-
-        // Filter by AI model
-        if ($request->has('ai_model')) {
-            $aiModel = AiModel::where('model_identifier', $request->ai_model)->first();
-            if ($aiModel) {
-                $query->where('ai_model_id', $aiModel->id);
-            }
-        }
-
-        // Sort options
-        if ($request->has('sort')) {
-            $sort = $request->sort;
-            if ($sort == 'popular') {
-                $query->popular();
-            } elseif ($sort == 'recent') {
-                $query->recent();
-            } elseif ($sort == 'likes') {
-                $query->orderBy('total_likes', 'desc');
-            }
-        } else {
-            $query->popular();
-        }
-
-        $perPage = $request->has('per_page') ? $request->per_page : 20;
-        $promptTemplates = $query->paginate($perPage);
-
-        return response()->json([
-            'prompt_templates' => $promptTemplates,
-            'filters' => $request->all()
-        ]);
+        $prompts = PromptCase
     }
 
     public function create()
     {
         $categories = Category::all();
         $teams = Team::all();
-        $tags = PromptCaseTag::all();
+        $tags = PromptTag::all();
 
         return view('prompt_case.create', compact('categories', 'teams', 'tags'));
     }

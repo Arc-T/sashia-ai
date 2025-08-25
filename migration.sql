@@ -240,3 +240,19 @@ CREATE TABLE IF NOT EXISTS `submissions` (
     -- Changed reference from submission_categories to categories
     CONSTRAINT `fk_submissions_category_id` FOREIGN KEY (`category_id`) REFERENCES `submission_categories` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB COMMENT='Central table for all user submissions. Uses a polymorphic relationship.';
+
+CREATE TABLE IF NOT EXISTS `user_prompts` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NULL,
+    `content` TEXT NOT NULL COMMENT 'The actual prompt text',
+    `ai_model_ids` VARCHAR(50) NOT NULL COMMENT 'The models this prompt is optimized for',
+    `is_favorite` INT UNSIGNED NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		-- **************************** Table Keys ****************************
+		PRIMARY KEY (`id`),
+		KEY `idx_user_prompts_user_id` (`user_id`),
+		FULLTEXT KEY `ft_user_prompts_title_content` (`title`, `content`),
+    CONSTRAINT `fk_user_prompts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ) ENGINE=InnoDB COMMENT='prompt case table. used for managing user prompts';

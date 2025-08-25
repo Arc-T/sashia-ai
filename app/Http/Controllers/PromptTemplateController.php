@@ -50,7 +50,7 @@ class PromptTemplateController extends Controller
         $perPage = 20;
         $page = $request->input('page', 1);
 
-        $all = PromptCollectionService::all();
+        $all = PromptCollectionService::LexiaPrompts();
         $items = $all->forPage($page, $perPage);
 
         $paginated = new LengthAwarePaginator(

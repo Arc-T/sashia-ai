@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Fetches a single batch of images from the Lexica.art API.
- *
- * @param int|null $cursor The pagination cursor. For the first request, use null.
- * @return array|null The decoded JSON response from the API or null on failure.
- */
 function fetchLexicaBatch($cursor = null) {
     $url = 'https://lexica.art/api/infinite-prompts';
     
@@ -26,7 +20,7 @@ function fetchLexicaBatch($cursor = null) {
         'http' => [
             'header'  => 
                 "Content-Type: application/json\r\n" .
-                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36\r\n",
+                "User-Agent: Mozilla/5.0\r\n",
             'method'  => 'POST',
             'content' => $jsonPayload,
             'timeout' => 30
@@ -47,14 +41,6 @@ function fetchLexicaBatch($cursor = null) {
     }
 }
 
-/**
- * Fetches multiple pages of images from the Lexica API.
- *
- * @param int|null $initialCursor The starting cursor. Use null for the first page.
- * @param int $maxPages Maximum number of pages to fetch.
- * @param int $delay Delay in seconds between requests.
- * @return array A list of all image objects fetched from the API.
- */
 function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
     $allImages = [];
     $currentCursor = $initialCursor;
@@ -68,31 +54,38 @@ function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
             echo "Stopping due to error.\n";
             break;
         }
-        
-        // Handle the API response structure
-        $batchImages = [];
-        if (is_array($data) && isset($data['images'])) {
-            // Structure is likely: { "images": [...] }
-            $batchImages = $data['images'];
-        } elseif (is_array($data) && !isset($data['images']) && !empty($data)) {
-            // Structure might be a direct list: [...]
-            $batchImages = $data;
-        } else {
-            echo "Unexpected API response structure.\n";
-            print_r($data); // Inspect the response
-            break;
+
+        // extract images and prompts
+        $batchImages  = $data['images']  ?? [];
+        $batchPrompts = $data['prompts'] ?? [];
+
+        // index prompts by id for quick lookup
+        $promptsById = [];
+        foreach ($batchPrompts as $prompt) {
+            $promptsById[$prompt['id']] = $prompt;
         }
-        
+
+        // attach prompt text to each image
+        foreach ($batchImages as &$img) {
+            $promptId = $img['promptid'] ?? null;
+            if ($promptId && isset($promptsById[$promptId])) {
+                $img['prompt'] = $promptsById[$promptId]['prompt'];
+                $img['negativePrompt'] = $promptsById[$promptId]['negativePrompt'];
+            } else {
+                $img['prompt'] = null;
+                $img['negativePrompt'] = null;
+            }
+        }
+        unset($img);
+
         if (empty($batchImages)) {
             echo "No more images found. Reached the end.\n";
             break;
         }
-        
-        // Add the images from this batch to our main list
+
         $allImages = array_merge($allImages, $batchImages);
         echo "Fetched " . count($batchImages) . " images in this batch. Total so far: " . count($allImages) . "\n";
         
-        // Get the cursor for the next page (ID of the last image)
         $lastImage = end($batchImages);
         if (isset($lastImage['id'])) {
             $currentCursor = $lastImage['id'];
@@ -103,10 +96,7 @@ function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
         }
         
         $pagesFetched++;
-        
-        // Delay before the next request
         if ($pagesFetched < $maxPages) {
-            echo "Waiting for $delay second(s) before next request...\n";
             sleep($delay);
         }
     }
@@ -116,17 +106,12 @@ function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
 
 // Main execution
 $outputFilename = 'lexica_images.json';
-$maxPagesToFetch = 3; // Start small to test
-$delayBetweenRequests = 2; // Be polite
+$maxPagesToFetch = 3;
+$delayBetweenRequests = 2;
 
 echo "Starting to fetch images from Lexica.art...\n";
-$allImagesData = getAllLexicaImages(
-    null, // Start from the beginning
-    $maxPagesToFetch,
-    $delayBetweenRequests
-);
+$allImagesData = getAllLexicaImages(null, $maxPagesToFetch, $delayBetweenRequests);
 
-// Save the collected data to a JSON file
 echo "\nSaving " . count($allImagesData) . " images to '$outputFilename'...\n";
 try {
     $jsonData = json_encode($allImagesData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -144,4 +129,3 @@ try {
     echo "Error saving file: " . $e->getMessage() . "\n";
 }
 
-?>
