@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AIModel;
 use App\Models\PromptCase;
 use App\Models\Category;
 use App\Models\PromptCaseTag;
 use App\Models\PromptCaseUsageStat;
 use App\Models\PromptTag;
-use App\Models\PromptTemplate;
 use App\Models\Team;
+use App\Models\UserPrompt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PromptCaseController extends Controller
 {
+    // Add relationships to avoid N+1 queries
     public function index(Request $request)
     {
-        $prompts = PromptCase
+        $userPrompts = UserPrompt::byUser(Auth::id())
+                                   ->paginate(10);
+
+        return view('user_prompts', compact('userPrompts'));
     }
 
     public function create()

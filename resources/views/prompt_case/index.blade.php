@@ -28,7 +28,7 @@
                         <span uk-icon="icon: database; ratio: 2" class="uk-text-primary"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">۱۲۷</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">کل پرامپت ها</p>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         <span uk-icon="icon: star; ratio: 2" class="uk-text-warning"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">۴۳</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">مورد علاقه‌ها</p>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                         <span uk-icon="icon: tag; ratio: 2" class="uk-text-success"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">۱۵</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">دسته‌بندی‌ها</p>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         <span uk-icon="icon: users; ratio: 2" class="uk-text-danger"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">۸</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">0</h3>
                         <p class="uk-text-muted uk-margin-remove">تیم‌های مشترک</p>
                     </div>
                 </div>
@@ -140,20 +140,20 @@
                         <thead>
                             <tr>
                                 <th class="uk-width-small">عنوان</th>
-                                <th>پیشنهاد</th>
+                                <th>پرامپت</th>
                                 <th class="uk-width-small">دسته‌بندی</th>
                                 <th class="uk-width-small">تاریخ ایجاد</th>
                                 <th class="uk-width-small">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Prompt 1 -->
+                            @foreach ($userPrompts as $userPrompt)
                             <tr>
                                 <td>
                                     <div class="uk-flex uk-flex-middle">
                                         <span uk-icon="icon: star; ratio: 0.8"
                                             class="uk-margin-small-left uk-text-warning"></span>
-                                        <span class="uk-text-bold">پیشنهاد بازاریابی</span>
+                                        <span class="uk-text-bold">{{ $userPrompt->title }}</span>
                                     </div>
                                 </td>
                                 <td>
@@ -163,10 +163,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="uk-label uk-label-success">بازاریابی</span>
+                                    <span class="uk-label uk-label-success">{{ $userPrompt->prompt }}</span>
                                 </td>
                                 <td>
-                                    <span class="uk-text-small">۱۴۰۲/۰۵/۱۵</span>
+                                    <span class="uk-text-small">{{ $userPrompt->created_at }}</span>
                                 </td>
                                 <td class="uk-text-nowrap">
                                     <div class="uk-button-group">
@@ -175,9 +175,9 @@
                                         </button>
                                         <button class="uk-icon-button uk-button-default uk-margin-small-right"
                                             uk-icon="eye" uk-tooltip="نمایش">
-                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                                uk-icon="pencil" uk-tooltip="ویرایش">
-                                            </button>
+                                        </button>
+                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                            uk-icon="pencil" uk-tooltip="ویرایش">
                                         </button>
                                         <!-- Delete Button -->
                                         <button class="uk-icon-button uk-button-danger uk-margin-small-right"
@@ -242,6 +242,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endfor
                         </tbody>
                     </table>
                 </div>
@@ -487,527 +488,3 @@
         </script>
     @endpush --}}
 @endsection
-
-
-{{-- Saved Prompts Tab --}}
-{{-- <li>
-    <div class="uk-grid-medium" uk-grid>
-        <div class="uk-width-1-4@m">
-            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
-                <h3 class="uk-card-title">دسته‌بندی‌های ذخیره شده</h3>
-                <ul class="uk-nav uk-nav-default">
-                    <li class="uk-active"><a href="#">همه پرومپت‌ها (۲۴)</a></li>
-                    <li><a href="#">کاربردی (۸)</a></li>
-                    <li><a href="#">هنری (۵)</a></li>
-                    <li><a href="#">تحقیقاتی (۳)</a></li>
-                    <li><a href="#">شخصی‌سازی شده (۴)</a></li>
-                </ul>
-                <hr>
-                <button class="uk-button uk-button-default uk-width-1-1">
-                    <span uk-icon="icon: plus"></span> دسته جدید
-                </button>
-            </div>
-        </div>
-        <div class="uk-width-3-4@m">
-            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
-                <div class="uk-flex uk-flex-between uk-flex-middle">
-                    <h3 class="uk-card-title">پرومپت‌های ذخیره شده</h3>
-                    <div>
-                        <button class="uk-button uk-button-text uk-text-primary" uk-tooltip="بارگذاری مجدد">
-                            <span uk-icon="icon: refresh"></span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-match uk-margin-top" uk-grid>
-                    @foreach ([1, 2, 3, 4, 5, 6] as $prompt)
-                        <div>
-                            <div class="uk-card uk-card-default uk-card-hover uk-card-small uk-border-rounded">
-                                <div class="uk-card-header">
-                                    <div class="uk-grid-small uk-flex-middle" uk-grid>
-                                        <div class="uk-width-auto">
-                                            <span
-                                                class="uk-badge">{{ ['ChatGPT-4', 'Midjourney', 'Claude'][array_rand([0, 1, 2])] }}</span>
-                                        </div>
-                                        <div class="uk-width-expand">
-                                            <h4 class="uk-card-title uk-margin-remove-bottom">پرومپت نمونه
-                                                {{ $prompt }}</h4>
-                                            <p class="uk-text-meta uk-margin-remove-top">ذخیره شده در
-                                                ۱۴۰۲/۰۵/{{ 10 + $prompt }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uk-card-body">
-                                    <p>این یک پرومپت نمونه است که می‌تواند برای اهداف مختلف استفاده شود.</p>
-                                    <div class="uk-margin-small-top">
-                                        <span class="uk-badge uk-margin-small-left">ایمیل</span>
-                                        <span class="uk-badge">تجاری</span>
-                                    </div>
-                                </div>
-                                <div class="uk-card-footer">
-                                    <div class="uk-grid-small" uk-grid>
-                                        <div class="uk-width-expand">
-                                            <button class="uk-button uk-button-text uk-text-primary">استفاده</button>
-                                        </div>
-                                        <div class="uk-width-auto">
-                                            <button class="uk-button uk-button-text uk-text-danger" uk-tooltip="حذف">
-                                                <span uk-icon="icon: trash"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="uk-margin-top">
-                    <ul class="uk-pagination uk-flex-center">
-                        <li><a href="#"><span uk-pagination-previous></span></a></li>
-                        <li class="uk-active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><span uk-pagination-next></span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</li> --}}
-
-<!-- Page Header -->
-{{-- <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
-    <h1 class="uk-heading-medium uk-text-bold uk-text-primary">مدیریت پیشنهادات ذخیره شده</h1>
-
-    <!-- Create New Prompt Button -->
-    <div class="uk-inline">
-        <button class="uk-button uk-button-primary" type="button">
-            <span uk-icon="icon: plus"></span>
-            <span class="uk-margin-small-right">پیشنهاد جدید</span>
-        </button>
-        <div uk-dropdown="mode: click; pos: bottom-right; offset: 5">
-            <ul class="uk-nav uk-dropdown-nav">
-                <li><a href="#" uk-toggle="target: #create-prompt-modal">
-                        <span uk-icon="icon: file-edit"></span> ایجاد دستی
-                    </a></li>
-                <li><a href="#"><span uk-icon="icon: cloud-download"></span> وارد کردن از فایل</a></li>
-                <li class="uk-nav-divider"></li>
-                <li><a href="#"><span uk-icon="icon: template"></span> از الگو استفاده کنید</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<!-- Stats Cards -->
-<div class="uk-child-width-1-4@m uk-grid-small uk-grid-match" uk-grid>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body uk-border-rounded uk-box-shadow-small">
-            <div class="uk-flex uk-flex-middle">
-                <div class="uk-margin-left">
-                    <span uk-icon="icon: database; ratio: 2" class="uk-text-primary"></span>
-                </div>
-                <div>
-                    <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ number_format($totalPrompts) }}</h3>
-                    <p class="uk-text-muted uk-margin-remove">کل پیشنهادات</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body uk-border-rounded uk-box-shadow-small">
-            <div class="uk-flex uk-flex-middle">
-                <div class="uk-margin-left">
-                    <span uk-icon="icon: star; ratio: 2" class="uk-text-warning"></span>
-                </div>
-                <div>
-                    <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ number_format($favoritePrompts) }}</h3>
-                    <p class="uk-text-muted uk-margin-remove">مورد علاقه‌ها</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body uk-border-rounded uk-box-shadow-small">
-            <div class="uk-flex uk-flex-middle">
-                <div class="uk-margin-left">
-                    <span uk-icon="icon: tag; ratio: 2" class="uk-text-success"></span>
-                </div>
-                <div>
-                    <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ number_format($totalCategories) }}</h3>
-                    <p class="uk-text-muted uk-margin-remove">دسته‌بندی‌ها</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default uk-card-body uk-border-rounded uk-box-shadow-small">
-            <div class="uk-flex uk-flex-middle">
-                <div class="uk-margin-left">
-                    <span uk-icon="icon: users; ratio: 2" class="uk-text-danger"></span>
-                </div>
-                <div>
-                    <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ number_format($totalTeams) }}</h3>
-                    <p class="uk-text-muted uk-margin-remove">تیم‌های مشترک</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Main Content Area -->
-<div class="uk-margin-top">
-    <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-medium">
-        <!-- Toolbar -->
-        <div class="uk-card-header">
-            <form method="GET" action="{{ route('prompt_case.index') }}">
-                <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="uk-inline uk-width-1-1">
-                            <span class="uk-form-icon" uk-icon="icon: search"></span>
-                            <input class="uk-input uk-form-large" type="text" name="search"
-                                placeholder="جستجو در پیشنهادات..." value="{{ request('search') }}">
-                        </div>
-                    </div>
-                    <div class="uk-width-auto">
-                        <div>
-                            <button class="uk-button uk-button-default" type="button">
-                                <span uk-icon="icon: settings"></span>
-                                <span class="uk-margin-small-right">فیلترها</span>
-                            </button>
-                            <div uk-dropdown="mode: click; pos: bottom-right; offset: 5">
-                                <div class="uk-form-stacked">
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label">دسته‌بندی</label>
-                                        <div class="uk-form-controls">
-                                            <select class="uk-select uk-form-small" name="category">
-                                                <option value="all">همه دسته‌بندی‌ها</option>
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                        {{ request('category') == $category->id ? 'selected' : '' }}>
-                                                        {{ $category->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label">مرتب‌سازی بر اساس</label>
-                                        <div class="uk-form-controls">
-                                            <select class="uk-select uk-form-small" name="sort_by">
-                                                <option value="created_at"
-                                                    {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>جدیدترین
-                                                </option>
-                                                <option value="title"
-                                                    {{ request('sort_by') == 'title' ? 'selected' : '' }}>الفبایی
-                                                    (صعودی)</option>
-                                                <option value="title_desc"
-                                                    {{ request('sort_by') == 'title_desc' ? 'selected' : '' }}>الفبایی
-                                                    (نزولی)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label>
-                                            <input class="uk-checkbox" type="checkbox" name="favorites"
-                                                value="1" {{ request('favorites') ? 'checked' : '' }}>
-                                            فقط مورد علاقه‌ها
-                                        </label>
-                                    </div>
-                                    <button type="submit"
-                                        class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-top">
-                                        اعمال فیلترها
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- Prompts Table -->
-        <div class="uk-card-body uk-padding-remove-top">
-            <div class="uk-overflow-auto">
-                <table class="uk-table uk-table-divider uk-table-middle uk-table-hover">
-                    <thead>
-                        <tr>
-                            <th class="uk-width-small">عنوان</th>
-                            <th>پیشنهاد</th>
-                            <th class="uk-width-small">دسته‌بندی</th>
-                            <th class="uk-width-small">تاریخ ایجاد</th>
-                            <th class="uk-width-small">عملیات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($prompts as $prompt)
-                            <tr>
-                                <td>
-                                    <div class="uk-flex uk-flex-middle">
-                                        @if ($prompt->is_favorite)
-                                            <span uk-icon="icon: star; ratio: 0.8"
-                                                class="uk-margin-small-left uk-text-warning"></span>
-                                        @endif
-                                        <span class="uk-text-bold">{{ $prompt->title }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uk-text-truncate" style="max-width: 300px;">
-                                        {{ Str::limit($prompt->content, 100) }}
-                                    </div>
-                                </td>
-                                <td>
-                                    @if ($prompt->category)
-                                        <span class="uk-label" style="background: {{ $prompt->category->color }}">
-                                            {{ $prompt->category->name }}
-                                        </span>
-                                    @else
-                                        <span class="uk-label">بدون دسته</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <span class="uk-text-small">{{ $prompt->created_at->format('Y/m/d') }}</span>
-                                </td>
-                                <td>
-                                    <div class="uk-button-group">
-                                        @can('update', $prompt)
-                                            <button class="uk-button uk-button-default uk-button-small"
-                                                uk-tooltip="ویرایش" onclick="editPrompt({{ $prompt->id }})">
-                                                <span uk-icon="icon: pencil"></span>
-                                            </button>
-                                        @endcan
-
-                                        <button class="uk-button uk-button-default uk-button-small" uk-tooltip="کپی"
-                                            onclick="copyPrompt({{ $prompt->id }})">
-                                            <span uk-icon="icon: copy"></span>
-                                        </button>
-
-                                        @can('update', $prompt)
-                                            <button class="uk-button uk-button-default uk-button-small"
-                                                uk-tooltip="اشتراک‌گذاری" onclick="sharePrompt({{ $prompt->id }})">
-                                                <span uk-icon="icon: social"></span>
-                                            </button>
-                                        @endcan
-
-                                        @can('delete', $prompt)
-                                            <form action="{{ route('prompt_case.destroy', $prompt) }}" method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('آیا از حذف این پیشنهاد مطمئن هستید؟')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="uk-button uk-button-danger uk-button-small"
-                                                    uk-tooltip="حذف">
-                                                    <span uk-icon="icon: trash"></span>
-                                                </button>
-                                            </form>
-                                        @endcan
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="uk-text-center uk-padding-large">
-                                    <div class="uk-text-muted">
-                                        <span uk-icon="icon: database; ratio: 2"></span>
-                                        <p class="uk-margin-small-top">هیچ پیشنهادی یافت نشد</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Pagination -->
-        @if ($prompts->hasPages())
-            <div class="uk-card-footer">
-                <ul class="uk-pagination uk-flex-center" uk-margin>
-                    {{-- Previous Page Link --}}
-{{-- @if ($prompts->onFirstPage())
-                        <li class="uk-disabled"><span uk-pagination-previous></span></li>
-                    @else
-                        <li><a href="{{ $prompts->previousPageUrl() }}"><span uk-pagination-previous></span></a></li> --}}
-{{-- @endif --}}
-
-{{-- Pagination Elements --}}
-{{-- @foreach ($prompts->getUrlRange(1, $prompts->lastPage()) as $page => $url)
-                        @if ($page == $prompts->currentPage())
-                            <li class="uk-active"><span>{{ $page }}</span></li>
-                        @else
-                            <li><a href="{{ $url }}">{{ $page }}</a></li>
-                        @endif
-                    @endforeach --}}
-
-{{-- Next Page Link --}}
-{{-- @if ($prompts->hasMorePages())
-                        <li><a href="{{ $prompts->nextPageUrl() }}"><span uk-pagination-next></span></a></li>
-                    @else
-                        <li class="uk-disabled"><span uk-pagination-next></span></li>
-                    @endif --}}
-{{-- </ul> --}}
-{{-- </div> --}}
-{{-- @endif --}}
-{{-- </div> --}}
-{{-- </div> --}}
-
-<!-- Create Prompt Modal -->
-{{-- <div id="create-prompt-modal" uk-modal="bg-close: false" class="uk-modal-container">
-    <div class="uk-modal-dialog uk-margin-auto-vertical uk-border-rounded uk-box-shadow-large">
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-        <!-- Modal Header -->
-        <div
-            class="uk-modal-header uk-border-rounded-top uk-background-gradient uk-background-primary uk-padding-small">
-            <div class="uk-grid-small uk-flex-middle" uk-grid>
-                <div class="uk-width-auto">
-                    <span uk-icon="icon: file-edit; ratio: 1.5" class="uk-text-white"></span>
-                </div>
-                <div class="uk-width-expand">
-                    <h2 class="uk-modal-title uk-text-bold uk-text-white">ایجاد پیشنهاد جدید</h2>
-                    <p class="uk-text-meta uk-margin-remove uk-text-light">پیشنهادهای هوشمندانه بسازید و ذخیره کنید</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Body with Form -->
-        <form action="{{ route('prompt_case.store') }}" method="POST">
-            @csrf
-            <div class="uk-modal-body uk-padding-remove">
-                <ul uk-tab="animation: uk-animation-fade" class="uk-tab uk-flex-center uk-margin-remove">
-                    <li><a href="#" class="uk-text-bold">محتوا</a></li>
-                    <li><a href="#" class="uk-text-bold">تنظیمات پیشرفته</a></li>
-                    <li><a href="#" class="uk-text-bold">اشتراک‌گذاری</a></li>
-                </ul>
-
-                <div class="uk-switcher uk-margin">
-                    <!-- Content Tab -->
-                    <div class="uk-padding">
-                        <div class="uk-margin">
-                            <label class="uk-form-label uk-text-bold">عنوان پیشنهاد</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input uk-form-large uk-border-rounded" type="text" name="title"
-                                    placeholder="مثال: تولید محتوای اینستاگرام" required>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <label class="uk-form-label uk-text-bold">متن پیشنهاد</label>
-                            <div class="uk-form-controls">
-                                <textarea class="uk-textarea uk-border-rounded" name="content" rows="8"
-                                    placeholder="متن کامل پیشنهاد خود را اینجا بنویسید..." required></textarea>
-                            </div>
-                            <div class="uk-text-meta uk-text-left@m uk-margin-small-top">
-                                <span uk-icon="icon: info"></span> از متغیرها مانند {موضوع} یا {سبک} استفاده کنید
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Settings Tab -->
-                    <div class="uk-padding">
-                        <div class="uk-grid-small" uk-grid>
-                            <div class="uk-width-1-2@s">
-                                <label class="uk-form-label uk-text-bold">دسته‌بندی</label>
-                                <div class="uk-form-controls">
-                                    <select class="uk-select uk-border-rounded" name="category_id">
-                                        <option value="">بدون دسته‌بندی</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="uk-width-1-2@s">
-                                <label class="uk-form-label uk-text-bold">برچسب‌ها</label>
-                                <div class="uk-form-controls">
-                                    <input class="uk-input uk-border-rounded" type="text" name="tags"
-                                        placeholder="مثال: اینستاگرام,محتوا,بازاریابی">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <label class="uk-form-label uk-text-bold">رنگ نشانگر</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-grid-small uk-child-width-auto" uk-grid>
-                                    @foreach (['#1e87f0', '#32d296', '#faa05a', '#f0506e'] as $color)
-                                        <div>
-                                            <input class="uk-radio" type="radio" name="color"
-                                                value="{{ $color }}" {{ $loop->first ? 'checked' : '' }}>
-                                            <label class="uk-margin-small-right">
-                                                <span class="uk-badge"
-                                                    style="background: {{ $color }}"></span>
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <label>
-                                <input class="uk-checkbox uk-margin-small-right" type="checkbox" name="is_favorite"
-                                    value="1">
-                                <span class="uk-text-bold">علامت‌گذاری به عنوان مورد علاقه</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Sharing Tab -->
-                    <div class="uk-padding">
-                        <div class="uk-margin">
-                            <label class="uk-form-label uk-text-bold">اشتراک‌گذاری با</label>
-                            <div class="uk-form-controls">
-                                <select class="uk-select uk-border-rounded" name="shared_teams[]" multiple>
-                                    @foreach ($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <label class="uk-form-label uk-text-bold">سطح دسترسی</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-grid-small uk-child-width-auto" uk-grid>
-                                    <div>
-                                        <input class="uk-radio" type="radio" name="permission_level"
-                                            value="read" id="permission-read" checked>
-                                        <label for="permission-read" class="uk-margin-small-right">فقط مشاهده</label>
-                                    </div>
-                                    <div>
-                                        <input class="uk-radio" type="radio" name="permission_level"
-                                            value="edit" id="permission-edit">
-                                        <label for="permission-edit" class="uk-margin-small-right">ویرایش</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="uk-alert uk-alert-warning uk-border-rounded">
-                            <span uk-icon="icon: warning"></span> کاربران با دسترسی ویرایش می‌توانند این پیشنهاد را
-                            تغییر دهند
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="uk-modal-footer uk-border-rounded-bottom uk-background-muted">
-                <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="uk-progress uk-border-rounded">
-                            <div class="uk-progress-bar" style="width: 33%"></div>
-                        </div>
-                        <div class="uk-text-meta uk-text-center">مرحله 1 از 3</div>
-                    </div>
-                    <div class="uk-width-auto">
-                        <button class="uk-button uk-button-default uk-border-rounded uk-margin-small-right"
-                            type="button" uk-toggle="target: #create-prompt-modal">انصراف</button>
-                        <button class="uk-button uk-button-primary uk-border-rounded" type="submit">ذخیره
-                            پیشنهاد</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div> --}}
