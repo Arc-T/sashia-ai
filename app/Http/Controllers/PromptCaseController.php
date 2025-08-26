@@ -18,10 +18,11 @@ class PromptCaseController extends Controller
     // Add relationships to avoid N+1 queries
     public function index(Request $request)
     {
+        $categories = Category::all();
         $userPrompts = UserPrompt::byUser(Auth::id())
                                    ->paginate(10);
-
-        return view('prompt_case.index', compact('userPrompts'));
+ 
+        return view('prompt_case.index', compact('userPrompts','categories'));
     }
 
     public function create()
@@ -39,14 +40,9 @@ class PromptCaseController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'nullable|exists:categories,id',
-            'color' => 'nullable|string|max:20',
             'is_favorite' => 'boolean',
             'tags' => 'array',
             'tags.*' => 'exists:prompt_tags,id',
-            'shared_teams' => 'array',
-            'shared_teams.*' => 'exists:teams,id',
-            'permission_level' => 'array',
-            'permission_level.*' => 'in:read,edit'
         ]);
 
         DB::transaction(function () use ($validated, $request) {

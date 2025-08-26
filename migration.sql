@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `ai_models` (
     `model_identifier` VARCHAR(255) NOT NULL COMMENT 'The API-specific model name (e.g., "gpt-4-turbo-preview")',
     `description` TEXT NULL,
     `version` VARCHAR(50) NULL,
+    `icon` VARCHAR(50) NULL,
     `is_active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Controls whether this model is available for use',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -247,12 +248,16 @@ CREATE TABLE IF NOT EXISTS `user_prompts` (
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     `content` TEXT NOT NULL COMMENT 'The actual prompt text',
+    `category_id` INT UNSIGNED NOT NULL COMMENT 'prompt category id',
     `ai_model_ids` VARCHAR(50) NOT NULL COMMENT 'The models this prompt is optimized for',
     `is_favorite` INT UNSIGNED NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		-- **************************** Table Keys ****************************
 		PRIMARY KEY (`id`),
+		KEY `idx_user_prompts_category_id` (`category_id`),
 		KEY `idx_user_prompts_user_id` (`user_id`),
 		FULLTEXT KEY `ft_user_prompts_title_content` (`title`, `content`),
-    CONSTRAINT `fk_user_prompts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ) ENGINE=InnoDB COMMENT='prompt case table. used for managing user prompts';
+    CONSTRAINT `fk_user_prompts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+    CONSTRAINT `fk_user_prompts_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE
+     ) ENGINE=InnoDB COMMENT='prompt case table. used for managing user prompts';

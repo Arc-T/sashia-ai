@@ -1,0 +1,95 @@
+-- Top-level categories (parent_id is NULL)
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `sort_order`) VALUES
+('Marketing', 'بازاریابی-و-فروش', 'Prompts related to marketing, sales and advertising', '#FF6B6B', 1),
+('Content Creation', 'تولید-محتوا', 'Text, image and video content creation prompts', '#4ECDC4', 2),
+('Programming', 'برنامه-نویسی', 'Developer assistance prompts', '#45B7D1', 3),
+('Data Analysis', 'تحلیل-داده', 'Data analysis and business intelligence prompts', '#96CEB4', 4),
+('Creativity', 'خلاقیت-و-ایده-پردازی', 'Creative and ideation prompts', '#FECA57', 5),
+('Customer Support', 'پشتیبانی-و-خدمات', 'Customer service and support prompts', '#FF9FF3', 6);
+
+-- Subcategories for Marketing
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('Social Media', 'شبکه-های-اجتماعی', 'Social media marketing and content prompts', '#FF9FF3', 1, 1),
+('Email Marketing', 'ایمیل-مارکتینگ', 'Email campaign and newsletter prompts', '#FECA57', 1, 2),
+('SEO', 'سئو', 'Search engine optimization prompts', '#48DBFB', 1, 3),
+('Advertising', 'تبلیغات', 'Ad copy and campaign prompts', '#1DD1A1', 1, 4);
+
+-- Subcategories for Content Creation
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('Blog Writing', 'نوشتن-بلاگ', 'Blog post and article writing prompts', '#00D2D3', 2, 1),
+('Video Scripts', 'فیلمنامه-ویدیو', 'Video script and storyboard prompts', '#54A0FF', 2, 2),
+('Social Media Posts', 'پست-شبکه-اجتماعی', 'Social media content prompts', '#FF6B6B', 2, 3),
+('Product Descriptions', 'توضیحات-محصول', 'E-commerce product description prompts', '#10AC84', 2, 4);
+
+-- Subcategories for Programming
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('Web Development', 'توسعه-وب', 'Web development and frontend prompts', '#FF9FF3', 3, 1),
+('Backend', 'بک-اند', 'Backend and API development prompts', '#FECA57', 3, 2),
+('Database', 'پایگاه-داده', 'Database query and design prompts', '#48DBFB', 3, 3),
+('DevOps', 'دوواپس', 'DevOps and infrastructure prompts', '#1DD1A1', 3, 4);
+
+-- Subcategories for Data Analysis
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('Data Visualization', 'نمایش-داده', 'Data visualization and dashboard prompts', '#00D2D3', 4, 1),
+('Statistical Analysis', 'تحلیل-آماری', 'Statistical analysis and modeling prompts', '#54A0FF', 4, 2),
+('Business Intelligence', 'هوش-تجاری', 'Business intelligence and reporting prompts', '#FF6B6B', 4, 3),
+('Machine Learning', 'یادگیری-ماشین', 'Machine learning and AI model prompts', '#10AC84', 4, 4);
+
+-- Subcategories for Creativity
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('Story Writing', 'نوشتن-داستان', 'Creative writing and storytelling prompts', '#FF9FF3', 5, 1),
+('Art Ideas', 'ایده-های-هنری', 'Art and design inspiration prompts', '#FECA57', 5, 2),
+('Product Naming', 'نام-گذاری-محصول', 'Product and brand naming prompts', '#48DBFB', 5, 3),
+('Brainstorming', 'طوفان-فکری', 'Brainstorming and ideation prompts', '#1DD1A1', 5, 4);
+
+-- Subcategories for Customer Support
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `parent_id`, `sort_order`) VALUES
+('FAQ Generation', 'تولید-سوالات-متداول', 'FAQ and help center content prompts', '#00D2D3', 6, 1),
+('Response Templates', 'قالب-های-پاسخ', 'Customer response template prompts', '#54A0FF', 6, 2),
+('Troubleshooting', 'عیب-یابی', 'Troubleshooting guide prompts', '#FF6B6B', 6, 3),
+('Feedback Analysis', 'تحلیل-بازخورد', 'Customer feedback analysis prompts', '#10AC84', 6, 4);
+
+-- Some inactive categories for testing
+INSERT INTO `categories` (`name`, `slug`, `description`, `color_hex`, `is_active`, `sort_order`) VALUES
+('Legacy Templates', 'قالب-های-قدیمی', 'Deprecated prompt templates', '#CCCCCC', 0, 99),
+('Archived Prompts', 'پرامپت-های-آرشیو', 'Archived and inactive prompts', '#999999', 0, 100); 
+
+
+INSERT INTO `ai_models` (`name`, `vendor`, `model_identifier`, `description`, `version`, `is_active`) VALUES
+('GPT-4 Turbo', 'OpenAI', 'gpt-4-turbo-preview', 'OpenAI\'s most powerful model with 128K context window and knowledge up to April 2023', 'turbo-preview', 1),
+('GPT-4', 'OpenAI', 'gpt-4', 'OpenAI\'s advanced multimodal model with strong reasoning capabilities', '4', 1),
+('GPT-3.5 Turbo', 'OpenAI', 'gpt-3.5-turbo', 'Fast and cost-effective model for everyday tasks', '3.5-turbo', 1),
+('Claude 3 Opus', 'Anthropic', 'claude-3-opus-20240229', 'Anthropic\'s most intelligent model for highly complex tasks', '20240229', 1),
+('Claude 3 Sonnet', 'Anthropic', 'claude-3-sonnet-20240229', 'Anthropic\'s balanced model between intelligence and speed', '20240229', 1),
+('Claude 3 Haiku', 'Anthropic', 'claude-3-haiku-20240307', 'Anthropic\'s fastest and most compact model for simple tasks', '20240307', 1),
+('Gemini 1.0 Pro', 'Google', 'gemini-pro', 'Google\'s advanced multimodal model for general purposes', '1.0', 1),
+('Gemini 1.5 Pro', 'Google', 'gemini-1.5-pro', 'Google\'s latest model with million-token context window', '1.5', 1),
+('Llama 3', 'Meta', 'llama-3-70b', 'Meta\'s open-source large language model with 70B parameters', '3-70b', 1),
+('Mixtral 8x7B', 'Mistral AI', 'mixtral-8x7b', 'High-quality sparse mixture of experts model with 8x7B parameters', '8x7b', 1),
+('DALL-E 3', 'OpenAI', 'dall-e-3', 'OpenAI\'s most advanced image generation model', '3', 1),
+('Stable Diffusion XL', 'Stability AI', 'stable-diffusion-xl', 'Open-source image generation model with high-quality outputs', 'XL', 1),
+('Midjourney v6', 'Midjourney', 'midjourney-v6', 'Advanced AI image generation model with photorealistic capabilities', 'v6', 1),
+('Whisper Large', 'OpenAI', 'whisper-large', 'OpenAI\'s speech recognition and translation model', 'large', 1),
+('GPT-4 Vision', 'OpenAI', 'gpt-4-vision-preview', 'Multimodal model that can understand images and text', 'vision-preview', 1),
+('Jurassic-2 Ultra', 'AI21 Labs', 'j2-ultra', 'AI21 Studio\'s most capable model for complex reasoning', '2-ultra', 1),
+('Command R+', 'Cohere', 'command-r-plus', 'Cohere\'s advanced model for enterprise applications', 'r-plus', 1),
+('Claude Instant', 'Anthropic', 'claude-instant-1.2', 'Anthropic\'s faster and more affordable model', '1.2', 0),
+('GPT-3', 'OpenAI', 'gpt-3', 'Legacy OpenAI model (deprecated)', '3', 0),
+('Codex', 'OpenAI', 'code-davinci-002', 'OpenAI\'s code generation model (deprecated)', 'davinci-002', 0);
+
+INSERT INTO `user_prompts` (`user_id`, `category_id`, `title`, `description`, `content`, `ai_model_ids`, `is_favorite`, `created_at`) VALUES
+(1, 1, 'ایمیل بازاریابی حرفه‌ای', 'قالب ایمیل برای جذب مشتریان جدید', 'یک ایمیل بازاریابی حرفه‌ای بنویس که شامل معرفی محصول، مزایای آن و دعوت به اقدام واضح باشد. ایمیل باید جذاب، مختصر و مؤثر باشد.', '1,2,3', 1, '2024-01-15 10:30:00'),
+(1, 1, 'پست اینستاگرام محصول', 'قالب پست برای معرفی محصول در اینستاگرام', 'یک پست اینستاگرام جذاب برای محصول جدید ما ایجاد کن. شامل توضیحات کوتاه، هشتگ‌های مرتبط و دعوت به تعامل.', '1,2,3', 0, '2024-01-16 14:20:00'),
+(1, 3, 'کد پیاده‌سازی API', 'ساختار پایه برای API endpoint', 'یک endpoint API RESTful با Node.js و Express ایجاد کن که شامل validation، error handling و documentation باشد.', '3,9,10', 1, '2024-01-17 09:45:00'),
+(1, 4, 'تحلیل داده فروش', 'آنالیز داده‌های فروش فصلی', 'یک گزارش تحلیل داده برای فروش سه ماهه ایجاد کن. شامل نمودارها، insights و پیشنهادات بهبود.', '4,5,6', 0, '2024-01-18 16:10:00'),
+(1, 5, 'داستان خلاقانه کوتاه', 'داستان کوتاه با موضوع فناوری', 'یک داستان کوتاه 500 کلمه‌ای درباره تأثیر هوش مصنوعی بر زندگی انسان بنویس.', '1,2,5', 1, '2024-01-19 11:30:00'),
+(1, 6, 'پاسخ پشتیبانی مشتری', 'قالب پاسخ به شکایت مشتری', 'یک پاسخ حرفه‌ای و همدلانه به شکایت مشتری بنویس که شامل عذرخواهی، راه‌حل و پیگیری باشد.', '1,2,7', 0, '2024-01-20 13:15:00'),
+(1, 2, 'اسکریپت ویدیوی آموزشی', 'اسکریپت برای ویدیوی آموزشی 5 دقیقه‌ای', 'اسکریپت کامل برای یک ویدیوی آموزشی درباره مفاهیم پایه برنامه‌نویسی ایجاد کن.', '2,3,8', 1, '2024-01-21 15:40:00'),
+(1, 1, 'بهینه‌سازی سئو', 'چک‌لیست سئو برای محتوای وب', 'یک چک‌لیست جامع برای بهینه‌سازی سئو محتوای وب ایجاد کن که شامل meta tags، keywords و ساختار محتوا باشد.', '1,4,6', 0, '2024-01-22 08:50:00'),
+(1, 5, 'نام‌گذاری محصول جدید', 'ایده‌های نام برای محصول tech جدید', '10 ایده خلاقانه برای نام‌گذاری یک محصول نرم‌افزاری جدید ایجاد کن.', '5,8,9', 1, '2024-01-23 12:25:00'),
+(1, 4, 'گزارش مالی سه‌ماهه', 'قالب گزارش مالی حرفه‌ای', 'یک گزارش مالی سه‌ماهه با ساختار استاندارد ایجاد کن که شامل درآمد، هزینه‌ها و تحلیل روند باشد.', '4,6,7', 0, '2024-01-24 17:05:00'),
+(1, 2, 'محتوای وبلاگ سلامت', 'مقاله درباره تغذیه سالم', 'یک مقاله 1000 کلمه‌ای درباره اهمیت تغذیه سالم و تأثیر آن بر سلامت روان بنویس.', '1,2,8', 1, '2024-01-25 10:15:00'),
+(1, 3, 'کد authentication', 'سیستم احراز هویت امن', 'یک سیستم احراز هویت با Node.js ایجاد کن که شامل register، login، JWT و password hashing باشد.', '3,9,10', 1, '2024-01-26 14:30:00'),
+(1, 1, 'استراتژی شبکه‌های اجتماعی', 'برنامه محتوای ماهانه', 'یک استراتژی محتوای ماهانه برای شبکه‌های اجتماعی ایجاد کن که شامل calendar، content ideas و engagement tactics باشد.', '1,2,4', 0, '2024-01-27 09:20:00'),
+(1, 2, 'رزومه حرفه‌ای', 'قالب رزومه برای توسعه‌دهنده', 'یک رزومه حرفه‌ای برای توسعه‌دهنده full-stack ایجاد کن که شامل skills، experience و projects باشد.', '1,2,3', 1, '2024-01-28 16:45:00'),
+(1, 4, 'برنامه کسب‌وکار', 'طرح کسب‌وکار استارتاپ', 'یک طرح کسب‌وکار کامل برای استارتاپ tech ایجاد کن که شامل market analysis، financial projections و growth strategy باشد.', '1,4,6', 0, '2024-01-29 11:10:00');

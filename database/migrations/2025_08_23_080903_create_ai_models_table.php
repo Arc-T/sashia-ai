@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('model_identifier', 255)->unique();
             $table->text('description')->nullable();
             $table->string('version', 50)->nullable();
+            $table->string('icon', 50)->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             

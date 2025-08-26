@@ -15,7 +15,12 @@
                 <span uk-icon="icon: plus-circle; ratio: 1.2" class="uk-margin-small-left"></span>
                 ایجاد پرامپت جدید
             </button>
-            @include('prompt_case.create')
+
+            {{-- CREATE‌ FORM --}}
+            <form method="POST" action="{{ route('prompt-case.store') }}">
+                @include('prompt_case.create')
+            </form>
+
         </div>
     </div>
 
@@ -140,7 +145,7 @@
                         <thead>
                             <tr>
                                 <th class="uk-width-small">عنوان</th>
-                                <th>پرامپت</th>
+                                <th class="uk-width-small">پرامپت</th>
                                 <th class="uk-width-small">دسته‌بندی</th>
                                 <th class="uk-width-small">تاریخ ایجاد</th>
                                 <th class="uk-width-small">عملیات</th>
@@ -148,100 +153,110 @@
                         </thead>
                         <tbody>
                             @foreach ($userPrompts as $userPrompt)
-                            <tr>
-                                <td>
-                                    <div class="uk-flex uk-flex-middle">
-                                        <span uk-icon="icon: star; ratio: 0.8"
-                                            class="uk-margin-small-left uk-text-warning"></span>
-                                        <span class="uk-text-bold">{{ $userPrompt->title }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uk-text-truncate" style="max-width: 300px;">
-                                        یک پست جذاب برای اینستاگرام درباره محصول جدید ما بنویس که شامل مزایای محصول و یک
-                                        دعوت به اقدام قوی باشد...
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="uk-label uk-label-success">{{ $userPrompt->prompt }}</span>
-                                </td>
-                                <td>
-                                    <span class="uk-text-small">{{ $userPrompt->created_at }}</span>
-                                </td>
-                                <td class="uk-text-nowrap">
-                                    <div class="uk-button-group">
-                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                            uk-icon="copy" uk-tooltip="کپی">
-                                        </button>
-                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                            uk-icon="eye" uk-tooltip="نمایش">
-                                        </button>
-                                        <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                            uk-icon="pencil" uk-tooltip="ویرایش">
-                                        </button>
-                                        <!-- Delete Button -->
-                                        <button class="uk-icon-button uk-button-danger uk-margin-small-right"
-                                            uk-icon="trash" uk-tooltip="حذف" uk-toggle="target: #delete-modal">
-                                        </button>
+                                <tr>
+                                    <td>
+                                        <div class="uk-flex uk-flex-middle">
+                                            <span uk-icon="icon: star; ratio: 0.8"
+                                                class="uk-margin-small-left uk-text-warning"></span>
+                                            <span class="uk-text-bold">{{ $userPrompt->title }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="uk-text-truncate" style="max-width: 500px;">
+                                            {{ $userPrompt->content }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @php
+                                            $category = $categories[$userPrompt->category_id] ?? null;
+                                        @endphp
 
-                                        <!-- Delete Confirmation Modal -->
-                                        <div id="delete-modal" uk-modal>
-                                            <div
-                                                class="uk-modal-dialog uk-border-rounded uk-box-shadow-xlarge uk-width-1-1 uk-width-medium@m">
+                                        @if ($category)
+                                            <span class="uk-label" style="background-color: {{ $category->color_hex }};">
+                                                {{ $category->slug }}
+                                            </span>
+                                        @else
+                                            <span class="uk-label uk-label-warning">بدون دسته</span>
+                                        @endif
+                                    <td>
+                                        <span class="uk-text-small">{{ $userPrompt->created_at }}</span>
+                                    </td>
+                                    <td class="uk-text-nowrap">
+                                        <div class="uk-button-group">
+                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                                uk-icon="copy" uk-tooltip="کپی">
+                                            </button>
+                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                                uk-icon="eye" uk-tooltip="نمایش">
+                                            </button>
+                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
+                                                uk-icon="pencil" uk-tooltip="ویرایش">
+                                            </button>
+                                            <!-- Delete Button -->
+                                            <button class="uk-icon-button uk-button-danger uk-margin-small-right"
+                                                uk-icon="trash" uk-tooltip="حذف" uk-toggle="target: #delete-modal">
+                                            </button>
 
-                                                <!-- Close -->
-                                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                            <!-- Delete Confirmation Modal -->
+                                            <div id="delete-modal" uk-modal>
+                                                <div
+                                                    class="uk-modal-dialog uk-border-rounded uk-box-shadow-xlarge uk-width-1-1 uk-width-medium@m">
 
-                                                <!-- Header -->
-                                                <div class="uk-padding-small uk-light"
-                                                    style="background: linear-gradient(135deg, #f44336, #e57373);">
-                                                    <h3
-                                                        class="uk-modal-title uk-text-bold uk-flex uk-flex-middle uk-margin-remove">
-                                                        <span uk-icon="icon: warning; ratio: 1.5"
-                                                            class="uk-margin-small-left"></span>
-                                                        حذف آیتم
-                                                    </h3>
-                                                </div>
+                                                    <!-- Close -->
+                                                    <button class="uk-modal-close-default" type="button"
+                                                        uk-close></button>
 
-                                                <!-- Body -->
-                                                <div class="uk-padding uk-text-center">
-                                                    <p class="uk-text-large uk-text-bold">آیا مطمئن هستید که می‌خواهید این
-                                                        آیتم را حذف کنید؟</p>
-                                                    <p class="uk-text-meta">این عملیات قابل بازگشت نیست.</p>
-                                                </div>
+                                                    <!-- Header -->
+                                                    <div class="uk-padding-small uk-light"
+                                                        style="background: linear-gradient(135deg, #f44336, #e57373);">
+                                                        <h3
+                                                            class="uk-modal-title uk-text-bold uk-flex uk-flex-middle uk-margin-remove">
+                                                            <span uk-icon="icon: warning; ratio: 1.5"
+                                                                class="uk-margin-small-left"></span>
+                                                            حذف آیتم
+                                                        </h3>
+                                                    </div>
 
-                                                <!-- Footer -->
-                                                <div class="uk-padding-small uk-background-muted">
-                                                    <div class="uk-flex uk-flex-between uk-flex-middle" uk-grid>
-                                                        <div>
-                                                            <button
-                                                                class="uk-button uk-button-default uk-border-pill uk-modal-close"
-                                                                type="button">
-                                                                <span uk-icon="icon: close"></span> لغو
-                                                            </button>
-                                                        </div>
-                                                        <div>
-                                                            <button class="uk-button uk-button-danger uk-border-pill"
-                                                                type="button" id="confirm-delete-btn">
-                                                                <span uk-icon="icon: trash"></span> حذف
-                                                            </button>
+                                                    <!-- Body -->
+                                                    <div class="uk-padding uk-text-center">
+                                                        <p class="uk-text-large uk-text-bold">آیا مطمئن هستید که می‌خواهید
+                                                            این
+                                                            آیتم را حذف کنید؟</p>
+                                                        <p class="uk-text-meta">این عملیات قابل بازگشت نیست.</p>
+                                                    </div>
+
+                                                    <!-- Footer -->
+                                                    <div class="uk-padding-small uk-background-muted">
+                                                        <div class="uk-flex uk-flex-between uk-flex-middle" uk-grid>
+                                                            <div>
+                                                                <button
+                                                                    class="uk-button uk-button-default uk-border-pill uk-modal-close"
+                                                                    type="button">
+                                                                    <span uk-icon="icon: close"></span> لغو
+                                                                </button>
+                                                            </div>
+                                                            <div>
+                                                                <button class="uk-button uk-button-danger uk-border-pill"
+                                                                    type="button" id="confirm-delete-btn">
+                                                                    <span uk-icon="icon: trash"></span> حذف
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Optional JS: handle confirmation -->
-                                        <script>
-                                            document.getElementById('confirm-delete-btn').addEventListener('click', function() {
-                                                // Put your delete logic here
-                                                UIkit.modal('#delete-modal').hide(); // close modal after action
-                                                console.log('Item deleted!');
-                                            });
-                                        </script>
-                                    </div>
-                                </td>
-                            </tr>
+                                            <!-- Optional JS: handle confirmation -->
+                                            <script>
+                                                document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+                                                    // Put your delete logic here
+                                                    UIkit.modal('#delete-modal').hide(); // close modal after action
+                                                    console.log('Item deleted!');
+                                                });
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

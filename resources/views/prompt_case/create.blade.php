@@ -22,13 +22,14 @@
                         <label class="uk-form-label uk-text-bold">
                             <span uk-icon="icon: pencil"></span> عنوان
                         </label>
-                        <input class="uk-input custom-input" type="text" placeholder="مثال: تصویر طبیعت" />
+                        <input name="title" class="uk-input custom-input" type="text"
+                            placeholder="مثال: تصویر طبیعت" />
                     </div>
                     <div class="uk-width-1-2@s">
                         <label class="uk-form-label uk-text-bold">
                             <span uk-icon="icon: bolt"></span>دسته بندی
                         </label>
-                        <select class="uk-select custom-input">
+                        <select class="uk-select custom-input" name="category">
                             <option value="">انتخاب کنید</option>
                             <option value="easy">آسان</option>
                             <option value="medium">متوسط</option>
@@ -40,7 +41,7 @@
                         <label class="uk-form-label uk-text-bold" for="prompt-content">
                             <span uk-icon="icon: commenting"></span> محتوا
                         </label>
-                        <textarea class="uk-textarea custom-input uk-resize-vertical" id="prompt-content" rows="4"
+                        <textarea name="content" class="uk-textarea custom-input uk-resize-vertical" id="prompt-content" rows="4"
                             placeholder="متن پرامپت را وارد کنید..." required></textarea>
                     </div>
 
@@ -49,7 +50,8 @@
                         <label class="uk-form-label uk-text-bold" for="prompt-description">
                             <span uk-icon="icon: file-text"></span> توضیحات
                         </label>
-                        <textarea class="uk-textarea custom-input" id="prompt-description" rows="1" placeholder="توضیح مختصر..."></textarea>
+                        <textarea name="description" class="uk-textarea custom-input" id="prompt-description" rows="1"
+                            placeholder="توضیح مختصر..."></textarea>
                     </div>
 
                     <!-- AI Models Multi-Select -->
@@ -58,7 +60,7 @@
                             <span uk-icon="icon: settings; ratio: 1.2" class="uk-margin-small-left"></span>
                             مدل‌های هوش مصنوعی
                         </label>
-                        <select id="ai-models" multiple placeholder="انتخاب کنید ...">
+                        <select name="ai_models" id="ai-models" multiple placeholder="انتخاب کنید ...">
                             <option value="gpt-4" data-icon="bolt" data-color="#1e87f0">GPT-4</option>
                             <option value="gpt-3.5" data-icon="code" data-color="#6a11cb">GPT-3.5 Turbo
                             </option>
@@ -78,7 +80,8 @@
                         <label class="uk-form-label uk-text-bold">
                             <span uk-icon="icon: tag"></span> برچسب‌ها
                         </label>
-                        <input class="uk-input custom-input" type="text" placeholder="مثال: مقاله, آموزشی" />
+                        <input name="tags" class="uk-input custom-input" type="text"
+                            placeholder="مثال: مقاله, آموزشی" />
                     </div>
 
                 </div>
@@ -94,7 +97,7 @@
                     </button>
                 </div>
                 <div>
-                    <button class="uk-button uk-button-primary uk-border-pill" type="submit">
+                    <button type="submit" class="uk-button uk-button-primary uk-border-pill" type="submit">
                         <span uk-icon="icon: check"></span> ذخیره پرامپت
                     </button>
                 </div>
