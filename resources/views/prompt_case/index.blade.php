@@ -242,7 +242,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endfor
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -250,15 +250,7 @@
 
             <!-- Pagination -->
             <div class="uk-card-footer">
-                <ul class="uk-pagination uk-flex-center" uk-margin>
-                    <li><a href="#"><span uk-pagination-previous></span></a></li>
-                    <li><a href="#">۱</a></li>
-                    <li class="uk-active"><a href="#">۲</a></li>
-                    <li><a href="#">۳</a></li>
-                    <li><a href="#">۴</a></li>
-                    <li><a href="#">۵</a></li>
-                    <li><a href="#"><span uk-pagination-next></span></a></li>
-                </ul>
+                {{ $userPrompts->links('components.pagination') }}
             </div>
         </div>
     </div>

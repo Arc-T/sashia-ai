@@ -21,7 +21,7 @@ class PromptCaseController extends Controller
         $userPrompts = UserPrompt::byUser(Auth::id())
                                    ->paginate(10);
 
-        return view('user_prompts', compact('userPrompts'));
+        return view('prompt_case.index', compact('userPrompts'));
     }
 
     public function create()

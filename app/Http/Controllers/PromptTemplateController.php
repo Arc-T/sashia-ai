@@ -53,7 +53,7 @@ class PromptTemplateController extends Controller
         $all = PromptCollectionService::LexiaPrompts();
         $items = $all->forPage($page, $perPage);
 
-        $paginated = new LengthAwarePaginator(
+        $images = new LengthAwarePaginator(
             $items,
             $all->count(),
             $perPage,
@@ -61,7 +61,7 @@ class PromptTemplateController extends Controller
             ['path' => url('/prompt-templates')]
         );
 
-        return view('prompt_templates.index', ['images' => $paginated]);
+        return view('prompt_templates.index', compact('images'));
     }
 
     public function show($id)

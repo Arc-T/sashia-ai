@@ -13,6 +13,12 @@
 
     <!-- Dark Theme (loaded conditionally) -->
     <link rel="stylesheet" href="{{ asset('css/theme/dark-theme.css') }}" id="darkTheme" disabled>
+
+    {{-- Fav icons --}}
+    <link rel="icon" type="image/image/svg+xml" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="32x32">
+    <link rel="icon" type="image/image/svg+xml" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="16x16">
+    <link rel="apple-touch-icon" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}">
+
     @stack('styles')
 </head>
 

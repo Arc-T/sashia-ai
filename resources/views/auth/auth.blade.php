@@ -8,7 +8,8 @@
 
     <!-- UIkit CSS -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('uikit/dist/css/uikit-rtl.min.css') }}">
+    @vite(['resources/css/app.css'])
+
     <link rel="stylesheet" href="{{ asset('css/theme/light-theme.css') }}">
 </head>
 
@@ -169,10 +170,8 @@
             </div>
         </div>
     </div>
+    @vite(['resources/js/app.js'])
 
-    <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.0/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.0/dist/js/uikit-icons.min.js"></script>
 </body>
 
 </html>

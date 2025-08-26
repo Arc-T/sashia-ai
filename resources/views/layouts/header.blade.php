@@ -14,7 +14,7 @@
             <!-- Desktop Navigation -->
             <ul class="uk-navbar-nav uk-visible@m uk-margin-right">
                 <li>
-                    <a href="#">
+                    <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-collection uk-margin-small-left" viewBox="0 0 16 16">
                             <path
@@ -29,19 +29,19 @@
                                     <li class="uk-nav-header uk-margin-small-bottom">
                                         <span uk-icon="icon: commenting" class="uk-margin-small-left"></span>پرامپت ها
                                     </li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: image"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: image"
                                                 class="uk-margin-small-left"></span>گرافیکی</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon:  paint-bucket"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon:  paint-bucket"
                                                 class="uk-margin-small-left"></span>طراحی محصول</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: camera"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: camera"
                                                 class="uk-margin-small-left"></span>عکاسی</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: user"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: user"
                                                 class="uk-margin-small-left"></span>کارکتر</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: happy"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: happy"
                                                 class="uk-margin-small-left"></span>حیوانات</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: world"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: world"
                                                 class="uk-margin-small-left"></span>طبیعت</a></li>
-                                    <li><a href="{{ route('gallery') }}"><span uk-icon="icon: nut"
+                                    <li><a href="{{ route('prompt-templates.index') }}"><span uk-icon="icon: nut"
                                                 class="uk-margin-small-left"></span>انتزاع</a></li>
                                 </ul>
                             </div>
@@ -155,7 +155,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('prompt_case.index') }}">
+                    <a href="{{ route('prompt-case.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-suitcase-lg uk-margin-small-left" viewBox="0 0 16 16">
                             <path
@@ -164,7 +164,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('prompt_case.index') }}">
+                    <a href="{{ route('prompt-case.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-house-gear uk-margin-small-left" viewBox="0 0 16 16">
                             <path
