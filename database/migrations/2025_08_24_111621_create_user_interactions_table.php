@@ -16,7 +16,7 @@ return new class extends Migration
             $table->json('metadata')->nullable();
             $table->timestamps();
             
-            $table->unique(['user_id', 'prompt_template_id', 'interaction_type']);
+            $table->unique(['user_id', 'prompt_template_id', 'interaction_type'], 'uniq_user_interaction');
             $table->index(['prompt_template_id', 'interaction_type']);
         });
     }
