@@ -36,6 +36,7 @@ class UserPrompt extends Model
         'content',
         'ai_model_ids',
         'is_favorite',
+        'category_id'
     ];
 
     /**
@@ -55,6 +56,14 @@ class UserPrompt extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+        /**
+     * Get the user that owns the prompt.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**

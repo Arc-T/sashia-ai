@@ -22,9 +22,11 @@ class PromptCaseController extends Controller
         $tags = PromptTag::all();
         $ai_models = AIModel::all();
         $categories = Category::all();
-        $userPrompts = UserPrompt::byUser(Auth::id())->paginate(10);
- 
-        return view('prompt_case.index', compact('tags','ai_models','userPrompts','categories'));
+        $userPrompts = UserPrompt::byUser(Auth::id())
+        ->with('category')
+        ->paginate(10);
+
+        return view('prompt_case.index', compact('tags', 'ai_models', 'userPrompts', 'categories'));
     }
 
     public function store(Request $request)
@@ -38,23 +40,26 @@ class PromptCaseController extends Controller
         //     'tags.*' => 'exists:prompt_tags,id',
         // ]);
 
-        dd($request);
+        $aiModels = $request->input('ai_models', []);
+        $tags = $request->input('tags', []);
 
-        DB::transaction(function () use ($request) {
-            $prompt = UserPrompt::create([
+        $aiModels = implode(',', $aiModels);
+
+        
+        DB::transaction(function () use ($request, $aiModels) {
+            UserPrompt::create([
                 'user_id' => Auth::id(),
                 'title' => $request['title'],
                 'description' => $request['description'],
                 'content' => $request['content'],
                 'category_id' => $request['category_id'],
-                'ai_models' => $request['ai_models'],
+                'ai_model_ids' => $aiModels,
                 'is_favorite' => $request['is_favorite'] ?? false,
             ]);
-
         });
 
-        return redirect()->route('prompt_case.index')
-            ->with('success', 'پیشنهاد با موفقیت ایجاد شد.');
+        return redirect()->route('prompt-case.index')
+            ->with('success', 'پرامپت با موفقیت ایجاد شد.');
     }
 
     public function edit(PromptCase $prompt)

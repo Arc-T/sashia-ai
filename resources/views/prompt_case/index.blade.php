@@ -8,11 +8,7 @@
 
         <!-- Search and Filter -->
         <div class="uk-inline">
-            <!-- Trigger Button -->
-            <form method="POST" action="{{ route('prompt-case.store') }}">
-                @csrf
-                @include('prompt_case.create')
-            </form>
+            @include('prompt_case.create')
         </div>
     </div>
 
@@ -25,7 +21,7 @@
                         <span uk-icon="icon: database; ratio: 2" class="uk-text-primary"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->total() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">کل پرامپت ها</p>
                     </div>
                 </div>
@@ -38,7 +34,8 @@
                         <span uk-icon="icon: star; ratio: 2" class="uk-text-warning"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">
+                            {{ $userPrompts->where('is_favorite', true)->count() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">مورد علاقه‌ها</p>
                     </div>
                 </div>
@@ -136,6 +133,7 @@
                     <table class="uk-table uk-table-divider uk-table-middle uk-table-hover">
                         <thead>
                             <tr>
+                                <th class="uk-width-small">ردیف</th>
                                 <th class="uk-width-small">عنوان</th>
                                 <th class="uk-width-small">پرامپت</th>
                                 <th class="uk-width-small">دسته‌بندی</th>
@@ -147,29 +145,26 @@
                             @foreach ($userPrompts as $userPrompt)
                                 <tr>
                                     <td>
-                                        <div class="uk-flex uk-flex-middle">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>
+                                        <div class="uk-text-truncate" style="max-width: 300px;">
                                             <span uk-icon="icon: star; ratio: 0.8"
                                                 class="uk-margin-small-left uk-text-warning"></span>
                                             <span class="uk-text-bold">{{ $userPrompt->title }}</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="uk-text-truncate" style="max-width: 500px;">
+                                        <div class="uk-text-truncate" style="max-width: 300px;">
                                             {{ $userPrompt->content }}
                                         </div>
                                     </td>
                                     <td>
                                         @php
-                                            $category = $categories[$userPrompt->category_id] ?? null;
+                                            $category = $categories->firstWhere('id', $userPrompt->category_id);
                                         @endphp
-
-                                        @if ($category)
-                                            <span class="uk-label" style="background-color: {{ $category->color_hex }};">
-                                                {{ $category->slug }}
-                                            </span>
-                                        @else
-                                            <span class="uk-label uk-label-warning">بدون دسته</span>
-                                        @endif
+                                        <span class="uk-label"
+                                            style="background-color: {{ $category->color_hex }};">{{ $category->slug }}</span>
                                     <td>
                                         <span class="uk-text-small">{{ $userPrompt->created_at }}</span>
                                     </td>
@@ -195,8 +190,7 @@
                                                     class="uk-modal-dialog uk-border-rounded uk-box-shadow-xlarge uk-width-1-1 uk-width-medium@m">
 
                                                     <!-- Close -->
-                                                    <button class="uk-modal-close-default" type="button"
-                                                        uk-close></button>
+                                                    <button class="uk-modal-close-default" type="button" uk-close></button>
 
                                                     <!-- Header -->
                                                     <div class="uk-padding-small uk-light"
