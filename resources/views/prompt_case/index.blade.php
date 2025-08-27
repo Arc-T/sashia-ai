@@ -9,18 +9,10 @@
         <!-- Search and Filter -->
         <div class="uk-inline">
             <!-- Trigger Button -->
-            <button class="uk-button uk-border-pill uk-light uk-flex uk-flex-middle" type="button"
-                uk-toggle="target: #prompt-modal"
-                style="background: linear-gradient(135deg, #6a11cb, #2575fc); border: none; padding: 10px 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
-                <span uk-icon="icon: plus-circle; ratio: 1.2" class="uk-margin-small-left"></span>
-                ایجاد پرامپت جدید
-            </button>
-
-            {{-- CREATE‌ FORM --}}
             <form method="POST" action="{{ route('prompt-case.store') }}">
+                @csrf
                 @include('prompt_case.create')
             </form>
-
         </div>
     </div>
 
@@ -99,7 +91,7 @@
                                 <span class="uk-margin-small-right">فیلترها</span>
                             </button>
                             <div uk-dropdown="mode: click; pos: bottom-right; offset: 5">
-                                <form class="uk-form-stacked">
+                                <div class="uk-form-stacked">
                                     <div class="uk-margin">
                                         <label class="uk-form-label">دسته‌بندی</label>
                                         <div class="uk-form-controls">
@@ -131,7 +123,7 @@
                                     </div>
                                     <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-top">اعمال
                                         فیلترها</button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

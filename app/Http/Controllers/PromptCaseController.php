@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AIModel;
 use App\Models\PromptCase;
 use App\Models\Category;
 use App\Models\PromptCaseTag;
@@ -18,59 +19,38 @@ class PromptCaseController extends Controller
     // Add relationships to avoid N+1 queries
     public function index(Request $request)
     {
-        $categories = Category::all();
-        $userPrompts = UserPrompt::byUser(Auth::id())
-                                   ->paginate(10);
- 
-        return view('prompt_case.index', compact('userPrompts','categories'));
-    }
-
-    public function create()
-    {
-        $categories = Category::all();
-        $teams = Team::all();
         $tags = PromptTag::all();
-
-        return view('prompt_case.create', compact('categories', 'teams', 'tags'));
+        $ai_models = AIModel::all();
+        $categories = Category::all();
+        $userPrompts = UserPrompt::byUser(Auth::id())->paginate(10);
+ 
+        return view('prompt_case.index', compact('tags','ai_models','userPrompts','categories'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'is_favorite' => 'boolean',
-            'tags' => 'array',
-            'tags.*' => 'exists:prompt_tags,id',
-        ]);
+        // $validated = $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'content' => 'required|string',
+        //     'category_id' => 'nullable|exists:categories,id',
+        //     'is_favorite' => 'boolean',
+        //     'tags' => 'array',
+        //     'tags.*' => 'exists:prompt_tags,id',
+        // ]);
 
-        DB::transaction(function () use ($validated, $request) {
-            $prompt = PromptCase::create([
-                'title' => $validated['title'],
-                'content' => $validated['content'],
-                'category_id' => $validated['category_id'],
-                'color' => $validated['color'] ?? '#1e87f0',
-                'is_favorite' => $validated['is_favorite'] ?? false,
-                'user_id' => Auth::id()
+        dd($request);
+
+        DB::transaction(function () use ($request) {
+            $prompt = UserPrompt::create([
+                'user_id' => Auth::id(),
+                'title' => $request['title'],
+                'description' => $request['description'],
+                'content' => $request['content'],
+                'category_id' => $request['category_id'],
+                'ai_models' => $request['ai_models'],
+                'is_favorite' => $request['is_favorite'] ?? false,
             ]);
 
-            // Attach tags
-            if (isset($validated['tags'])) {
-                $prompt->tags()->attach($validated['tags']);
-            }
-
-            // Share with teams
-            if (isset($validated['shared_teams'])) {
-                $teamData = [];
-                foreach ($validated['shared_teams'] as $teamId) {
-                    $teamData[$teamId] = [
-                        'permission_level' => $validated['permission_level'][$teamId] ?? 'read',
-                        'shared_by' => Auth::id()
-                    ];
-                }
-                $prompt->teams()->attach($teamData);
-            }
         });
 
         return redirect()->route('prompt_case.index')

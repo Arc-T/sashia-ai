@@ -19,7 +19,6 @@ Route::get('/maker', function () {
     return view('maker');
 });
 
-
 Route::middleware(['auth'])->group(function () {
     Route::resource('/prompt-case', PromptCaseController::class);
     Route::post('/prompt-case/{prompt}/favorite', [PromptCaseController::class, 'toggleFavorite'])->name('prompt_case.favorite');

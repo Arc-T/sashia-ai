@@ -16,19 +16,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-
-        for ($i = 0; $i < 5; $i++) {
-            DB::table('users')->insert([
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'email' => $faker->unique()->safeEmail,
-                'phone' => $faker->unique()->phoneNumber,
-                'password' => Hash::make('password123'), // Default password for testing
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
 
         // Insert a specific user for testing
         DB::table('users')->insert([
@@ -40,5 +27,19 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 5; $i++) {
+            DB::table('users')->insert([
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'email' => $faker->unique()->safeEmail,
+                'phone' => $faker->unique()->phoneNumber,
+                'password' => Hash::make('password123'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

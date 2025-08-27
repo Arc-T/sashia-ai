@@ -207,10 +207,6 @@ body {
   background-color: var(--color-section-muted);
 }
 
-.uk-table tr:nth-child(even) {
-  background-color: var(--color-section-default);
-}
-
 /* ======================
    Modals
    ====================== */

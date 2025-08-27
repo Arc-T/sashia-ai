@@ -287,16 +287,6 @@ Custom
   background-color: var(--color-surface-4dp);
 }
 
-.uk-table-striped tbody tr:nth-child(even) {
-  background-color: var(--color-surface-1dp);
-}
-
-.uk-table-divider > :first-child > tr:not(:first-child),
-.uk-table-divider > :not(:first-child) > tr,
-.uk-table-divider > tr:not(:first-child) {
-  border-top-color: var(--color-divider);
-}
-
 /* ======================
    Modals & Dialogs
    ====================== */
