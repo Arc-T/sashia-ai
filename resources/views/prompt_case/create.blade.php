@@ -1,11 +1,11 @@
-<button class="uk-button uk-border-pill uk-light uk-flex uk-flex-middle" type="button" uk-toggle="target: #prompt-modal"
+<button class="uk-button uk-border-pill uk-light uk-flex uk-flex-middle" type="button" uk-toggle="target: #create_prompt_modal"
     style="background: linear-gradient(135deg, #6a11cb, #2575fc); border: none; padding: 10px 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
     <span uk-icon="icon: plus-circle; ratio: 1.2" class="uk-margin-small-left"></span>
     ایجاد پرامپت جدید
 </button>
 
-<div id="prompt-modal" uk-modal>
-    <div class="uk-modal-dialog uk-border-rounded uk-box-shadow-xlarge uk-width-1-1 uk-width-2xlarge@m"
+<div id="create_prompt_modal" uk-modal>
+    <div class="uk-modal-dialog uk-box-shadow-xlarge uk-width-1-1 uk-width-2xlarge@m"
         style="max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
 
         <form method="POST" action="{{ route('prompt-case.store') }}">
