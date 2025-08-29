@@ -16,10 +16,10 @@
 
     {{-- Fav icons --}}
     <link rel="icon" type="image/image/svg+xml"
-        href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="32x32">
+        href="{{ asset('images/logo.svg') }}" sizes="32x32">
     <link rel="icon" type="image/image/svg+xml"
-        href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="16x16">
-    <link rel="apple-touch-icon" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}">
+        href="{{ asset('images/logo.svg') }}" sizes="16x16">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.svg') }}">
 
     @stack('styles')
 </head>

@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AIModel;
 use App\Models\PromptCase;
 use App\Models\Category;
-use App\Models\PromptCaseTag;
 use App\Models\PromptCaseUsageStat;
-use App\Models\PromptTag;
-use App\Models\Team;
+use App\Models\Tag;
 use App\Models\UserPrompt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +17,12 @@ class PromptCaseController extends Controller
     // Add relationships to avoid N+1 queries
     public function index(Request $request)
     {
-        $tags = PromptTag::all();
+        $tags = Tag::all();
         $ai_models = AIModel::all();
         $categories = Category::all();
         $userPrompts = UserPrompt::byUser(Auth::id())
-        ->with('category')
-        ->paginate(10);
+            ->with('category')
+            ->paginate(10);
 
         return view('prompt_case.index', compact('tags', 'ai_models', 'userPrompts', 'categories'));
     }
@@ -43,34 +41,41 @@ class PromptCaseController extends Controller
         $aiModels = $request->input('ai_models', []);
         $tags = $request->input('tags', []);
 
-        $aiModels = implode(',', $aiModels);
-
-        
-        DB::transaction(function () use ($request, $aiModels) {
-            UserPrompt::create([
+        return DB::transaction(function () use ($request, $aiModels, $tags) {
+            $userPrompt = UserPrompt::create([
                 'user_id' => Auth::id(),
                 'title' => $request['title'],
-                'description' => $request['description'],
+                'description' => $request['description'] ?? null,
                 'content' => $request['content'],
                 'category_id' => $request['category_id'],
-                'ai_model_ids' => $aiModels,
+                'ai_model_ids' => implode(',', $aiModels),
                 'is_favorite' => $request['is_favorite'] ?? false,
             ]);
+
+            if (!empty($tags)) {
+                $userPrompt->tags()->attach($tags);
+            }
+            return $userPrompt;
         });
 
         return redirect()->route('prompt-case.index')
             ->with('success', 'پرامپت با موفقیت ایجاد شد.');
     }
 
-    public function edit(PromptCase $prompt)
+    public function edit($id)
     {
-        // $this->authorize('update', $prompt);
-
+        $tags = Tag::all();
+        $ai_models = AIModel::all();
         $categories = Category::all();
-        $teams = Team::all();
-        $tags = PromptCaseTag::all();
 
-        return view('prompt_case.edit', compact('prompt', 'categories', 'teams', 'tags'));
+        $userPrompts = UserPrompt::byUser(Auth::id())
+            ->with('category')
+            ->with('tags')
+            ->paginate(10);
+
+        $userPromptInfo = UserPrompt::with('tags')->find(31);
+
+        return view('prompt_case.index', compact('userPromptInfo', 'categories', 'tags', 'ai_models', 'userPrompts'));
     }
 
     public function update(Request $request, PromptCase $prompt)

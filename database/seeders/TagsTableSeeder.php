@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PromptTagsTableSeeder extends Seeder
+class TagsTableSeeder extends Seeder
 {
     public function run(): void
     {
@@ -61,6 +61,6 @@ class PromptTagsTableSeeder extends Seeder
             ['name' => 'معماری'],
         ];
 
-        DB::table('prompt_tags')->insertOrIgnore($tags);
+        DB::table('tags')->insertOrIgnore($tags);
     }
 }

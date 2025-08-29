@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('taggables', function (Blueprint $table) {
-            $table->foreignId('tag_id')->constrained('prompt_tags')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('taggable_id');
             $table->string('taggable_type', 255);
             

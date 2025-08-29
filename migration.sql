@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `prompt_templates` (
     CONSTRAINT `fk_prompt_templates_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `prompt_tags` (
+CREATE TABLE IF NOT EXISTS `tags` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL COMMENT 'Tag name (lowercase, normalized)',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `taggables` (
   -- Foreign key constraint
   CONSTRAINT `fk_taggables_tag_id` 
     FOREIGN KEY (`tag_id`) 
-    REFERENCES `prompt_tags` (`id`) 
+    REFERENCES `tags` (`id`) 
     ON DELETE CASCADE 
     ON UPDATE CASCADE,
   -- Indexes for better performance

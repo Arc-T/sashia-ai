@@ -306,6 +306,21 @@ Custom
   color: var(--color-text);
 }
 
+/* Custom UIkit notification styling */
+.uk-notification-message {
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+  color: white !important;
+  font-weight: 500;
+  padding: 15px 20px;
+}
+
+/* Adjust close button for better visibility */
+.uk-notification-close {
+  color: white !important;
+}
+
 /* ======================
    Alerts & Notifications
    ====================== */

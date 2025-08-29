@@ -58,12 +58,17 @@ class UserPrompt extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-        /**
+    /**
      * Get the user that owns the prompt.
      */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**
@@ -99,8 +104,8 @@ class UserPrompt extends Model
     {
         return $query->where(function ($q) use ($searchTerm) {
             $q->whereFullText(['title', 'content'], $searchTerm)
-              ->orWhere('title', 'like', "%{$searchTerm}%")
-              ->orWhere('content', 'like', "%{$searchTerm}%");
+                ->orWhere('title', 'like', "%{$searchTerm}%")
+                ->orWhere('content', 'like', "%{$searchTerm}%");
         });
     }
 

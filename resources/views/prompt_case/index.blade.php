@@ -5,7 +5,6 @@
     <!-- Page Header -->
     <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
         <h1 class="uk-heading-medium uk-text-bold uk-text-primary">مدیریت پرامپت های ذخیره شده</h1>
-        @include('prompt_case.create')
     </div>
 
     <!-- Stats Cards -->
@@ -65,189 +64,127 @@
         </div>
     </div>
 
-    <!-- Main Content Area -->
+    <!-- Three Tabs: Table / Create / Edit -->
     <div class="uk-margin-top">
-        <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-medium">
-            <!-- Toolbar -->
-            <div class="uk-card-header">
-                <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="uk-inline uk-width-1-1">
-                            <span class="uk-form-icon" uk-icon="icon: search"></span>
-                            <input class="uk-input uk-form-large" type="text" placeholder="جستجو در پیشنهادات...">
-                        </div>
-                    </div>
-                    <div class="uk-width-auto">
-                        <div>
-                            <button class="uk-button uk-button-default" type="button">
-                                <span uk-icon="icon: settings"></span>
-                                <span class="uk-margin-small-right">فیلترها</span>
-                            </button>
-                            <div uk-dropdown="mode: click; pos: bottom-right; offset: 5">
-                                <div class="uk-form-stacked">
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label">دسته‌بندی</label>
-                                        <div class="uk-form-controls">
-                                            <select class="uk-select uk-form-small">
-                                                <option>همه دسته‌بندی‌ها</option>
-                                                <option>بازاریابی</option>
-                                                <option>برنامه‌نویسی</option>
-                                                <option>تحلیل داده</option>
-                                                <option>خلاقانه</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label">مرتب‌سازی بر اساس</label>
-                                        <div class="uk-form-controls">
-                                            <select class="uk-select uk-form-small">
-                                                <option>جدیدترین</option>
-                                                <option>قدیمی‌ترین</option>
-                                                <option>پرکاربردترین</option>
-                                                <option>الفبایی (صعودی)</option>
-                                                <option>الفبایی (نزولی)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <label>
-                                            <input class="uk-checkbox" type="checkbox"> فقط مورد علاقه‌ها
-                                        </label>
-                                    </div>
-                                    <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-top">اعمال
-                                        فیلترها</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Prompts Table -->
-            <div class="uk-card-body uk-padding-remove-top uk-padding-remove-bottom">
-                <div class="uk-overflow-auto">
-                    <table class="uk-table uk-table-divider uk-table-middle uk-table-hover">
-                        <thead>
-                            <tr>
-                                <th class="uk-width-small">ردیف</th>
-                                <th class="uk-width-small">عنوان</th>
-                                <th class="uk-width-small">پرامپت</th>
-                                <th class="uk-width-small">دسته‌بندی</th>
-                                <th class="uk-width-small">تاریخ ایجاد</th>
-                                <th class="uk-width-small">عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($userPrompts as $userPrompt)
+        <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-medium uk-padding">
+            <ul uk-tab>
+                <li @if (Request::is('prompt-case')) class="uk-active" @endif><a href="#">جدول پرامپت‌ها</a></li>
+                <li><a href="#">ایجاد پرامپت</a></li>
+                <li @if (Request::is('prompt-case/*/edit')) class="uk-active" @endif><a href="#">ویرایش پرامپت</a></li>
+            </ul>
+            <ul class="uk-switcher uk-margin">
+                <!-- Table Tab -->
+                <li>
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        {{ $loop->iteration }}
-                                    </td>
-                                    <td>
-                                        <div class="uk-text-truncate" style="max-width: 300px;">
-                                            <span uk-icon="icon: star; ratio: 0.8"
-                                                class="uk-margin-small-left uk-text-warning"></span>
-                                            <span class="uk-text-bold">{{ $userPrompt->title }}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="uk-text-truncate" style="max-width: 300px;">
-                                            {{ $userPrompt->content }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @php
-                                            $category = $categories->firstWhere('id', $userPrompt->category_id);
-                                        @endphp
-                                        <span class="uk-label"
-                                            style="background-color: {{ $category->color_hex }};">{{ $category->slug }}</span>
-                                    <td>
-                                        <span class="uk-text-small">{{ $userPrompt->created_at }}</span>
-                                    </td>
-                                    <td class="uk-text-nowrap">
-                                        <div class="uk-button-group">
-                                            <button class="uk-icon-button uk-button-default uk-margin-small-right copy-btn"
-                                                uk-icon="copy" uk-tooltip="کپی"
-                                                data-content="{{ e($userPrompt->content) }}">
-                                            </button>
-
-                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                                uk-icon="eye" uk-tooltip="نمایش">
-                                            </button>
-                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                                uk-icon="pencil" uk-tooltip="ویرایش">
-                                            </button>
-                                            <!-- Delete Button -->
-                                            <button class="uk-icon-button uk-button-danger uk-margin-small-right"
-                                                uk-icon="trash" uk-tooltip="حذف"
-                                                onclick="openDeleteModal('{{ route('prompt-case.destroy', $userPrompt->id) }}', '{{ e($userPrompt->title) }}', 'پرامپت')">
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <th>ردیف</th>
+                                    <th>عنوان</th>
+                                    <th>پرامپت</th>
+                                    <th>دسته‌بندی</th>
+                                    <th>تاریخ ایجاد</th>
+                                    <th>عملیات</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($userPrompts as $userPrompt)
+                                    @php $category = $categories->firstWhere('id', $userPrompt->category_id); @endphp
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $userPrompt->title }}</td>
+                                        <td>{{ $userPrompt->content }}</td>
+                                        <td>{{ $category->slug }}</td>
+                                        <td>{{ verta($userPrompt->created_at)->format('Y-m-d') }}</td>
+                                        <td>
+                                            <div class="uk-button-group">
+                                                <button class="uk-button uk-button-small uk-button-default copy-btn uk-margin-small-left"
+                                                    uk-toggle="target: #delete-modal"
+                                                    uk-tooltip="کپی" data-content="{{ e($userPrompt->content) }}">
+                                                    <span uk-icon="copy"></span>کپی
+                                                </button>
+                                                <a href="{{ route('prompt-case.edit', $userPrompt->id) }}"
+                                                    class="uk-button uk-button-small uk-button-primary edit-btn uk-margin-small-left">
+                                                    <span uk-icon="pencil"></span> ویرایش
+                                                </a>
+                                                <button class="uk-button uk-button-small uk-button-danger"
+                                                    onclick="openDeleteModal('{{ route('prompt-case.destroy', $userPrompt->id) }}','{{ e($userPrompt->title) }}','پرامپت')">
+                                                    <span uk-icon="trash"></span> حذف
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- Pagination -->
+                        <div class="uk-margin-top">
+                            {{ $userPrompts->links('components.pagination') }}
+                        </div>
+                    </div>
+                </li>
 
-            <!-- Pagination -->
-            <div class="uk-card-footer">
-                {{ $userPrompts->links('components.pagination') }}
-            </div>
+                <!-- Create Tab -->
+                <li>
+                    @include('prompt_case.create')
+                </li>
+
+                <!-- Edit Tab -->
+                <li>
+                    @if (Request::is('prompt-case/*/edit'))
+                        @include('prompt_case.edit')
+                    @endif
+                </li>
+            </ul>
         </div>
     </div>
 
     @include('components.delete_modal')
 
+@endsection
 
-    @push('scripts')
-        <script>
-            // Single event listener for clipboard functionality
-            document.addEventListener('click', function(e) {
-                // Check if the clicked element is a copy button
-                if (e.target.closest('button[uk-icon="copy"]')) {
-                    // Get the button element
-                    const button = e.target.closest('button[uk-icon="copy"]');
-
-                    // Get the content from data-content attribute
-                    const content = button.getAttribute('data-content');
-
-                    // Use the Clipboard API to copy text
-                    navigator.clipboard.writeText(content).then(() => {
-                        UIkit.notification({
-                            message: 'پرامپت با موفقیت کپی شد !',
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clipboard
+            document.addEventListener('click', e => {
+                const btn = e.target.closest('.copy-btn');
+                if (btn) {
+                    navigator.clipboard.writeText(btn.dataset.content)
+                        .then(() => UIkit.notification({
+                            message: 'پرامپت با موفقیت کپی شد!',
                             status: 'primary',
-                            pos: 'bottom-left',
-                            timeout: 5000
-                        });
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                        alert('Failed to copy text to clipboard');
-                    });
+                            timeout: 3000
+                        }));
                 }
             });
-        </script>
-    @endpush
 
-    @push('styles')
-        <style>
-            /* Custom UIkit notification styling */
-            .uk-notification-message {
-                border-radius: 12px !important;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
-                color: white !important;
-                font-weight: 500;
-                padding: 15px 20px;
-            }
+            // Initialize Tom Select
+            document.querySelectorAll('.tom-select').forEach(el => {
+                if (!el.id) new TomSelect(el, {
+                    create: false,
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
 
-            /* Adjust close button for better visibility */
-            .uk-notification-close {
-                color: white !important;
-            }
-        </style>
-    @endpush
+@push('styles')
+    <style>
+        .uk-table-hover tbody tr:hover {
+            background: rgba(100, 115, 230, 0.05);
+        }
 
+        .uk-card {
+            padding: 20px;
+        }
 
-@endsection
+        .uk-switcher>li {
+            padding-top: 20px;
+        }
+    </style>
+@endpush

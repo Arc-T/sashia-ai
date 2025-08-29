@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
             $this->call(AIModelsTableSeeder::class);
             $this->call(UserPromptsTableSeeder::class);
             $this->call(UserPromptsTableSeeder::class);
-            $this->call(PromptTagsTableSeeder::class);
+            $this->call(TagsTableSeeder::class);
     }
 }

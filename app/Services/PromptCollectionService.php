@@ -12,7 +12,7 @@ class PromptCollectionService
         $jsonPath = public_path('images/part-000001.json');
 
         $json = json_decode(file_get_contents($jsonPath), true);
-
+        
         return collect($json)
             ->map(function ($item, $filename) {
                 return [

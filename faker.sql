@@ -94,7 +94,7 @@ INSERT INTO `user_prompts` (`user_id`, `category_id`, `title`, `description`, `c
 (1, 2, 'رزومه حرفه‌ای', 'قالب رزومه برای توسعه‌دهنده', 'یک رزومه حرفه‌ای برای توسعه‌دهنده full-stack ایجاد کن که شامل skills، experience و projects باشد.', '1,2,3', 1, '2024-01-28 16:45:00'),
 (1, 4, 'برنامه کسب‌وکار', 'طرح کسب‌وکار استارتاپ', 'یک طرح کسب‌وکار کامل برای استارتاپ tech ایجاد کن که شامل market analysis، financial projections و growth strategy باشد.', '1,4,6', 0, '2024-01-29 11:10:00');
 
-INSERT INTO `prompt_tags` (`name`) VALUES
+INSERT INTO `tags` (`name`) VALUES
 ('بازاریابی'),
 ('سئو'),
 ('شبکه‌های‌اجتماعی'),
