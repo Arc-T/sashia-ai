@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
-    Route::get('/auth', [AuthController::class, 'showAuthForm'])->name('auth');
+    Route::get('/login', [AuthController::class, 'showAuthForm'])->name('auth');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');

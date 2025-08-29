@@ -163,6 +163,14 @@
                     <img src="{{ asset('images/logo.png') }}" alt="ساشیا" width="80"
                         class="uk-border-circle uk-box-shadow-small">
                 </div>
+                <div class="uk-width-auto">
+                    <a referrerpolicy='origin' target='_blank'
+                        href='https://trustseal.enamad.ir/?id=642021&Code=QSwYGLcKbzWkr0BFJzzTQhb92OsjABU2'><img
+                            width="80" height="80" class="uk-border-circle uk-box-shadow-small" referrerpolicy='origin'
+                            src='https://trustseal.enamad.ir/logo.aspx?id=642021&Code=QSwYGLcKbzWkr0BFJzzTQhb92OsjABU2'
+                            alt='اینماد' style='cursor:pointer' code='QSwYGLcKbzWkr0BFJzzTQhb92OsjABU2'></a>
+                </div>
+
                 <div class="uk-width-expand">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
                         <div class="uk-width-expand@m">

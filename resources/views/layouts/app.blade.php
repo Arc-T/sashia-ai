@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="{{ asset('css/theme/dark-theme.css') }}" id="darkTheme" disabled>
 
     {{-- Fav icons --}}
-    <link rel="icon" type="image/image/svg+xml" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="32x32">
-    <link rel="icon" type="image/image/svg+xml" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="16x16">
+    <link rel="icon" type="image/image/svg+xml"
+        href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="32x32">
+    <link rel="icon" type="image/image/svg+xml"
+        href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}" sizes="16x16">
     <link rel="apple-touch-icon" href="{{ asset('images/ChatGPT Image Aug 11, 2025, 04_34_00 PM.svg') }}">
 
     @stack('styles')
@@ -57,13 +59,27 @@
     @vite(['resources/js/app.js'])
     <!-- Dark mode toggle script -->
     <script>
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme
             const darkTheme = document.getElementById('darkTheme');
-            const isDark = darkTheme.disabled;
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
 
-            darkTheme.disabled = !isDark;
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            // Apply initial theme
+            if (darkTheme) darkTheme.disabled = (initialTheme !== 'dark');
+            document.documentElement.setAttribute('data-theme', initialTheme);
+
+            // Add toggle functionality
+            const toggleButton = document.getElementById('darkModeToggle');
+            if (toggleButton) {
+                toggleButton.addEventListener('click', function() {
+                    const isDark = document.getElementById('darkTheme').disabled;
+                    document.getElementById('darkTheme').disabled = !isDark;
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                });
+            }
         });
     </script>
     @stack('scripts')

@@ -88,7 +88,7 @@
     </div>
 
     <!-- Features Section -->
-    <div class="uk-section uk-padding-large">
+    <div class="uk-section">
         <div class="uk-container">
             <div class="uk-text-center uk-margin-large-bottom" uk-scrollspy="cls: uk-animation-fade; repeat: true">
                 <h2 class="uk-heading-line"><span>چرا ساشیا ؟</span></h2>
@@ -146,16 +146,14 @@
     </div>
 
     <!-- Testimonials Section -->
-    <div class="uk-section uk-padding-large">
+    <div class="uk-section">
         <div class="uk-container">
             <div class="uk-text-center uk-margin-large-bottom" uk-scrollspy="cls: uk-animation-fade; repeat: true">
                 <h2 class="uk-heading-line"><span>نظرات کاربران</span></h2>
             </div>
 
             <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="autoplay: true">
-                <ul
-                    class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s
-uk-child-width-1-3@m uk-grid-medium">
+                <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-medium">
                     <li>
                         <div class="uk-card uk-card-default uk-card-body uk-border-rounded-large">
                             <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -226,11 +224,6 @@ uk-child-width-1-3@m uk-grid-medium">
                         </div>
                     </li>
                 </ul>
-
-                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-                    uk-slider-item="previous"></a>
-                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-                    uk-slider-item="next"></a>
             </div>
         </div>
     </div>
@@ -254,3 +247,5 @@ uk-child-width-1-3@m uk-grid-medium">
         </div>
     </div>
 @endsection
+
+	

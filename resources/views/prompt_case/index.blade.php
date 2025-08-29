@@ -166,9 +166,11 @@
                                     </td>
                                     <td class="uk-text-nowrap">
                                         <div class="uk-button-group">
-                                            <button class="uk-icon-button uk-button-default uk-margin-small-right"
-                                                uk-icon="copy" uk-tooltip="کپی">
+                                            <button class="uk-icon-button uk-button-default uk-margin-small-right copy-btn"
+                                                uk-icon="copy" uk-tooltip="کپی"
+                                                data-content="{{ e($userPrompt->content) }}">
                                             </button>
+
                                             <button class="uk-icon-button uk-button-default uk-margin-small-right"
                                                 uk-icon="eye" uk-tooltip="نمایش">
                                             </button>
@@ -197,6 +199,55 @@
     </div>
 
     @include('components.delete_modal')
+
+
+    @push('scripts')
+        <script>
+            // Single event listener for clipboard functionality
+            document.addEventListener('click', function(e) {
+                // Check if the clicked element is a copy button
+                if (e.target.closest('button[uk-icon="copy"]')) {
+                    // Get the button element
+                    const button = e.target.closest('button[uk-icon="copy"]');
+
+                    // Get the content from data-content attribute
+                    const content = button.getAttribute('data-content');
+
+                    // Use the Clipboard API to copy text
+                    navigator.clipboard.writeText(content).then(() => {
+                        UIkit.notification({
+                            message: 'پرامپت با موفقیت کپی شد !',
+                            status: 'primary',
+                            pos: 'bottom-left',
+                            timeout: 5000
+                        });
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        alert('Failed to copy text to clipboard');
+                    });
+                }
+            });
+        </script>
+    @endpush
+
+    @push('styles')
+        <style>
+            /* Custom UIkit notification styling */
+            .uk-notification-message {
+                border-radius: 12px !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+                color: white !important;
+                font-weight: 500;
+                padding: 15px 20px;
+            }
+
+            /* Adjust close button for better visibility */
+            .uk-notification-close {
+                color: white !important;
+            }
+        </style>
+    @endpush
 
 
 @endsection
