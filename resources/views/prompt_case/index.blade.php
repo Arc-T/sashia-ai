@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'جا پرامپتی |‌ داشبورد')
+@section('title', 'جا پرامپتی | داشبورد')
 
 @section('content')
     <!-- Page Header -->

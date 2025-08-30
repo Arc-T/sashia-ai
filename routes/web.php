@@ -20,7 +20,7 @@ Route::get('/maker', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('/prompt-case', PromptCaseController::class);
+    Route::resource('/prompt-case', PromptCaseController::class)->except('show');
     Route::post('/prompt-case/{prompt}/favorite', [PromptCaseController::class, 'toggleFavorite'])->name('prompt_case.favorite');
     Route::post('/prompt-case/{prompt}/usage', [PromptCaseController::class, 'incrementUsage'])->name('prompt_case.usage');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

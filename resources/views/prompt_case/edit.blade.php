@@ -1,5 +1,6 @@
-<form method="POST" action="{{ route('prompt-case.store') }}">
+<form method="POST" action="{{ route('prompt-case.update', $userPromptInfo->id) }}">
     @csrf
+    @method('PUT')
     <div class="uk-form-stacked uk-form-custom-style">
         <div class="uk-grid-small" uk-grid>
 
