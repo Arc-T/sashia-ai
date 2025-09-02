@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\PromptTemplate;
 use App\Models\PromptCategory;
 use App\Models\AiModel;
@@ -47,6 +48,8 @@ class PromptTemplateController extends Controller
         //     $query->popular();
         // }
 
+        $categories = Category::whereNull('parent_id')->get();
+
         $perPage = 20;
         $page = $request->input('page', 1);
 
@@ -61,7 +64,7 @@ class PromptTemplateController extends Controller
             ['path' => url('/prompt-templates')]
         );
 
-        return view('prompt_templates.index', compact('images'));
+        return view('prompt_templates.index', compact('images','categories'));
     }
 
     public function show($id)

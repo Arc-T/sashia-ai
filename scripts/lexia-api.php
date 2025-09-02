@@ -41,31 +41,28 @@ function fetchLexicaBatch($cursor = null) {
     }
 }
 
-function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
+function getAllLexicaImages($initialCursor = 0, $maxPages = 5, $delay = 2, $batchSize = 50) {
     $allImages = [];
     $currentCursor = $initialCursor;
     $pagesFetched = 0;
-    
+
     while ($pagesFetched < $maxPages) {
-        echo "Fetching page " . ($pagesFetched + 1) . " with cursor: " . ($currentCursor ?? 'null') . "\n";
-        
+        echo "Fetching page " . ($pagesFetched + 1) . " with cursor: $currentCursor\n";
+
         $data = fetchLexicaBatch($currentCursor);
         if ($data === null) {
             echo "Stopping due to error.\n";
             break;
         }
 
-        // extract images and prompts
         $batchImages  = $data['images']  ?? [];
         $batchPrompts = $data['prompts'] ?? [];
 
-        // index prompts by id for quick lookup
         $promptsById = [];
         foreach ($batchPrompts as $prompt) {
             $promptsById[$prompt['id']] = $prompt;
         }
 
-        // attach prompt text to each image
         foreach ($batchImages as &$img) {
             $promptId = $img['promptid'] ?? null;
             if ($promptId && isset($promptsById[$promptId])) {
@@ -85,28 +82,24 @@ function getAllLexicaImages($initialCursor = null, $maxPages = 5, $delay = 2) {
 
         $allImages = array_merge($allImages, $batchImages);
         echo "Fetched " . count($batchImages) . " images in this batch. Total so far: " . count($allImages) . "\n";
-        
-        $lastImage = end($batchImages);
-        if (isset($lastImage['id'])) {
-            $currentCursor = $lastImage['id'];
-            echo "Next cursor will be: $currentCursor\n";
-        } else {
-            echo "No 'id' field found in the last image. Cannot paginate further.\n";
-            break;
-        }
-        
+
+        // increment cursor by batch size
+        $currentCursor += $batchSize;
+        echo "Next cursor will be: $currentCursor\n";
+
         $pagesFetched++;
         if ($pagesFetched < $maxPages) {
             sleep($delay);
         }
     }
-    
+
     return $allImages;
 }
 
+
 // Main execution
 $outputFilename = 'lexica_images.json';
-$maxPagesToFetch = 3;
+$maxPagesToFetch = 10;
 $delayBetweenRequests = 2;
 
 echo "Starting to fetch images from Lexica.art...\n";
@@ -118,12 +111,17 @@ try {
     if ($jsonData === false) {
         throw new Exception('JSON encoding failed: ' . json_last_error_msg());
     }
-    
-    $result = file_put_contents($outputFilename, $jsonData);
-    if ($result === false) {
-        throw new Exception("Failed to write to file '$outputFilename'");
+
+    $existingData = [];
+    if (file_exists($outputFilename)) {
+        $existingJson = file_get_contents($outputFilename);
+        $existingData = json_decode($existingJson, true) ?: [];
     }
-    
+
+    $allImagesData = array_merge($existingData, $allImagesData);
+
+    file_put_contents($outputFilename, json_encode($allImagesData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+
     echo "Done! Data successfully saved.\n";
 } catch (Exception $e) {
     echo "Error saving file: " . $e->getMessage() . "\n";
