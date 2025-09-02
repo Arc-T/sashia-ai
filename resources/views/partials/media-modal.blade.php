@@ -27,9 +27,9 @@
             </div>
 
             <!-- Info Column -->
-            <div class="uk-width-1-1 uk-width-1-3@m uk-background-default uk-border-rounded-right uk-overflow-auto uk-padding-small uk-padding-remove-right"
+            <div class="uk-width-1-1 uk-width-1-3@m uk-background-default uk-border-rounded-right uk-overflow-auto"
                 style="max-height: 90vh;">
-                <div class="uk-padding-small uk-padding-remove-right">
+                <div class="uk-padding-small">
                     <!-- Title & Metadata -->
                     <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap uk-margin-bottom">
                         <!-- Title & Metadata - Now on left -->
