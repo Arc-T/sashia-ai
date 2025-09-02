@@ -4,31 +4,36 @@
     <div class="uk-form-stacked uk-form-custom-style">
         <div class="uk-grid-small" uk-grid>
 
+            <!-- Title -->
             <div class="uk-width-1-2@s">
                 <label class="uk-form-label uk-text-bold">
                     <span uk-icon="icon: pencil"></span> عنوان
                 </label>
                 <input name="title" class="uk-input custom-input" type="text" value="{{ $userPromptInfo->title }}"
-                    placeholder="مثال: تصویر طبیعت" />
+                       placeholder="مثال: تصویر طبیعت" />
             </div>
+
+            <!-- Category -->
             <div class="uk-width-1-2@s">
                 <label class="uk-form-label uk-text-bold">
-                    <span uk-icon="icon: bolt"></span>دسته بندی
+                    <span uk-icon="icon: bolt"></span> دسته بندی
                 </label>
                 <select class="tom-select" name="category_id" id="category-select">
-                    @foreach ($categories as $category)
+                    @foreach ($pageInfo['categories'] as $category)
                         <option value="{{ $category->id }}" @if ($userPromptInfo->category_id == $category->id) selected @endif>
-                            {{ $category->slug }}</option>
+                            {{ $category->slug }}
+                        </option>
                     @endforeach
                 </select>
             </div>
+
             <!-- Content -->
             <div class="uk-width-1-1">
                 <label class="uk-form-label uk-text-bold" for="prompt-content">
                     <span uk-icon="icon: commenting"></span> محتوا
                 </label>
                 <textarea name="content" class="uk-textarea custom-input uk-resize-vertical" id="prompt-content" rows="4"
-                    placeholder="متن پرامپت را وارد کنید..." required>{{ $userPromptInfo->content }}</textarea>
+                          placeholder="متن پرامپت را وارد کنید..." required>{{ $userPromptInfo->content }}</textarea>
             </div>
 
             <!-- Description -->
@@ -37,7 +42,7 @@
                     <span uk-icon="icon: file-text"></span> توضیحات
                 </label>
                 <textarea name="description" class="uk-textarea custom-input" id="prompt-description" rows="1"
-                    placeholder="توضیح مختصر...">{{ $userPromptInfo->description }}</textarea>
+                          placeholder="توضیح مختصر...">{{ $userPromptInfo->description }}</textarea>
             </div>
 
             <!-- AI Models Multi-Select -->
@@ -50,13 +55,12 @@
                     @php
                         $userPromptInfo->ai_model_ids = explode(',', $userPromptInfo->ai_model_ids);
                     @endphp
-                    @foreach ($ai_models as $ai_model)
+                    @foreach ($pageInfo['ai_models'] as $ai_model)
                         <option value="{{ $ai_model->id }}" @if (in_array($ai_model->id, $userPromptInfo->ai_model_ids)) selected @endif>
                             {{ $ai_model->name }}
                         </option>
                     @endforeach
                 </select>
-
                 <div class="uk-text-meta uk-margin-small-top">
                     می‌توانید چند مدل را انتخاب کنید
                 </div>
@@ -68,7 +72,7 @@
                     <span uk-icon="icon: tag"></span> برچسب‌ها
                 </label>
                 <select class="tom-select" name="tags[]" id="tag_id" multiple placeholder="انتخاب کنید ...">
-                    @foreach ($tags as $tag)
+                    @foreach ($pageInfo['tags'] as $tag)
                         <option value="{{ $tag->id }}" @if ($userPromptInfo->tags->contains('id', $tag->id)) selected @endif>
                             {{ $tag->name }}
                         </option>

@@ -9,7 +9,7 @@
                     <span uk-icon="icon: pencil"></span> عنوان
                 </label>
                 <input name="title" class="uk-input custom-input" type="text" placeholder="مثال: تصویر طبیعت"
-                    required />
+                       required />
             </div>
 
             <!-- Category -->
@@ -18,7 +18,7 @@
                     <span uk-icon="icon: bolt"></span> دسته بندی
                 </label>
                 <select class="tom-select" name="category_id" placeholder="انتخاب کنید ...">
-                    @foreach ($categories as $category)
+                    @foreach ($pageInfo['categories'] as $category)
                         <option value="{{ $category->id }}">{{ $category->slug }}</option>
                     @endforeach
                 </select>
@@ -30,7 +30,7 @@
                     <span uk-icon="icon: commenting"></span> محتوا
                 </label>
                 <textarea name="content" class="uk-textarea custom-input uk-resize-vertical" id="prompt-content" rows="5"
-                    placeholder="متن پرامپت را وارد کنید..." required></textarea>
+                          placeholder="متن پرامپت را وارد کنید..." required></textarea>
             </div>
 
             <!-- Description -->
@@ -39,7 +39,7 @@
                     <span uk-icon="icon: file-text"></span> توضیحات
                 </label>
                 <textarea name="description" class="uk-textarea custom-input" id="prompt-description" rows="2"
-                    placeholder="توضیح مختصر..."></textarea>
+                          placeholder="توضیح مختصر..."></textarea>
             </div>
 
             <!-- AI Models -->
@@ -49,10 +49,8 @@
                     مدل‌های هوش مصنوعی
                 </label>
                 <select class="tom-select" name="ai_models[]" id="ai-models" multiple placeholder="انتخاب کنید ...">
-                    @foreach ($ai_models as $ai_model)
-                        <option value="{{ $ai_model->id }}" data-icon="server" data-color="#f0506e">
-                            {{ $ai_model->name }}
-                        </option>
+                    @foreach ($pageInfo['ai_models'] as $ai_model)
+                        <option value="{{ $ai_model->id }}">{{ $ai_model->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -63,13 +61,12 @@
                     <span uk-icon="icon: tag"></span> برچسب‌ها
                 </label>
                 <select class="tom-select" name="tags[]" id="tag_id" multiple placeholder="انتخاب کنید ...">
-                    @foreach ($tags as $tag)
-                        <option value="{{ $tag->id }}" data-icon="tag" data-color="#6a11cb">
-                            {{ $tag->name }}
-                        </option>
+                    @foreach ($pageInfo['tags'] as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                     @endforeach
                 </select>
             </div>
+
         </div>
     </div>
     <div class="uk-flex uk-flex-left">

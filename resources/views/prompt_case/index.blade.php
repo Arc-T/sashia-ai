@@ -16,7 +16,7 @@
                         <span uk-icon="icon: database; ratio: 2" class="uk-text-primary"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->total() }}</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $pageInfo['user_prompts']->total() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">کل پرامپت ها</p>
                     </div>
                 </div>
@@ -30,7 +30,8 @@
                     </div>
                     <div>
                         <h3 class="uk-card-title uk-margin-remove uk-text-bold">
-                            {{ $userPrompts->where('is_favorite', true)->count() }}</h3>
+                            {{ $pageInfo['user_prompts']->where('is_favorite', true)->count() }}
+                        </h3>
                         <p class="uk-text-muted uk-margin-remove">مورد علاقه‌ها</p>
                     </div>
                 </div>
@@ -43,7 +44,7 @@
                         <span uk-icon="icon: tag; ratio: 2" class="uk-text-success"></span>
                     </div>
                     <div>
-                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $userPrompts->count() }}</h3>
+                        <h3 class="uk-card-title uk-margin-remove uk-text-bold">{{ $pageInfo['categories']->count() }}</h3>
                         <p class="uk-text-muted uk-margin-remove">دسته‌بندی‌ها</p>
                     </div>
                 </div>
@@ -68,9 +69,11 @@
     <div class="uk-margin-top">
         <div class="uk-card uk-card-default uk-border-rounded uk-box-shadow-medium uk-padding">
             <ul uk-tab>
-                <li @if (Request::is('prompt-case')) class="uk-active" @endif><a href="#">جدول پرامپت‌ها</a></li>
+                <li @if (Request::is('prompt-case') || Request::has('page')) class="uk-active" @endif><a href="#">جدول
+                        پرامپت‌ها</a></li>
                 <li><a href="#">ایجاد پرامپت</a></li>
-                <li @if (Request::is('prompt-case/*/edit')) class="uk-active" @endif><a href="#">ویرایش پرامپت</a></li>
+                <li @if (Request::is('prompt-case/*/edit') && !Request::has('page')) class="uk-active" @endif><a
+                            href="#">ویرایش پرامپت</a></li>
             </ul>
             <ul class="uk-switcher uk-margin">
                 <!-- Table Tab -->
@@ -78,49 +81,64 @@
                     <div class="uk-overflow-auto">
                         <table class="uk-table uk-table-divider uk-table-hover uk-table-middle">
                             <thead>
-                                <tr>
-                                    <th>ردیف</th>
-                                    <th>عنوان</th>
-                                    <th>پرامپت</th>
-                                    <th>دسته‌بندی</th>
-                                    <th>تاریخ ایجاد</th>
-                                    <th>عملیات</th>
-                                </tr>
+                            <tr>
+                                <th>ردیف</th>
+                                <th>عنوان</th>
+                                <th>پرامپت</th>
+                                <th>دسته‌بندی</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>عملیات</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach ($userPrompts as $userPrompt)
-                                    @php $category = $categories->firstWhere('id', $userPrompt->category_id); @endphp
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $userPrompt->title }}</td>
-                                        <td>{{ $userPrompt->content }}</td>
-                                        <td>{{ $category->slug }}</td>
-                                        <td>{{ verta($userPrompt->created_at)->format('Y-m-d') }}</td>
-                                        <td>
-                                            <div class="uk-button-group">
-                                                <button class="uk-button uk-button-small uk-button-default copy-btn uk-margin-small-left"
-                                                    uk-toggle="target: #delete-modal"
-                                                    uk-tooltip="کپی" data-content="{{ e($userPrompt->content) }}">
-                                                    <span uk-icon="copy"></span>کپی
-                                                </button>
-                                                <a href="{{ route('prompt-case.edit', $userPrompt->id) }}"
-                                                    class="uk-button uk-button-small uk-button-primary edit-btn uk-margin-small-left">
-                                                    <span uk-icon="pencil"></span> ویرایش
-                                                </a>
-                                                <button class="uk-button uk-button-small uk-button-danger"
-                                                    onclick="openDeleteModal('{{ route('prompt-case.destroy', $userPrompt->id) }}','{{ e($userPrompt->title) }}','پرامپت')">
-                                                    <span uk-icon="trash"></span> حذف
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @forelse ($pageInfo['user_prompts'] as $userPrompt)
+                                <!-- Find category for the current prompt -->
+                                @php
+                                    $category = $pageInfo['categories']->firstWhere('id', $userPrompt->category_id);
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $userPrompt->title ?? 'بدون عنوان' }}</td>
+                                    <td>{{ Str::limit($userPrompt->content, 50) }}</td>
+                                    <!-- Limit content length for display -->
+                                    <td>{{ $category->title ?? 'بدون دسته‌بندی' }}</td>
+                                    <!-- Use category title instead of slug -->
+                                    <td>{{ verta($userPrompt->created_at)->format('Y-m-d') }}</td>
+                                    <td>
+                                        <div class="uk-button-group">
+                                            <!-- Copy Button -->
+                                            <button class="uk-button uk-button-small uk-button-default copy-btn uk-margin-small-left"
+                                                    uk-tooltip="کپی"
+                                                    data-content="{{ e($userPrompt->content) }}"
+                                                    onclick="copyToClipboard('{{ e($userPrompt->content) }}')">
+                                                <span uk-icon="copy"></span> کپی
+                                            </button>
+                                            <!-- Edit Button -->
+                                            <a href="{{ route('prompt-case.edit', $userPrompt->id) }}"
+                                               class="uk-button uk-button-small uk-button-primary edit-btn uk-margin-small-left">
+                                                <span uk-icon="pencil"></span> ویرایش
+                                            </a>
+                                            <!-- Delete Button -->
+                                            <button class="uk-button uk-button-small uk-button-danger"
+                                                    onclick="openDeleteModal('{{ route('prompt-case.destroy', $userPrompt->id) }}', '{{ e($userPrompt->title) }}', 'پرامپت')">
+                                                <span uk-icon="trash"></span> حذف
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="uk-text-center">هیچ پرامپتی یافت نشد.</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <!-- Pagination -->
-                        <div class="uk-margin-top">
-                            {{ $userPrompts->links('components.pagination') }}
-                        </div>
+                        @if ($pageInfo['user_prompts']->hasPages())
+                            <div class="uk-margin-top">
+                                {{ $pageInfo['user_prompts']->links('components.pagination') }}
+                            </div>
+                        @endif
                     </div>
                 </li>
 
@@ -145,7 +163,7 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Clipboard
             document.addEventListener('click', e => {
                 const btn = e.target.closest('.copy-btn');
@@ -183,7 +201,7 @@
             padding: 20px;
         }
 
-        .uk-switcher>li {
+        .uk-switcher > li {
             padding-top: 20px;
         }
     </style>

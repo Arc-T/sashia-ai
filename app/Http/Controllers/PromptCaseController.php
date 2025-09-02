@@ -12,16 +12,25 @@ use Illuminate\Support\Facades\DB;
 
 class PromptCaseController extends Controller
 {
+    private $pageInfo = [];
+
+    public function __construct()
+    {
+        $this->pageInfo = [
+            'tags' => Tag::all(),
+            'categories' => Category::all(),
+            'ai_models' => AIModel::all(),
+            'user_prompts' => UserPrompt::byUser(Auth::id())
+                ->with(['category','tags'])
+                ->paginate(10)
+        ];
+    }
+
     public function index(Request $request)
     {
-        $tags = Tag::all();
-        $ai_models = AIModel::all();
-        $categories = Category::all();
-        $userPrompts = UserPrompt::byUser(Auth::id())
-            ->with('category')
-            ->paginate(10);
-
-        return view('prompt_case.index', compact('tags', 'ai_models', 'userPrompts', 'categories'));
+        return view('prompt_case.index', [
+            'pageInfo' => $this->pageInfo
+        ]);
     }
 
     public function store(Request $request)
@@ -60,18 +69,12 @@ class PromptCaseController extends Controller
 
     public function edit($id)
     {
-        $tags = Tag::all();
-        $ai_models = AIModel::all();
-        $categories = Category::all();
-
-        $userPrompts = UserPrompt::byUser(Auth::id())
-            ->with('category')
-            ->with('tags')
-            ->paginate(10);
-
         $userPromptInfo = UserPrompt::with('tags')->find($id);
 
-        return view('prompt_case.index', compact('userPromptInfo', 'categories', 'tags', 'ai_models', 'userPrompts'));
+        return view('prompt_case.index', [
+            'pageInfo' => $this->pageInfo,
+            'userPromptInfo' => $userPromptInfo
+        ]);
     }
 
     public function update(Request $request, int $id)
@@ -92,14 +95,8 @@ class PromptCaseController extends Controller
             $userPrompt->tags()->sync($request->input('tags', []));
         });
 
-        $tags = Tag::all();
-        $ai_models = AIModel::all();
-        $categories = Category::all();
-        $userPrompts = UserPrompt::byUser(Auth::id())
-            ->with('category')
-            ->paginate(10);
-
-        return view('prompt_case.index', compact('tags', 'ai_models', 'userPrompts', 'categories'))->with('success', "پرامپت با موفقیت آپدیت شد !");
+        return redirect()->route('prompt-case.index')
+            ->with('success', 'پرامپت با موفقیت آپدیت شد.');
 
     }
 
@@ -108,8 +105,8 @@ class PromptCaseController extends Controller
         $userPrompt = UserPrompt::findOrFail($id);
         $userPrompt->delete();
 
-        return redirect()->route('prompt_case.index')
-            ->with('success', 'پیشنهاد با موفقیت حذف شد.');
+        return redirect()->route('prompt-case.index')
+            ->with('success', 'پرامپت با موفقیت حذف شد.');
     }
 
     public function toggleFavorite(PromptCase $prompt)
