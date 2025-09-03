@@ -17,13 +17,12 @@
 
                 <!-- Image Display with Card -->
                 <div class="uk-overflow-hidden uk-position-relative uk-flex uk-flex-center uk-flex-middle"
-                    style="max-height: 90vh;">
+                     style="max-height: 90vh;">
 
                     <img id="modal-image" src="" alt="تصویر تولید شده توسط هوش مصنوعی"
-                        class="uk-border-rounded uk-transition-scale-up uk-transition-opaque"
-                        style="max-height: 75vh; max-width: 100%; object-fit: contain; display: none;">
+                         class="uk-border-rounded uk-transition-scale-up uk-transition-opaque"
+                         style="max-height: 75vh; max-width: 100%; object-fit: contain;" hidden>
                 </div>
-
             </div>
 
             <!-- Info Column -->
@@ -156,8 +155,8 @@
                                 class="uk-label uk-label-success uk-border-pill uk-margin-small-left uk-margin-small-bottom">سبز</a>
                         </div>
                     </div>
-
-
+                    <!-- Description -->
+                    <p id="modal-description" class="uk-text-small uk-text-muted uk-margin-small"></p>
                     <!-- Related -->
                     {{-- <div class="uk-margin-top">
                         <h5 class="uk-heading-line uk-text-small"><span>تصاویر مرتبط</span></h5>
