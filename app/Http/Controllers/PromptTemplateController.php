@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\PromptTemplate;
-use App\Models\PromptCategory;
-use App\Models\AiModel;
 use App\Services\PromptCollectionService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,57 +13,36 @@ class PromptTemplateController extends Controller
 {
     public function index(Request $request)
     {
-        // $query = PromptTemplate::with(['category', 'aiModel', 'tags', 'user'])
-        //     ->public();
-
-        // Filter by tags
-        // if ($request->has('tags')) {
-        //     $tags = explode(',', $request->tags);
-        //     $query->whereHas('tags', function ($q) use ($tags) {
-        //         $q->whereIn('name', $tags);
-        //     });
-        // }
-
-        // // Filter by AI model
-        // if ($request->has('ai_model')) {
-        //     $aiModel = AiModel::where('model_identifier', $request->ai_model)->first();
-        //     if ($aiModel) {
-        //         $query->where('ai_model_id', $aiModel->id);
-        //     }
-        // }
-
-        // // Sort options
-        // if ($request->has('sort')) {
-        //     $sort = $request->sort;
-        //     if ($sort == 'popular') {
-        //         $query->popular();
-        //     } elseif ($sort == 'recent') {
-        //         $query->recent();
-        //     } elseif ($sort == 'likes') {
-        //         $query->orderBy('total_likes', 'desc');
-        //     }
-        // } else {
-        //     $query->popular();
-        // }
-
-        $categories = Category::whereNull('parent_id')->get();
+        // Get active top-level categories
+        $categories = Category::where('is_active', true)
+            ->whereNull('parent_id')
+            ->orderBy('sort_order')
+            ->get();
 
         $perPage = 20;
-        $page = $request->input('page', 1);
 
-        $all = PromptCollectionService::LexiaPrompts();
-        $items = $all->forPage($page, $perPage);
+        $query = PromptTemplate::query();
 
-        $images = new LengthAwarePaginator(
-            $items,
-            $all->count(),
-            $perPage,
-            $page,
-            ['path' => url('/prompt-templates')]
-        );
+        $currentCategory = null;
 
-        return view('prompt_templates.index', compact('images','categories'));
+        // Filter by category slug
+        if ($request->filled('category') && $request->category !== 'all') {
+            $categoryName = str_replace('-', ' ', $request->category);
+            $categoryName = ucwords($categoryName);
+
+            $currentCategory = Category::where('name', $categoryName)->first();
+            if ($currentCategory) {
+                $query->where('category_id', $currentCategory->id);
+            } else {
+                $query->whereRaw('1=0');
+            }
+        }
+
+        $images = $query->paginate($perPage)->withQueryString();
+
+        return view('prompt_templates.index', compact('images', 'categories', 'currentCategory'));
     }
+
 
     public function show($id)
     {

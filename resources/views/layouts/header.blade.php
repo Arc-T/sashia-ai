@@ -293,16 +293,6 @@
                 </li>
                 <li>
                     <a href="#" class="uk-transition-opacity">
-                        <span uk-icon="icon: info" class="uk-margin-small-left"></span> درباره ما
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="uk-transition-opacity">
-                        <span uk-icon="icon: mail" class="uk-margin-small-left"></span> تماس با ما
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="uk-transition-opacity">
                         <span uk-icon="icon: question" class="uk-margin-small-left"></span> راهنمای خرید
                     </a>
                 </li>

@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `prompt_templates` (
     `total_likes` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Denormalized count for performance',
     `total_views` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Denormalized count for performance',
     `is_public` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Visibility control: 0 = Private, 1 = Public',
-    `is_active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Soft delete flag',
+    `metadata` JSON NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     -- **************************** Table Keys ****************************

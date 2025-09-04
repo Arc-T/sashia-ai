@@ -15,9 +15,11 @@
                         <li class="{{ request('category') == 'all' || !request('category') ? 'uk-active' : '' }}">
                             <a href="{{ request()->fullUrlWithQuery(['category' => 'all']) }}">همه</a>
                         </li>
-                        @foreach($categories as $category)
-                            <li class="{{ request('category') == strtolower($category->name) ? 'uk-active' : '' }}">
-                                <a href="{{ request()->fullUrlWithQuery(['category' => strtolower($category->name)]) }}">{{ $category->slug }}</a>
+                        @foreach ($categories as $category)
+                            <li
+                                class="{{ request('category') == strtolower(str_replace(' ', '-', $category->name)) ? 'uk-active' : '' }}">
+                                <a
+                                    href="{{ request()->fullUrlWithQuery(['category' => strtolower(str_replace(' ', '-', $category->name))]) }}">{{ $category->slug }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -59,11 +61,11 @@
                     <!-- View Toggle -->
                     <div class="uk-button-group">
                         <button id="grid-view-btn" class="uk-button uk-button-primary uk-button-small" data-view="grid"
-                                uk-tooltip="نمایش شبکه‌ای">
+                            uk-tooltip="نمایش شبکه‌ای">
                             <span uk-icon="grid"></span>
                         </button>
                         <button id="list-view-btn" class="uk-button uk-button-default uk-button-small" data-view="list"
-                                uk-tooltip="نمایش لیستی">
+                            uk-tooltip="نمایش لیستی">
                             <span uk-icon="list"></span>
                         </button>
                     </div>
@@ -74,10 +76,8 @@
         <hr>
 
         <!-- Gallery -->
-        <div id="gallery-grid"
-             class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l"
-             uk-grid="masonry: true"
-             data-view="grid">
+        <div id="gallery-grid" class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l"
+            uk-grid="masonry: true" data-view="grid">
 
             @foreach ($images as $index => $image)
                 <div class="gallery-item">
@@ -86,22 +86,20 @@
                         <!-- Grid View -->
                         <div class="gallery-grid-view">
                             <div class="uk-card-media-top uk-position-relative uk-overflow-hidden uk-border-rounded">
-                                <img src="{{ $image['path'] }}" alt="{{ $image['filename'] }}" loading="lazy"
-                                     class="uk-width-1-1 uk-border-rounded uk-object-cover uk-transition-opacity"
-                                     style="height:250px; background:#f8f8f8;">
+                                <img src="{{ $image['image_path'] }}" alt="{{ $image['title'] }}" loading="lazy"
+                                    class="uk-width-1-1 uk-border-rounded uk-object-cover uk-transition-opacity"
+                                    style="height:250px; background:#f8f8f8;">
 
                                 <!-- Hover Overlay -->
                                 <a class="uk-position-cover uk-transition-fade uk-flex uk-flex-center uk-flex-middle"
-                                   href="#image-modal" uk-toggle
-                                   onclick="updateModalDetails({{
-                                   json_encode([
-                                       'id' => $index,
-                                       'category' => 'تصویر',
-                                       'date' => \Carbon\Carbon::now()->subDays(rand(1, 30))->diffForHumans(),
-                                       'imageUrl' => $image['path'],
-                                       'description' => $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی'
-                                   ])
-                               }})">
+                                    href="#image-modal" uk-toggle
+                                    onclick="updateModalDetails({{ json_encode([
+                                        'id' => $index,
+                                        'category' => 'تصویر',
+                                        'date' => $image['created_at'],
+                                        'imageUrl' => $image['image_path'],
+                                        'description' => $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی',
+                                    ]) }})">
                                     <div class="uk-text-center uk-light">
                                         <span uk-icon="search" ratio="1.5"></span>
                                         <p class="uk-margin-small-top uk-text-small">جزئیات</p>
@@ -111,11 +109,11 @@
                                 <!-- Action Buttons -->
                                 <div class="uk-position-top-right uk-padding-small">
                                     <button class="uk-icon-button" uk-icon="heart"
-                                            uk-tooltip="افزودن به علاقه‌مندی‌ها"></button>
+                                        uk-tooltip="افزودن به علاقه‌مندی‌ها"></button>
                                 </div>
                                 <div class="uk-position-top-left uk-padding-small">
                                     <a href="{{ $image['path'] }}" class="uk-icon-button" uk-icon="expand"
-                                       uk-tooltip="نمایش تمام صفحه"></a>
+                                        uk-tooltip="نمایش تمام صفحه"></a>
                                 </div>
                             </div>
                         </div>
@@ -124,25 +122,24 @@
                         <div class="gallery-list-view uk-hidden">
                             <div class="uk-grid-small" uk-grid>
                                 <div class="uk-width-1-3@s">
-                                    <img src="{{ $image['path'] }}" alt="{{ $image['filename'] }}" loading="lazy"
-                                         class="uk-width-1-1 uk-border-rounded uk-object-cover"
-                                         style="height:150px; background:#f8f8f8;">
+                                    <img src="{{ $image['image_path'] }}" alt="{{ $image['title'] }}" loading="lazy"
+                                        class="uk-width-1-1 uk-border-rounded uk-object-cover"
+                                        style="height:150px; background:#f8f8f8;">
                                 </div>
-                                <div class="uk-width-2-3@s uk-flex uk-flex-column uk-flex-middle uk-text-center@s uk-text-right">
+                                <div
+                                    class="uk-width-2-3@s uk-flex uk-flex-column uk-flex-middle uk-text-center@s uk-text-right">
                                     <h4 class="uk-margin-small">{{ $image['filename'] }}</h4>
-                                    <p class="uk-text-meta uk-margin-remove">{{ $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی' }}</p>
+                                    <p class="uk-text-meta uk-margin-remove">
+                                        {{ $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی' }}</p>
                                     <div class="uk-flex uk-flex-middle uk-margin-small-top">
-                                        <a href="#image-modal" uk-toggle
-                                           class="uk-button uk-button-text uk-button-small"
-                                           onclick="updateModalDetails({{
-                                           json_encode([
-                                               'id' => $index,
-                                               'category' => 'تصویر',
-                                               'date' => \Carbon\Carbon::now()->subDays(rand(1, 30))->diffForHumans(),
-                                               'imageUrl' => $image['path'],
-                                               'description' => $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی'
-                                           ])
-                                       }})">جزئیات</a>
+                                        <a href="#image-modal" uk-toggle class="uk-button uk-button-text uk-button-small"
+                                            onclick="updateModalDetails({{ json_encode([
+                                                'id' => $index,
+                                                'category' => 'تصویر',
+                                                'date' => $image['created_at'],
+                                                'imageUrl' => $image['image_path'],
+                                                'description' => $image['prompt'] ?? 'تصویری ایجاد شده با هوش مصنوعی',
+                                            ]) }})">جزئیات</a>
                                         <button class="uk-icon-button uk-margin-small-right" uk-icon="heart"></button>
                                     </div>
                                 </div>
@@ -190,7 +187,8 @@
                         listBtn.classList.replace('uk-button-primary', 'uk-button-default');
                     } else {
                         grid.dataset.view = 'list';
-                        grid.classList.remove('uk-child-width-1-2@s', 'uk-child-width-1-3@m', 'uk-child-width-1-4@l');
+                        grid.classList.remove('uk-child-width-1-2@s', 'uk-child-width-1-3@m',
+                            'uk-child-width-1-4@l');
                         grid.classList.add('uk-child-width-1-1');
                         gridView.forEach(el => el.classList.add('uk-hidden'));
                         listView.forEach(el => el.classList.remove('uk-hidden'));

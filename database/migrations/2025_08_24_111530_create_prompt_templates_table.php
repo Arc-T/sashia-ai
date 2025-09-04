@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->text('description')->nullable();
             $table->text('content');
+            $table->string('image_path', 255);
             $table->foreignId('ai_model_id')->constrained()->onUpdate('cascade');
             $table->foreignId('category_id')->constrained()->onUpdate('cascade');
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
@@ -21,7 +22,8 @@ return new class extends Migration
             $table->boolean('is_public')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-            
+            $table->json('metadata')->nullable();
+
             $table->index('ai_model_id');
             $table->index('category_id');
             $table->index('user_id');
