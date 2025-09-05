@@ -18,6 +18,7 @@ class PromptTemplate extends Model
         'user_id',
         'total_likes',
         'total_views',
+        'total_rates',
         'is_public',
         'is_active',
     ];

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\PromptTemplate;
-use App\Services\PromptCollectionService;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class PromptTemplateController extends Controller
@@ -38,9 +36,57 @@ class PromptTemplateController extends Controller
             }
         }
 
+        // Time filter implementation
+        if ($request->filled('time_filter')) {
+            switch ($request->time_filter) {
+                case '24h':
+                    $query->where('created_at', '>=', now()->subDay());
+                    break;
+                case 'week':
+                    $query->where('created_at', '>=', now()->subWeek());
+                    break;
+                case 'month':
+                    $query->where('created_at', '>=', now()->subMonth());
+                    break;
+            }
+        }
+
+        // Sort options implementation
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'top_rated':
+                    // Assuming you have a 'rating' column or relationship
+                    $query->orderBy('total_rates', 'desc');
+                    break;
+                case 'popular':
+                    // Assuming you have a 'views' or 'popularity' column
+                    $query->orderBy('total_views', 'desc');
+                    break;
+                case 'most_viewed':
+                default:
+                    $query->orderBy('total_likes', 'desc');
+                    break;
+            }
+        } else {
+            // Default sort by most viewed
+            $query->orderBy('created_at', 'desc');
+        }
+
         $images = $query->paginate($perPage)->withQueryString();
 
-        return view('prompt_templates.index', compact('images', 'categories', 'currentCategory'));
+        $currentTimeFilter = $request->input('time_filter', 'all');
+        $currentSort = $request->input('sort', 'most_viewed');
+
+        return view('prompt_templates.index', compact(
+            'images',
+            'categories',
+            'currentCategory',
+            'currentTimeFilter',
+            'currentSort'
+        ));
     }
 
 

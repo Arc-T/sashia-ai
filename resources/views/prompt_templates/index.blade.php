@@ -31,14 +31,42 @@
                     <!-- Time Filter -->
                     <div>
                         <button class="uk-button uk-button-default uk-button-small uk-border-pill" type="button">
-                            همه زمان‌ها <span uk-icon="chevron-down"></span>
+                            @switch($currentTimeFilter)
+                                @case('24h')
+                                    ۲۴ ساعت گذشته
+                                @break
+
+                                @case('week')
+                                    هفته گذشته
+                                @break
+
+                                @case('month')
+                                    ماه گذشته
+                                @break
+
+                                @default
+                                    همه زمان‌ها
+                            @endswitch
+                            <span uk-icon="chevron-down"></span>
                         </button>
                         <div uk-dropdown="mode: click; pos: bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li class="uk-active"><a href="#">همه زمان‌ها</a></li>
-                                <li><a href="#">۲۴ ساعت گذشته</a></li>
-                                <li><a href="#">هفته گذشته</a></li>
-                                <li><a href="#">ماه گذشته</a></li>
+                                <li class="{{ $currentTimeFilter === 'all' ? 'uk-active' : '' }}">
+                                    <a href="{{ request()->fullUrlWithQuery(['time_filter' => 'all', 'page' => 1]) }}">همه
+                                        زمان‌ها</a>
+                                </li>
+                                <li class="{{ $currentTimeFilter === '24h' ? 'uk-active' : '' }}">
+                                    <a href="{{ request()->fullUrlWithQuery(['time_filter' => '24h', 'page' => 1]) }}">۲۴
+                                        ساعت گذشته</a>
+                                </li>
+                                <li class="{{ $currentTimeFilter === 'week' ? 'uk-active' : '' }}">
+                                    <a href="{{ request()->fullUrlWithQuery(['time_filter' => 'week', 'page' => 1]) }}">هفته
+                                        گذشته</a>
+                                </li>
+                                <li class="{{ $currentTimeFilter === 'month' ? 'uk-active' : '' }}">
+                                    <a href="{{ request()->fullUrlWithQuery(['time_filter' => 'month', 'page' => 1]) }}">ماه
+                                        گذشته</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -46,14 +74,42 @@
                     <!-- Sort Options -->
                     <div>
                         <button class="uk-button uk-button-default uk-button-small uk-border-pill" type="button">
-                            پربازدیدها <span uk-icon="chevron-down"></span>
+                            @switch($currentSort)
+                                @case('newest')
+                                    جدیدترین
+                                @break
+
+                                @case('top_rated')
+                                    پرامتیازترین
+                                @break
+
+                                @case('popular')
+                                    محبوب‌ترین
+                                @break
+
+                                @default
+                                    پربازدیدها
+                            @endswitch
+                            <span uk-icon="chevron-down"></span>
                         </button>
                         <div uk-dropdown="mode: click; pos: bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li class="uk-active"><a href="#">پربازدیدها</a></li>
-                                <li><a href="#">جدیدترین</a></li>
-                                <li><a href="#">پرامتیازترین</a></li>
-                                <li><a href="#">محبوب‌ترین</a></li>
+                                <li class="{{ $currentSort === 'most_viewed' ? 'uk-active' : '' }}">
+                                    <a
+                                        href="{{ request()->fullUrlWithQuery(['sort' => 'most_viewed', 'page' => 1]) }}">پربازدیدها</a>
+                                </li>
+                                <li class="{{ $currentSort === 'newest' ? 'uk-active' : '' }}">
+                                    <a
+                                        href="{{ request()->fullUrlWithQuery(['sort' => 'newest', 'page' => 1]) }}">جدیدترین</a>
+                                </li>
+                                <li class="{{ $currentSort === 'top_rated' ? 'uk-active' : '' }}">
+                                    <a
+                                        href="{{ request()->fullUrlWithQuery(['sort' => 'top_rated', 'page' => 1]) }}">پرامتیازترین</a>
+                                </li>
+                                <li class="{{ $currentSort === 'popular' ? 'uk-active' : '' }}">
+                                    <a
+                                        href="{{ request()->fullUrlWithQuery(['sort' => 'popular', 'page' => 1]) }}">محبوب‌ترین</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
